@@ -11,20 +11,86 @@
     justify-content: space-between;
     align-items: center;
     z-index: var(--z-nav);
-    // box-shadow: 0 0 20px rgba($color: #000000, $alpha: 0.1);
+    transition: all 0.5s;
 
     .logo {
         font-family: var(--font-luxury);
         font-size: 30px;
-        color: var(--bg-mid-green);
-        font-weight: 800;
+        color: var(--color-accent);
+        font-weight: 700;
     }
 
     .links {
         display: flex;
+        font-weight: 600;
+        color: var(--color-accent);
+        align-items: center;
+        font-size: 16px;
 
         a {
-            margin-right: 20px;
+            padding: 0px 32px;
+            transition: all 0.5s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 64px;
+            border-radius: 8px;
+
+            &::after {
+                content: ' ';
+                display: flex;
+                width: 32px;
+                height: 0px;
+                background: var(--color-accent);
+                transition: all 0.5s;
+                opacity: 0;
+                transform: scaleX(0);
+            }
+
+            &:hover::after {
+                margin-top: 8px;
+                height: 2px;
+                opacity: 1;
+                transform: scaleX(1);
+            }
+
+            &:hover {
+                background: #5a84151a;
+            }
+        }
+
+        a.big {
+            background: var(--color-accent);
+            margin-left: 16px;
+            padding: 12px 32px;
+            border-radius: 48px;
+            color: #FFF;
+            box-shadow: 0px 2px 8px #5a841561;
+            height: auto;
+
+            &:hover {
+                box-shadow: 0px 4px 16px #5a8415cb;
+                background: #669b12;
+            }
+
+            &:active {
+                box-shadow: 0px 2px 10px #5a8415cb;
+                background: var(--color-accent);
+            }
+
+            &::after {
+                content: ' ';
+                display: flex;
+                width: 0px;
+                height: 0px;
+            }
+
+            &:hover::after {
+                margin-top: 0px;
+                width: 0px;
+                height: 0px;
+            }
         }
     }
 }
