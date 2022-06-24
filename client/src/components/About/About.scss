@@ -1,0 +1,16 @@
+.about {
+    margin-top: 100vh;
+
+    .about-info {
+        display: flex;
+        align-items: center;
+
+        .content-right {
+            margin-left: 40px;
+        }
+
+        .content-left {
+            margin-right: 30px;
+        }
+    }
+}
