@@ -10,6 +10,7 @@ body {
   min-height: 100vh;
   padding-top: var(--nav-height);
   font-family: 'Urbanist', sans-serif;
+  background: #fafdfd;
 }
 
 ::-webkit-scrollbar {
@@ -38,4 +39,15 @@ a {
 
 .container {
   padding: 0px 100px;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 900;
+  color: rgb(31, 31, 31);
+  margin-bottom: 24px;
+}
+
+.page {
+  padding-top: 32px;
 }
