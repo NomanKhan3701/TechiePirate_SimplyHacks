@@ -7,7 +7,7 @@ import "./Login.scss";
 
 // const admin_server_url = import.meta.env.ADMIN_SERVER_URL;
 // const admin_server_url = process.env.REACT_APP_SERVER_URL;
-const admin_server_url = "http://localhost:8000/api";
+const admin_server_url = process.env.REACT_APP_server_url;
 
 const Login = () => {
   const [isLoading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ const Login = () => {
     } else {
       setLoading(true);
       console.log(admin_server_url);
-      const { data: res } = await axios.post(`${admin_server_url}/auth/login`, {
+      const { data: res } = await axios.post(`${admin_server_url}/api/auth/login`, {
         email: loginData.email,
         password: loginData.password,
       });
