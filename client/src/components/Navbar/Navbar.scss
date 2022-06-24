@@ -9,12 +9,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    z-index: var(--z-nav);
     // box-shadow: 0 0 20px rgba($color: #000000, $alpha: 0.1);
 
     .logo {
         font-family: var(--font-luxury);
         font-size: 30px;
-        color: green;
+        color: var(--bg-mid-green);
     }
 
     .links {

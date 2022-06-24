@@ -1,0 +1,43 @@
+.header {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: var(--bg-light);
+    display: flex;
+    place-items: center;
+    min-height: 600px;
+
+    .bg-sections {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+
+        .line {
+            width: calc(100% / 6);
+            height: 100vh;
+            border-right: 3px solid rgba(rgb(160, 199, 160), 0.1);
+        }
+    }
+
+    .header-info {
+        display: flex;
+
+        .left {
+            .title {
+                font-size: 40px;
+				font-family: 'Poppins';
+
+                .green {
+                    color: var(--bg-mid-green);
+                }
+            }
+        }
+
+        .right {
+            border: 1px solid red;
+        }
+    }
+}
