@@ -1,9 +1,9 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const app = express();
 const cors = require("cors");
 const useImageRoute = require("./routes/image");
+const  auth=require("./routes/Authentication")
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -17,20 +17,14 @@ app.use(cors(corsOptions));
 
 // {* All the routes here *}
 app.use("/api/image", useImageRoute);
+app.use("/api/auth", auth);
 
-
-app.get("/", (req, res) => {
-  res.send("Hallaluya");
-});
 
 app.listen(PORT, async () => {
   try {
-    await mongoose.connect(
-      process.env.MONGO_URL, // Mongo url required in .env file
-      { useNewUrlParser: true },
-      () => console.log(`Server running at port ${PORT}`)
-    );
+    console.log(`Server running on ${PORT}`)
   } catch (e) {
     console.log(e);
   }
 });
+
