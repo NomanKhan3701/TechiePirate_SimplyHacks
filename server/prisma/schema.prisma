@@ -12,8 +12,17 @@ datasource db {
 
 model User {
   firstName String
-  lastName  String 
-  email String @id @unique 
-  password String 
+  lastName  String
+  email     String  @id @unique
+  password  String
+  Posts     Posts[]
 }
 
+model Posts {
+  postId    Int      @id @default(sequence())
+  title     String
+  tags      String[]
+  content   String
+  author    User     @relation(fields: [userEmail], references: [email])
+  userEmail String
+}

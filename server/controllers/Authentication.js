@@ -48,7 +48,8 @@ const login = async (req, res, next) => {
 
     if (await argon2.verify(user.password, req.body.password)) {
       const token = generateAuthToken(user);
-      res.status(200).send({ data: token, message: "Logged In Successfully" });
+      
+      res.status(200).send({ token:"Bearer "+token, message: "Logged In Successfully" });
     } else {
       return res.status(401).send({ message: "Invalid Password" }); // password did not match
     }
