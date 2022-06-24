@@ -7,6 +7,15 @@
         display: flex;
         align-items: center;
 
+        h2 {
+            margin-bottom: 10px;
+        }
+
+        .content {
+            font-size: 19px;
+            letter-spacing: 1.2px;
+        }
+
         .content-right {
             margin-left: 40px;
         }
