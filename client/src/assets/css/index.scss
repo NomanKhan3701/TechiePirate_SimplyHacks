@@ -38,4 +38,12 @@ a {
 
 .container {
   padding: 0px var(--pd-container);
+
+  @media screen and (max-width: '900px'){
+    padding: 0px 30px;
+  }
+
+  @media screen and (max-width: '700px') {
+    padding: 0 20px;
+  }
 }

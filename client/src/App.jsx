@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router'
-import { Home, Login, Posts, Signup } from './pages/import';
+import { CreateEvent, Home, Login, Posts, Signup } from './pages/import';
 import { Navbar } from './components/import';
 
 function App() {
@@ -11,6 +11,7 @@ function App() {
         <Route path='/posts' element={<Posts />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/createevent' element={<CreateEvent />} />
       </Routes>
     </div>
   );
