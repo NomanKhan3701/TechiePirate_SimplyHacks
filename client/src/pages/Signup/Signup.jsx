@@ -3,7 +3,7 @@ import './Signup.scss'
 
 const Signup = () => {
 	return (
-		<div>Signup</div>
+		<div className='container'>Signup</div>
 	)
 }
 
