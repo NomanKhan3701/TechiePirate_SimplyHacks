@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
+<<<<<<< HEAD
 import FullScreenLoader from "../../components/FullScreenLoader/FullScreenLoader";
+=======
+import FullScreenLoader from "../Signup/FullScreenLoader";
+>>>>>>> 35c10c2d7530bd204a086d72b36bac588ed09ab4
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 
 // const admin_server_url = import.meta.env.ADMIN_SERVER_URL;
 // const admin_server_url = process.env.REACT_APP_SERVER_URL;
+<<<<<<< HEAD
 const admin_server_url = "http://localhost:8000/api";
+=======
+const admin_server_url = process.env.REACT_APP_server_url;
+>>>>>>> 35c10c2d7530bd204a086d72b36bac588ed09ab4
 
 const Login = () => {
   const [isLoading, setLoading] = useState(false);
@@ -33,7 +41,11 @@ const Login = () => {
     } else {
       setLoading(true);
       console.log(admin_server_url);
+<<<<<<< HEAD
       const { data: res } = await axios.post(`${admin_server_url}/auth/login`, {
+=======
+      const { data: res } = await axios.post(`${admin_server_url}/api/auth/login`, {
+>>>>>>> 35c10c2d7530bd204a086d72b36bac588ed09ab4
         email: loginData.email,
         password: loginData.password,
       });
@@ -67,4 +79,8 @@ const Login = () => {
     </div>
   );
 };
+<<<<<<< HEAD
 export default Login;
+=======
+export default Login;
+>>>>>>> 35c10c2d7530bd204a086d72b36bac588ed09ab4
