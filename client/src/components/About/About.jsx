@@ -16,7 +16,7 @@ const About = () => {
 						loop
 						animationData={gardeningJson}
 						play
-						style={{ margin: "auto", height: "250px", minHeight: "200px" }}
+						style={{ margin: "auto", width: "200px", minHeight: "200px" }}
 					/>
 				</div>
 				<div className="content-right">
@@ -44,7 +44,9 @@ const About = () => {
 						loop
 						animationData={contactJson}
 						play
-						style={{ margin: "auto", height: "250px", minHeight: "200px" }}
+						style={{
+							margin: "auto", width: "200px", minHeight: "200px"
+						}}
 					/>
 				</div>
 			</div>
@@ -54,7 +56,7 @@ const About = () => {
 						loop
 						animationData={deliveryJson}
 						play
-						style={{ margin: "auto", height: "250px", minHeight: "200px" }}
+						style={{ margin: "auto", width: "200px", minHeight: "200px" }}
 					/>
 				</div>
 				<div className="content-right">
@@ -82,7 +84,7 @@ const About = () => {
 						loop
 						animationData={envelopeJson}
 						play
-						style={{ margin: "auto", height: "250px", minHeight: "200px" }}
+						style={{ margin: "auto", width: "200px", minHeight: "200px" }}
 					/>
 				</div>
 			</div>
