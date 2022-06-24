@@ -1,0 +1,14 @@
+.navbar {
+    height: 80px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+
+    .links {
+        display: flex;
+
+        a {
+            margin-right: 20px;
+        }
+    }
+}
