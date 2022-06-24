@@ -6,7 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 
 // const admin_server_url = import.meta.env.ADMIN_SERVER_URL;
-const admin_server_url = process.env.ADMIN_SERVER_URL;
+// const admin_server_url = process.env.REACT_APP_SERVER_URL;
+const admin_server_url = "http://localhost:8000/api";
 
 const Login = () => {
   const [isLoading, setLoading] = useState(false);
@@ -31,7 +32,8 @@ const Login = () => {
       toast.error("Fields cannot be empty.", { position: "top-center" });
     } else {
       setLoading(true);
-      const { data: res } = await axios.post(`${admin_server_url}/Login`, {
+      console.log(admin_server_url);
+      const { data: res } = await axios.post(`${admin_server_url}/auth/login`, {
         email: loginData.email,
         password: loginData.password,
       });

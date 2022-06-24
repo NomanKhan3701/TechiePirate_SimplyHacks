@@ -4,10 +4,11 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 import FullScreenLoader from "./FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
-import "./SignUp.scss";
+import "./Signup.scss";
 
 // const client_server_url = import.meta.env.VITE_APP_CLIENT_SERVER_URL;
-const client_server_url = process.env.CLIENT_SERVER_URL;
+// const client_server_url = process.env.CLIENT_SERVER_URL;
+const client_server_url = "http://localhost:8000/api/auth";
 
 const SignUp = () => {
   const navigate = useNavigate();
