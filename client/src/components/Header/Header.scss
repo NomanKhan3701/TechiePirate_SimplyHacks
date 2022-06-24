@@ -14,6 +14,7 @@
         width: 100%;
         height: 100%;
         display: flex;
+        pointer-events: none;
 
         .line {
             width: calc(100% / 6);
@@ -24,20 +25,73 @@
 
     .header-info {
         display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 0px var(--pd-container);
+        margin-top: 20px;
 
         .left {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            width: 50%;
+
             .title {
-                font-size: 40px;
-				font-family: 'Poppins';
+                font-size: 60px;
+                font-weight: 800;
 
                 .green {
                     color: var(--bg-mid-green);
+                }
+
+                .words {
+                    min-width: 350px;
+                }
+            }
+
+            .util {
+                margin-top: 40px;
+                display: flex;
+                width: max-content;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+
+                .btn {
+                    background: var(--bg-mid-green);
+                    width: 60px;
+                    height: 60px;
+                    display: grid;
+                    place-items: center;
+                    border-radius: 50%;
+                    box-shadow: 10px 10px 20px rgba(green, 0.4);
+
+                    svg {
+                        font-size: 30px;
+                        color: white;
+                    }
+                }
+
+                .content {
+                    margin-left: 20px;
+                    font-size: 20px;
+                    font-weight: 600;
+                    color: green;
                 }
             }
         }
 
         .right {
-            border: 1px solid red;
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+
+            .image {
+                height: 100%;
+                width: 100%;
+                display: flex;
+                min-width: 400px;
+            }
         }
     }
 }

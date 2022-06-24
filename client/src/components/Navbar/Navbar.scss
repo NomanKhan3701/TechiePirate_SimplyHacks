@@ -5,7 +5,8 @@
     left: 0;
     width: 100%;
     height: var(--nav-height);
-    padding: 20px 100px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -16,6 +17,7 @@
         font-family: var(--font-luxury);
         font-size: 30px;
         color: var(--bg-mid-green);
+        font-weight: 800;
     }
 
     .links {

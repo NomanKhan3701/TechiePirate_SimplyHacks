@@ -1,27 +1,45 @@
 import React from "react";
 import "./Header.scss";
+import Lottie from 'react-lottie-player'
+import { BsFillPlayFill } from "react-icons/bs"
+import lottieJson from '../../assets/lottie/wateringPlants.json'
 
 const Header = () => {
-  return (
-    <div className="header">
-      <div className="bg-sections">
-        <div className="line"></div>
-        <div className="line"></div>
-        <div className="line"></div>
-        <div className="line"></div>
-        <div className="line"></div>
-      </div>
-      <div className="header-info container">
-        <div className="left">
-          <div className="title">
-            <div className="green">Together</div>
-			<div>We can restore the planet</div>
-          </div>
-        </div>
-        <div className="right">sdfgkjnsfg</div>
-      </div>
-    </div>
-  );
+	return (
+		<div className="header">
+			<div className="bg-sections">
+				<div className="line"></div>
+				<div className="line"></div>
+				<div className="line"></div>
+				<div className="line"></div>
+				<div className="line"></div>
+			</div>
+			<div className="header-info">
+				<div className="left">
+					<div className="title">
+						<div className="green">Together</div>
+						<div className="words">We can restore the planet</div>
+					</div>
+					<div className="util">
+						<div className="btn">
+							<BsFillPlayFill />
+						</div>
+						<div className="content">See Posts</div>
+					</div>
+				</div>
+				<div className="right">
+					<div className="image">
+						<Lottie
+							loop
+							animationData={lottieJson}
+							play
+							style={{ margin: 'auto', height: '80vh', minHeight: '300px' }}
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default Header;
