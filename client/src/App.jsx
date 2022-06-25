@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router'
 import { CreatePost, Map, Navbar } from './components/import';
-import { CreateEvent, Events, Home, Login, Payment, Posts, Profile, Signup, ViewEvent, ViewPost } from './pages/import';
+import { Cancel, CreateEvent, Events, Home, Login, Payment, Posts, Profile, Signup, Success, ViewEvent, ViewPost } from './pages/import';
 
 import "react-toastify/dist/ReactToastify.css";
-import 'mapbox-gl/dist/mapbox-gl.css';
+import "mapbox-gl/dist/mapbox-gl.css";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -25,7 +25,8 @@ function App() {
           <Route path='/createpost' element={<CreatePost />} />
           <Route path='/map' element={<Map />} />
           <Route path='/profile' element={<Profile />} />
-          <Route path='/donate' element={<Payment />} />
+          <Route path='/success' element={<Success />} />
+          <Route path='/cancel' element={<Cancel />} />
         </Routes>
       </AuthProvider>
     </div>

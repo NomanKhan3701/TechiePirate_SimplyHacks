@@ -5,7 +5,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { eventTypes } from '../../constants'
 import BigButton from '../../components/BigButton/BigButton'
 import { useState } from 'react'
+import axios from 'axios'
 
+const server_url = process.env.REACT_APP_server_url
 const ViewEvent = () => {
   const navigate = useNavigate();
   const eventType = eventTypes['tree_planting']
@@ -17,13 +19,17 @@ const ViewEvent = () => {
   const closeForm = () => {
 
   }
-  const donate = () => {
-    navigate(`/donate`, {
-      state: {
-        message: message,
+  const donate = async () => {
+    try {
+      const res = await axios.post(`${server_url}/api/payment`, {
+        items: [{ id: 1, quantity: 1 }],
         amount: amount
-      }
-    })
+      })
+      window.location = res.data.url
+    } catch (e) {
+      console.log(e);
+    }
+
   }
   return (
     <div className='container page'>
