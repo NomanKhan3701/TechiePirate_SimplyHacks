@@ -14,7 +14,7 @@ const Posts = () => {
 
 	const getPosts = async () => {
 		try {
-			const res = await axios.get(`${server_url}/api/posts/?tags=music,legend`);
+			const res = await axios.get(`${server_url}/api/posts`);
 			setPosts(res.data)
 		} catch (e) {
 			console.log(e);
