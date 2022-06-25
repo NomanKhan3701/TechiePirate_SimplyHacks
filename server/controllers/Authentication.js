@@ -6,6 +6,7 @@ const {
 } = require("../models/User");
 const prisma = new PrismaClient();
 const argon2 = require("argon2");
+
 const signup = async (req, res, next) => {
   try {
     if (req.body.google == false) {

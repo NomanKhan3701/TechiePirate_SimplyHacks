@@ -1,11 +1,12 @@
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const makePayment = async (req, res) => {
-  console.log("in");
+  const amount = Number(req.body.amount);
+  
   const storeItems = new Map([
-    [1, { priceInCents: 100, name: "Learn React Today" }],
-    [2, { priceInCents: 200, name: "Learn CSS Today" }],
+    [1, { priceInCents: amount * 100, name: "Donation" }],
   ]);
+
   try {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -23,11 +24,12 @@ const makePayment = async (req, res) => {
           quantity: item.quantity,
         };
       }),
-      success_url: `${process.env.CLIENT_URL}/success.html`,
-      cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
+      success_url: `${process.env.CLIENT_URL}/success`,
+      cancel_url: `${process.env.CLIENT_URL}/cancel`,
     });
     res.json({ url: session.url });
   } catch (e) {
+    console.log(e);
     res.status(500).json({ error: e.message });
   }
 };

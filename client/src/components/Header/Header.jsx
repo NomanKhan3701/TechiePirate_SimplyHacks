@@ -2,6 +2,7 @@ import React from "react";
 import "./Header.scss";
 import Lottie from "react-lottie-player";
 import { BsFillPlayFill } from "react-icons/bs";
+import { GiThreeLeaves } from "react-icons/gi";
 import lottieJson from "../../assets/lottie/wateringPlants.json";
 import { Link } from "react-router-dom";
 
@@ -24,7 +25,7 @@ const Header = () => {
           <Link to="/posts">
             <div className="util">
               <div className="btn">
-                <BsFillPlayFill />
+                <GiThreeLeaves />
               </div>
               <div className="content">See Posts</div>
             </div>
