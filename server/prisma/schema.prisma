@@ -44,3 +44,10 @@ model Posts {
   createdAt DateTime       @default(now())
   Comments  postComments[]
 }
+model eventComments{
+  
+}
+model Events{
+
+}
+

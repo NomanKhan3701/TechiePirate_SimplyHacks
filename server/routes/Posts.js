@@ -14,6 +14,6 @@ router.get("/",getPosts)
 router.post("/",passport.authenticate('jwt', { session: false }),addPost)
 router.delete("/",passport.authenticate('jwt', { session: false }),deletePost)
 router.get("/Comments",getComments)
-router.post('/Comments',addComment)
-router.delete("/Comments",deleteComment)
+router.post('/Comments',passport.authenticate('jwt', { session: false }),addComment)
+router.delete("/Comments",passport.authenticate('jwt', { session: false }),deleteComment)
 module.exports = router;
