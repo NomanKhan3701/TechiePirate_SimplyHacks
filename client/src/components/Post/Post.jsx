@@ -8,7 +8,7 @@ const Post = ({ post }) => {
 	return (
 		<Link to={`/post/${post.postId}`} className='post'>
 			<div className="img-holder">
-				<img src={post.img ? post.img : 'https://via.placeholder.com/512'} />
+				<img src={post.image ? post.image : 'https://via.placeholder.com/512'} />
 
 				<div className="fader"></div>
 			</div>
