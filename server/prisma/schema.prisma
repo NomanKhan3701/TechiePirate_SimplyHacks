@@ -14,11 +14,12 @@ model User {
   firstName    String
   lastName     String
   email        String         @id @unique
+  image        String?
   password     String
   Posts        Posts[]
   postComments postComments[]
-  WorkPts      Int            @default(0)
-  ResourcePts  Int            @default(0)
+  workPts      Int            @default(0)
+  resourcePts  Int            @default(0)
   Contributor  Contributor[]
   Events       Events[]
   Participant  Participant[]
@@ -27,7 +28,7 @@ model User {
 model postComments {
   commentId   Int    @id @default(sequence())
   comment     String
-  Author      User   @relation(fields: [userEmail], references: [email])
+  author      User   @relation(fields: [userEmail], references: [email])
   userEmail   String
   Posts       Posts  @relation(fields: [postsPostId], references: [postId])
   postsPostId Int
@@ -39,11 +40,11 @@ model Posts {
   tags      String[]
   content   String
   image     String?
-  Likes     Int            @default(0)
+  likes     Int            @default(0)
   author    User           @relation(fields: [userEmail], references: [email])
   userEmail String
   createdAt DateTime       @default(now())
-  Comments  postComments[]
+  comments  postComments[]
 }
 
 model eventComments {
@@ -85,5 +86,5 @@ model Events {
   particicpants  Participant[]
   contributors   Contributor[]
   comments       eventComments[]
-  DonationAmount Float  @default(0)
+  donationAmount Float  @default(0)
 }

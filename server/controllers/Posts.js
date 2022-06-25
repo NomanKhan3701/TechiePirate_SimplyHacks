@@ -5,17 +5,35 @@ const { getImages, addImage, deleteImage } = require("../controllers/image");
 const axios=require('axios');
 const getPosts=async(req,res,next)=>{
     try {
-    const fields=req.query.tags
-    const field=fields.split(',')
-    const Posts=await prisma.Posts.findMany({
-        where:{
-            tags:{
-                hasSome:field,
-            }
-        }
-    })
-    res.send(Posts)
-    
+    if(!req.query.tags)
+    {
+        const Posts = await prisma.Posts.findMany({});
+        res.status(200).send(Posts)
+    }
+    else{
+        const fields = req.query.tags;
+        const field = fields.split(",");
+        const Posts = await prisma.Posts.findMany({
+          where: {
+            tags: {
+              hasSome: field,
+            },
+          },
+          include: {
+             author: {
+                select:{
+                    firstName:true,
+                    lastName:true,
+                    email:true,
+                    workPts:true,
+                    resourcePts:true,
+                    image:true,
+                }
+             }
+         },
+        });
+     res.send(Posts);
+   }
     } catch (error) {
         console.log(error)
         res.status(500).send({ message: "Internal Server Error" });
