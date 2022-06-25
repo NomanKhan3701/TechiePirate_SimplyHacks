@@ -38,12 +38,12 @@ const CreateEvent = () => {
 
         <div className="date-time">
           <div className={`calendar ${calendarToggle ? "open" : ""}`}>
-            <Calendar
+            {/* <Calendar
               value={selectedDay}
               onChange={setSelectedDay}
               shouldHighlightWeekends
               calendarClassName="responsive-calendar"
-            />
+            /> */}
           </div>
 
           <div className="title-util">

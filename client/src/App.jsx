@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router'
 import { CreateEvent, Events, Home, Login, Posts, Signup } from './pages/import';
 import { Navbar } from './components/import';
+import ViewEvent from './pages/ViewEvent/ViewEvent';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/createevent' element={<CreateEvent />} />
+        <Route path='/event/:id' element={<ViewEvent />} />
       </Routes>
     </div>
   );

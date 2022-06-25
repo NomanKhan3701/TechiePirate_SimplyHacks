@@ -52,10 +52,11 @@ a {
 h1 {
   font-size: 32px;
   font-weight: 900;
-  color: rgb(31, 31, 31);
+  color: var(--color-text-title);
   margin-bottom: 24px;
 }
 
 .page {
-  padding-top: 32px;
+  padding-top: 64px;
+  padding-bottom: 64px;
 }
