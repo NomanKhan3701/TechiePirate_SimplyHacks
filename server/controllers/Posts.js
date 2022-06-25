@@ -74,11 +74,13 @@ const deletePost=async(req,res,next)=>{
 }
 const addComment=async(req,res,next)=>{
  try {
-    const {error}=validateComment(req.body);
+    const data=req.body;
+    data.userEmail=req.user.email;
+    const {error}=validateComment(data);
       if (error)
        return res.status(400).send({ message: error.details[0].message });
     const comment =await prisma.postComments.create({
-        data:req.body
+        data:data
     })
     res.status(201).send(comment);
  } catch (error) {
