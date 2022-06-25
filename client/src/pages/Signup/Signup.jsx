@@ -81,6 +81,13 @@ const SignUp = () => {
 	return (
 		<div className="signup-container">
 			<ToastContainer></ToastContainer>
+			<div className="bg-sections">
+				<div className="line"></div>
+				<div className="line"></div>
+				<div className="line"></div>
+				<div className="line"></div>
+				<div className="line"></div>
+			</div>
 			<div className="signup">
 				<h1>SingUp</h1>
 				<input
