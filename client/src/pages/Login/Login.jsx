@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 import FullScreenLoader from "../Signup/FullScreenLoader";
-import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 import { Link } from "react-router-dom";
 
@@ -44,7 +43,6 @@ const Login = () => {
   };
   return (
     <div className="login-container">
-      <ToastContainer></ToastContainer>
       <div className="bg-sections">
         <div className="line"></div>
         <div className="line"></div>

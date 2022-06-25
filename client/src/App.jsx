@@ -1,10 +1,13 @@
 import { Routes, Route } from 'react-router'
 import { CreateEvent, Events, Home, Login, Posts, Signup } from './pages/import';
 import { CreatePost, Navbar } from './components/import';
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div className="app">
+			<ToastContainer></ToastContainer>
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />

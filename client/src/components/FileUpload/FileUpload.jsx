@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import "./FileUpload.scss";
 
 const FileUpload = (props) => {
@@ -88,7 +88,7 @@ const FileUpload = (props) => {
         </div>
       ) : (
         <div className="image-preview">
-          <img id="prev-img" src={prevImg} alt="image preview" />
+          <img id="prev-img" src={prevImg} alt="" />
         </div>
       )}
     </div>

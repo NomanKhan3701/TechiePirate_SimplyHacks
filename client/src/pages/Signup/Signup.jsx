@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import FullScreenLoader from "./FullScreenLoader";
-import "react-toastify/dist/ReactToastify.css";
 import "./Signup.scss";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // const client_server_url = import.meta.env.VITE_APP_CLIENT_SERVER_URL;
 // const client_server_url = process.env.CLIENT_SERVER_URL;
@@ -81,7 +80,6 @@ const SignUp = () => {
 	};
 	return (
 		<div className="signup-container">
-			<ToastContainer></ToastContainer>
 			<div className="bg-sections">
 				<div className="line"></div>
 				<div className="line"></div>
