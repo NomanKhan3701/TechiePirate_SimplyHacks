@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, FileUpload, MarkdownEditor } from "../../components/import";
+import { BigButton, Button, FileUpload, MarkdownEditor } from "../../components/import";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { FcClock } from "react-icons/fc";
 import moment from "moment";
@@ -20,7 +20,8 @@ const CreateEvent = () => {
   const [markdownVal, setMarkdownVal] = useState("");
 
   return (
-    <div className="create-event container">
+    <div className="create-event container page">
+      <h1>New Event</h1>
       <div className="main-form">
         <div className="title">
           <h3>Title</h3>
@@ -95,7 +96,9 @@ const CreateEvent = () => {
           </div>
         </div>
         <div className="btn">
-          <Button text='Create Event' />
+          <BigButton>
+						Create Event
+					</BigButton>
         </div>
       </div>
     </div>

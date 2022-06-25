@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router'
-import { CreatePost, Map, Navbar } from './components/import';
-import { CreateEvent, Events, Home, Login, Posts, Profile, Signup, ViewEvent, ViewPost } from './pages/import';
+import { Map, Navbar } from './components/import';
+import { CreatePost, CreateEvent, Events, Home, Login, Posts, Profile, Signup, ViewEvent, ViewPost } from './pages/import';
 
 import "react-toastify/dist/ReactToastify.css";
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -16,15 +16,15 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/posts' element={<Posts />} />
+          <Route path='/posts/create' element={<CreatePost />} />
+          <Route path='/post/:id' element={<ViewPost />} />
           <Route path='/events' element={<Events />} />
+          <Route path='/events/create' element={<CreateEvent />} />
+          <Route path='/event/:id' element={<ViewEvent />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path='/createevent' element={<CreateEvent />} />
-          <Route path='/event/:id' element={<ViewEvent />} />
-          <Route path='/post/:id' element={<ViewPost />} />
-          <Route path='/createpost' element={<CreatePost />} />
-          <Route path='/map' element={<Map />} />
           <Route path='/profile' element={<Profile />} />
+          <Route path='/map' element={<Map />} />
         </Routes>
       </AuthProvider>
     </div>
