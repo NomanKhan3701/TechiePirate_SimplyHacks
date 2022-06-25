@@ -170,6 +170,18 @@ const getComments = async (req, res, next) => {
       where: {
         postsPostId: Number(req.query.postId),
       },
+      include: {
+        author: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+            workPts: true,
+            resourcePts: true,
+            image: true,
+          },
+        },
+      },
     });
     res.send(Comments);
   } catch (error) {

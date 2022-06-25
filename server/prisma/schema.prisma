@@ -78,7 +78,7 @@ model Events {
   address        String
   eventTags      String[]
   organizerEmail String
-  Image          String?
+  image          String?
   donationAmount Float           @default(0.0)
   organizer      User            @relation(fields: [organizerEmail], references: [email])
   contributors   Contributor[]
