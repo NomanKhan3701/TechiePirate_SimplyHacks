@@ -7,14 +7,15 @@ import BigButton from '../../components/BigButton/BigButton'
 
 const ViewEvent = () => {
   const eventType = eventTypes['tree_planting']
+
   return (
     <div className='container page'>
-			<div className='event-cols'>
+      <div className='event-cols'>
         <div className="left">
           <img src='https://via.placeholder.com/512' />
 
           <Link to={'/profile'} className='posted-by'>
-            <img src='https://via.placeholder.com/512' /> 
+            <img src='https://via.placeholder.com/512' />
             <div>
               Aditya Kharote
               <div>
@@ -45,7 +46,7 @@ const ViewEvent = () => {
             </span>
           </div>
 
-          <div style={{'marginTop': '16px'}}>
+          <div style={{ 'marginTop': '16px' }}>
             <BigButton>
               Join Event
             </BigButton>
@@ -53,7 +54,7 @@ const ViewEvent = () => {
         </div>
 
         <div className="right">
-          <div className='event-type' style={{'color': eventType.color}}>
+          <div className='event-type' style={{ 'color': eventType.color }}>
             <eventType.icon />
             <span>{eventType.title}</span>
           </div>
@@ -74,13 +75,13 @@ const ViewEvent = () => {
               All proceeds will be used to fund this event.<br /><br />
               You can also contact the event creator directly in case you want to provide supplies or other non monetary contributions.
             </p>
-            <div style={{'width': 'fit-content'}}>
-              <BigButton>Donate Now</BigButton>
+            <div style={{ 'width': 'fit-content' }}>
+              <Link to='/donate'><BigButton >Donate Now</BigButton></Link>
             </div>
           </div>
         </div>
       </div>
-		</div>
+    </div>
   )
 }
 
