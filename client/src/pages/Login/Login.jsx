@@ -3,6 +3,7 @@ import { GoogleLogin } from "react-google-login";
 import { refreshTokenSetup } from "./refreshToken";
 import { gapi } from "gapi-script";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FullScreenLoader from "../Signup/FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,6 +15,7 @@ import { Link } from "react-router-dom";
 const admin_server_url = process.env.REACT_APP_server_url;
 
 const Login = () => {
+  const navigate = useNavigate();
   window.gapi.load("client:auth2", () => {
     window.gapi.client.init({
       clientId: process.env.REACT_APP_client_id,
@@ -43,35 +45,56 @@ const Login = () => {
       toast.error("Fields cannot be empty.", { position: "top-center" });
     } else {
       setLoading(true);
-      console.log(admin_server_url);
-      const { data: res } = await axios.post(
-        `${admin_server_url}/api/auth/login`,
-        {
-          email: loginData.email,
-          password: loginData.password,
-          google: false,
+      try {
+        const { data: res } = await axios.post(
+          `${admin_server_url}/api/auth/login`,
+          {
+            email: loginData.email,
+            password: loginData.password,
+            google: false,
+          }
+        );
+        localStorage.setItem("token", res.token);
+        console.log(res.token);
+
+        navigate("/");
+      } catch (error) {
+        const statusCode = error.response.status;
+        if (statusCode == 401) {
+          toast.error("Invalid email/password.", {
+            position: "top-center",
+          });
         }
-      );
-      localStorage.setItem("token", res.token);
-      console.log(res.token);
+      }
+      setLoading(false);
     }
   };
   const onSuccess = async (response) => {
-    console.log(response.profileObj);
     localStorage.setItem("username", response.profileObj.email);
     localStorage.setItem("loggedIn", true);
+    setLoading(true);
+    try {
+      const { data: res } = await axios.post(
+        `${admin_server_url}/api/auth/login`,
+        {
+          email: response.profileObj.email,
+          password: "",
+          google: true,
+        }
+      );
 
-    const { data: res } = await axios.post(
-      `${admin_server_url}/api/auth/login`,
-      {
-        email: response.profileObj.email,
-        password: "",
-        google: true,
+      localStorage.setItem("token", res.token);
+      console.log(res.token);
+      navigate("/");
+    } catch (error) {
+      const statusCode = error.response.status;
+      if (statusCode == 401) {
+        toast.error("Invalid email/password.", {
+          position: "top-center",
+        });
       }
-    );
-    localStorage.setItem("token", res.token);
-    console.log(res.token);
-
+    }
+    setLoading(false);
     //refreshTokenSetup(res);
   };
   return (

@@ -77,10 +77,17 @@ const SignUp = () => {
         })
         .then((response) => {
           setLoading(false);
-          console.log(response);
+          navigate("/");
+        })
+        .catch((error) => {
+          setLoading(false);
+          const statusCode = error.response.status;
+          if (statusCode == 409) {
+            toast.error("Email address already in use.", {
+              position: "top-center",
+            });
+          }
         });
-
-      navigate("/login");
     }
   };
   const onSuccess = async (response) => {
@@ -88,15 +95,25 @@ const SignUp = () => {
     localStorage.setItem("username", response.profileObj.email);
     localStorage.setItem("loggedIn", true);
 
-    const { data: res } = await axios.post(`${client_server_url}/SignUp`, {
-      firstName: response.profileObj.givenName,
-      lastName: response.profileObj.familyName,
-      email: response.profileObj.email,
-      password: "",
-      google: true,
-    });
-    localStorage.setItem("token", res.data);
-    console.log(res);
+    try {
+      const { data: res } = await axios.post(`${client_server_url}/SignUp`, {
+        firstName: response.profileObj.givenName,
+        lastName: response.profileObj.familyName,
+        email: response.profileObj.email,
+        password: "",
+        google: true,
+      });
+      console.log(res);
+      navigate("/");
+    } catch (error) {
+      const statusCode = error.response.status;
+      if (statusCode == 409) {
+        toast.error("Email address already in use.", {
+          position: "top-center",
+        });
+      }
+    }
+
     //refreshTokenSetup(res);
   };
   return (
