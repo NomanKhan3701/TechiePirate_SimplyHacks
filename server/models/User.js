@@ -2,9 +2,9 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const passwordComplexity = require("joi-password-complexity");
 
-generateAuthToken = (signatureObject) => {
+generateAuthToken = (payload) => {
   const token = jwt.sign(
-    { _id: signatureObject._id },
+   payload,
     process.env.JWTPRIVATEKEY,
     {
       expiresIn: "7d",
@@ -30,5 +30,7 @@ const validateLogin = (data) => {
   });
   return schema.validate(data);
 };
+
+
 
 module.exports = { generateAuthToken, validateSignup, validateLogin };

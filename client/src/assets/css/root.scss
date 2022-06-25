@@ -7,7 +7,9 @@
     --bg-nav: transparent;
 
     /* Color Constants */
-    --color-accent: #598415;
+    --color-green: #598415;
+    --color-blue: #1b63d7;
+    --color-accent: var(--color-green);
 
     /* text colors */
 
@@ -29,6 +31,7 @@
     --bg-dark-green: #024137;
     --bg-mid-green: green;
     --bg-sidebar: #2a6bb1;
+    --bg-light-cream: rgb(247, 247, 244);
     --bg-light: #ffff;
 
     /* ease functions */
