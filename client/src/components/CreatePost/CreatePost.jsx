@@ -12,7 +12,8 @@ const CreatePost = () => {
 	const [post, setPost] = useState({
 		title: "",
 		tags: "",
-		content: ""
+		content: "hello workld",
+		image: ""
 	})
 
 	const createPost = async () => {
@@ -27,6 +28,7 @@ const CreatePost = () => {
 				title: post.title,
 				tags: post.tags,
 				content: post.content,
+				image: post.image,
 			})
 			console.log(res)
 		} catch (e) {
