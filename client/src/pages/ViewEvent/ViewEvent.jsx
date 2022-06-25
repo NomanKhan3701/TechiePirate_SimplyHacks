@@ -21,6 +21,11 @@ const ViewEvent = () => {
   }
   const donate = async () => {
     try {
+      localStorage.setItem("donationToken",{
+        userEmail:email,
+        eventsEventId:id,
+        monetary: amount,
+      })
       const res = await axios.post(`${server_url}/api/payment`, {
         items: [{ id: 1, quantity: 1 }],
         amount: amount

@@ -10,7 +10,8 @@ const {
   getComments,
   deleteComment,
   createParticipant,
-  getEvent
+  createContributor,
+  getEvent,
 } = require("../controllers/Events");
 require("../strategy/jwt-auth");
 
@@ -37,6 +38,12 @@ router.delete(
 router.post(
   "/participant",
   passport.authenticate("jwt", { session: false }),
+  createParticipant
+);
+router.post(
+  "/contributor",
+  passport.authenticate("jwt", { session: false }),
+  createContributor
 );
 
 module.exports = router;

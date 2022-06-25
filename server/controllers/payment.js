@@ -1,7 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const makePayment = async (req, res) => {
-  const amount = Number(req.body.amount);
+  const amount = Number(req.body.items[0].quantity);
   
   const storeItems = new Map([
     [1, { priceInCents: amount * 100, name: "Donation" }],
