@@ -8,9 +8,8 @@ const prisma = new PrismaClient();
 const argon2 = require("argon2");
 const signup = async (req, res, next) => {
   try {
-    if(req.body.google==false)
-    {
-      const{error}  = validateSignup(req.body);
+    if (req.body.google == false) {
+      const { error } = validateSignup(req.body);
       if (error)
         return res.status(400).send({ message: error.details[0].message });
     }
@@ -32,7 +31,7 @@ const signup = async (req, res, next) => {
       data: data,
     });
     res.status(201).send({ message: "User Created successfully" });
-  } 
+  }
   catch (e) {
     console.log(e)
     res.status(500).send({ message: "Internal Server Error" });
@@ -41,11 +40,10 @@ const signup = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    if(!req.body.google)
-    {
-     const { error } = validateLogin(req.body);
-     if (error)
-       return res.status(400).send({ message: error.details[0].message });
+    if (!req.body.google) {
+      const { error } = validateLogin(req.body);
+      if (error)
+        return res.status(400).send({ message: error.details[0].message });
     }
     const user = await prisma.user.findUnique({
       where: {
@@ -57,8 +55,8 @@ const login = async (req, res, next) => {
 
     if (await argon2.verify(user.password, req.body.password)) {
       const token = generateAuthToken(user);
-      
-      res.status(200).send({ token:"Bearer "+token, message: "Logged In Successfully" });
+
+      res.status(200).send({ token: "Bearer " + token, message: "Logged In Successfully" });
     } else {
       return res.status(401).send({ message: "Invalid Password" }); // password did not match
     }
