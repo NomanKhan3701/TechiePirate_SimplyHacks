@@ -19,12 +19,11 @@ const Posts = () => {
 		} catch (e) {
 			console.log(e);
 		}
-
 	}
 
 	return (
 		<div className='container page'>
-			<h1>Posts</h1>
+			<h1>Posts</h1> 
 			<div className='posts-list'>
 				{posts?.map((post, key) => {
 					return <Post post={post} key={key} />

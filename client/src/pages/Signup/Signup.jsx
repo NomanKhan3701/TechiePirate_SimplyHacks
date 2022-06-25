@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { GoogleLogin } from "react-google-login";
-import { refreshTokenSetup } from "../Login/refreshToken";
-import { gapi } from "gapi-script";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import FullScreenLoader from "./FullScreenLoader";
@@ -10,9 +8,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Signup.scss";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/import";
+import { useAuth } from "../../contexts/AuthContext";
 
-// const client_server_url = import.meta.env.VITE_APP_CLIENT_SERVER_URL;
-// const client_server_url = process.env.CLIENT_SERVER_URL;
 const client_server_url = `${process.env.REACT_APP_server_url}/api/auth`;
 
 const SignUp = () => {
@@ -26,6 +23,8 @@ const SignUp = () => {
     password: "",
     cnfrmPassword: "",
   });
+
+  const auth = useAuth()
 
   if (isLoading) {
     return <FullScreenLoader />;
@@ -78,7 +77,7 @@ const SignUp = () => {
         })
         .then((response) => {
           setLoading(false);
-          navigate("/");
+          navigate("/login");
         })
         .catch((error) => {
           setLoading(false);

@@ -65,7 +65,7 @@ const ViewPost = () => {
         <div className="right">
           <h1>{post?.title}</h1>
           <div className='post-content'>
-            <ReactMarkdown children={testMarkdown}></ReactMarkdown>
+            <ReactMarkdown children={post?.content}></ReactMarkdown>
           </div>
         </div>
       </div>
