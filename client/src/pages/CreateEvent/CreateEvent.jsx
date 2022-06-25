@@ -38,12 +38,12 @@ const CreateEvent = () => {
 
         <div className="date-time">
           <div className={`calendar ${calendarToggle ? "open" : ""}`}>
-            <Calendar
+            {/* <Calendar
               value={selectedDay}
               onChange={setSelectedDay}
               shouldHighlightWeekends
               calendarClassName="responsive-calendar"
-            />
+            /> */}
           </div>
 
           <div className="title-util">
@@ -80,7 +80,9 @@ const CreateEvent = () => {
               className="time"
               onClick={() => setTimeToggle((toggle) => !toggle)}
             >
-              <div className="time-info">{time ? moment(time).format("hh:mm a") : "12:00 am"}</div>
+              <div className="time-info">
+                {time ? moment(time).format("hh:mm a") : "12:00 am"}
+              </div>
               <div className="icon">
                 <FcClock />
               </div>
