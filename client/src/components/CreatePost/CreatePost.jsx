@@ -25,10 +25,9 @@ const CreatePost = () => {
 		}
 		try {
 			const varToken = await localStorage.getItem("token");
-			console.log(varToken)
 			const res = await axios.post(`${server_url}/posts`, {
 				title: post.title,
-				tags: post.tags,
+				tags: post.tags.split(','),
 				content: post.content,
 				image: post.image,
 			}, {
@@ -48,7 +47,7 @@ const CreatePost = () => {
 			setPost((prevValue) => {
 				return {
 					...prevValue,
-					content: prevImg,
+					image: prevImg,
 				}
 			})
 		}

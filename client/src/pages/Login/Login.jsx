@@ -53,11 +53,9 @@ const Login = () => {
         }
       );
       localStorage.setItem("token", res.token);
-      console.log(res.token);
     }
   };
   const onSuccess = async (response) => {
-    console.log(response.profileObj);
     localStorage.setItem("username", response.profileObj.email);
     localStorage.setItem("loggedIn", true);
 
@@ -70,8 +68,6 @@ const Login = () => {
       }
     );
     localStorage.setItem("token", res.token);
-    console.log(res.token);
-
     //refreshTokenSetup(res);
   };
   return (
