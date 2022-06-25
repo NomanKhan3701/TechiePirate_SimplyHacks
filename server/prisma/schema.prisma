@@ -44,10 +44,26 @@ model Posts {
   createdAt DateTime       @default(now())
   Comments  postComments[]
 }
-// model eventComments{
+ model eventComments{
+  commentId Int @@id @default(sequence())
+ }
+ model Contributor{
+  contributorId Int @@id@default(sequence())
+  user User
+  contributions String[]
+ }
+ model Events{
+  eventId Int @id @default(sequence())
+  title String 
+  description String
+  time DateTime 
+  city String
+  address String
+  eventTags String[]
+  Organizer User
+  particicpants User[] 
+  contributors Contributor[]
+  comments eventComments[]
+ }
 
-// }
-// model Events{
-
-// }
 
