@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { FileUpload } from '../import'
 import { toast } from 'react-toastify';
+import Button from '../Button/Button';
 import './CreatePost.scss'
 import axios from 'axios';
 
@@ -39,7 +40,6 @@ const CreatePost = () => {
 		} catch (e) {
 			console.log("err --> ", e);
 		}
-
 	}
 
 	useEffect(() => {
@@ -84,7 +84,10 @@ const CreatePost = () => {
 						<FileUpload setPrevImg={setPrevImg} setFiles={setFiles} />
 					</div>
 				</div>
-				<div className="btn" onClick={createPost}>Create Post</div>
+				<div className="btn">
+					<Button text='Create Post' onClick={createPost} />
+
+				</div>
 			</div>
 
 		</div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FileUpload } from "../../components/import";
+import { Button, FileUpload } from "../../components/import";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { FcClock } from "react-icons/fc";
 import moment from "moment";
@@ -94,7 +94,7 @@ const CreateEvent = () => {
           </div>
         </div>
         <div className="btn">
-          <span>Create Event</span>
+          <Button text='Create Event' />
         </div>
       </div>
     </div>

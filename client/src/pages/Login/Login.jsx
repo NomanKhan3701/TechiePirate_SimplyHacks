@@ -8,6 +8,7 @@ import FullScreenLoader from "../Signup/FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 import { Link } from "react-router-dom";
+import { Button } from "../../components/import";
 
 // const admin_server_url = import.meta.env.ADMIN_SERVER_URL;
 // const admin_server_url = process.env.REACT_APP_SERVER_URL;
@@ -80,7 +81,7 @@ const Login = () => {
         <div className="line"></div>
       </div>
       <div className="login">
-        <h1>Login</h1>
+        <h1>Login into your account</h1>
         <input
           type="text"
           name="email"
@@ -99,14 +100,21 @@ const Login = () => {
           <span>Dont have an account ? </span>
           <Link to="/signup">Signup</Link>
         </div>
-        <div className="btn" onClick={submit}>
-          Submit
+        <div className="btn">
+          <Button text='login' onClick={submit} />
+
         </div>
-        <GoogleLogin
-          clientId={process.env.REACT_APP_client_id}
-          onSuccess={onSuccess}
-          onFailure={(err) => console.log("fail", err)}
-        ></GoogleLogin>
+
+        <div className="or">OR</div>
+        <div className="google">
+          <GoogleLogin
+            clientId={process.env.REACT_APP_client_id}
+            onSuccess={onSuccess}
+            onFailure={(err) => console.log("fail", err)}
+            buttonText="Sign in with Google"
+          ></GoogleLogin>
+        </div>
+
       </div>
     </div>
   );

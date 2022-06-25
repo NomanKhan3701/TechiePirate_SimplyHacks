@@ -6,3 +6,4 @@ export { default as About } from './About/About'
 export { default as FileUpload } from './FileUpload/FileUpload'
 export { default as ImgUpdateUpload } from './ImgUpdateUpload/ImgUpdateUpload'
 export { default as CreatePost } from "./CreatePost/CreatePost"
+export { default as Button } from './Button/Button'

@@ -9,6 +9,7 @@ import FullScreenLoader from "./FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
 import "./Signup.scss";
 import { Link } from "react-router-dom";
+import { Button } from "../../components/import";
 
 // const client_server_url = import.meta.env.VITE_APP_CLIENT_SERVER_URL;
 // const client_server_url = process.env.CLIENT_SERVER_URL;
@@ -109,7 +110,8 @@ const SignUp = () => {
         <div className="line"></div>
       </div>
       <div className="signup">
-        <h1>SingUp</h1>
+        <h1>Register your account</h1>
+
         <input
           type="text"
           name="firstname"
@@ -149,14 +151,19 @@ const SignUp = () => {
           <span>Have an account ? </span>
           <Link to="/login">Login</Link>
         </div>
-        <div className="btn" onClick={submit}>
-          Submit
+        <div className="btn">
+          <Button onClick={submit} text='Signup' />
+
         </div>
-        <GoogleLogin
-          clientId={process.env.REACT_APP_client_id}
-          onSuccess={onSuccess}
-          onFailure={(err) => console.log("fail", err)}
-        ></GoogleLogin>
+        <div className="or">OR</div>
+        <div className="google">
+          <GoogleLogin
+            clientId={process.env.REACT_APP_client_id}
+            onSuccess={onSuccess}
+            onFailure={(err) => console.log("fail", err)}
+            buttonText="Signup with Google"
+          ></GoogleLogin>
+        </div>
       </div>
     </div>
   );
