@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { GoogleLogin } from "react-google-login";
-import { refreshTokenSetup } from "./refreshToken";
-import { gapi } from "gapi-script";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { gapi } from "gapi-script";
 import FullScreenLoader from "../Signup/FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/import";
+import { useAuth } from "../../contexts/AuthContext";
 
-// const admin_server_url = import.meta.env.ADMIN_SERVER_URL;
-// const admin_server_url = process.env.REACT_APP_SERVER_URL;
 const admin_server_url = process.env.REACT_APP_server_url;
 
 const Login = () => {
@@ -30,6 +28,12 @@ const Login = () => {
     password: "",
   });
 
+  const auth = useAuth()
+
+  if (auth.state.authenticated) {
+    return navigate('/');
+  }
+
   if (isLoading) {
     return <FullScreenLoader />;
   }
@@ -39,7 +43,7 @@ const Login = () => {
     setLoginData((prevData) => {
       return { ...prevData, [name]: value };
     });
-  };
+  }
 
   const submit = async () => {
     if (!(loginData.email && loginData.password)) {
@@ -55,9 +59,9 @@ const Login = () => {
             google: false,
           }
         );
-        localStorage.setItem("token", res.token);
-        console.log(res.token);
 
+        localStorage.setItem("auth_token", res.token);
+        auth.verifyLogin()
         navigate("/");
       } catch (error) {
         const statusCode = error.response.status;
@@ -69,10 +73,9 @@ const Login = () => {
       }
       setLoading(false);
     }
-  };
+  }
+
   const onSuccess = async (response) => {
-    localStorage.setItem("username", response.profileObj.email);
-    localStorage.setItem("loggedIn", true);
     setLoading(true);
     try {
       const { data: res } = await axios.post(
@@ -82,10 +85,10 @@ const Login = () => {
           password: "",
           google: true,
         }
-      );
+      )
 
-      localStorage.setItem("token", res.token);
-      console.log(res.token);
+      localStorage.setItem("auth_token", res.token);
+      auth.verifyLogin()
       navigate("/");
     } catch (error) {
       const statusCode = error.response.status;
@@ -97,7 +100,8 @@ const Login = () => {
     }
     setLoading(false);
     //refreshTokenSetup(res);
-  };
+  }
+
   return (
     <div className="login-container">
       <div className="bg-sections">
@@ -128,7 +132,7 @@ const Login = () => {
           <Link to="/signup">Signup</Link>
         </div>
         <div className="btn">
-          <Button text='login' onClick={submit} />
+          <Button text='Login' onClick={submit} />
 
         </div>
 
@@ -144,6 +148,7 @@ const Login = () => {
 
       </div>
     </div>
-  );
-};
+  )
+}
+
 export default Login;

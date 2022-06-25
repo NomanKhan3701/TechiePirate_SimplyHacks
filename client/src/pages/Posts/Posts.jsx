@@ -14,17 +14,16 @@ const Posts = () => {
 
 	const getPosts = async () => {
 		try {
-			const res = await axios.get(`${server_url}/api/posts/?tags=music,legend`);
+			const res = await axios.get(`${server_url}/api/posts`);
 			setPosts(res.data)
 		} catch (e) {
 			console.log(e);
 		}
-
 	}
 
 	return (
 		<div className='container page'>
-			<h1>Posts</h1>
+			<h1>Posts</h1> 
 			<div className='posts-list'>
 				{posts?.map((post, key) => {
 					return <Post post={post} key={key} />

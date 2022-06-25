@@ -53,6 +53,7 @@ const FileUpload = (props) => {
     var reader = new FileReader();
     reader.onload = function (e) {
       props.setPrevImg(e.target.result);
+      setprevImg(e.target.result);
     };
     reader.readAsDataURL(uploadedFiles[0]);
 

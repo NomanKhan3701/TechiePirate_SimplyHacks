@@ -1,7 +1,7 @@
 import React from "react";
 import "./FullScreenLoader.scss";
 
-const fullScreenLoader = () => {
+const FullScreenLoader = () => {
 	return (
 		<div className="full-screen-loader">
 			<div className="gooey">
@@ -16,4 +16,4 @@ const fullScreenLoader = () => {
 	);
 };
 
-export default fullScreenLoader;
+export default FullScreenLoader;
