@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FileUpload } from "../../components/import";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { FcClock } from "react-icons/fc";
-import { IoIosNotifications } from "react-icons/io";
 import moment from "moment";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import TextField from "@mui/material/TextField";
 import "./CreateEvent.scss";
 
 const CreateEvent = () => {
   const [files, setFiles] = useState([]);
   const [prevImg, setPrevImg] = useState();
-  const [selectedDay, setSelectedDay] = useState(null);
+  const [selectedDay, setSelectedDay] = useState(new Date());
   const [calendarToggle, setCalendarToggle] = useState(false);
   const [timeToggle, setTimeToggle] = useState(false);
   const [time, setTime] = useState(new Date());
@@ -38,12 +38,19 @@ const CreateEvent = () => {
 
         <div className="date-time">
           <div className={`calendar ${calendarToggle ? "open" : ""}`}>
-            <Calendar
-              value={selectedDay}
-              onChange={setSelectedDay}
-              shouldHighlightWeekends
-              calendarClassName="responsive-calendar"
-            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <StaticDatePicker
+                displayStaticWrapperAs="desktop"
+                label="Week picker"
+                value={selectedDay}
+                onChange={(date) => {
+                  setSelectedDay(date);
+                }}
+                // renderDay={renderWeekPickerDay}
+                renderInput={(params) => <TextField {...params} />}
+                inputFormat="DD/MM/YY"
+              />
+            </LocalizationProvider>
           </div>
 
           <div className="title-util">
@@ -53,9 +60,8 @@ const CreateEvent = () => {
               onClick={() => setCalendarToggle((toggle) => !toggle)}
             >
               <div className="date-info">
-                {selectedDay
-                  ? `${selectedDay.day}/${selectedDay.month}/${selectedDay.year}`
-                  : "25/06/2022"}
+                {moment(selectedDay).format("DD/MM/YY")}
+
               </div>
               <div className="icon">
                 <BsFillCalendarDateFill />
@@ -85,15 +91,6 @@ const CreateEvent = () => {
                 <FcClock />
               </div>
             </div>
-          </div>
-        </div>
-        <div className="title-util">
-          <h3 className="reminder-title">Reminder</h3>
-          <div className="reminder">
-            <div className="icon">
-              <IoIosNotifications />
-            </div>
-            <div className="content">Add the time of event</div>
           </div>
         </div>
         <div className="btn">
