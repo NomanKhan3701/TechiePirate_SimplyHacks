@@ -8,8 +8,10 @@ const prisma = new PrismaClient();
 const argon2 = require("argon2");
 const signup = async (req, res, next) => {
   try {
-    if (req.body.google == false) {
-      const { error } = validateSignup(req.body);
+    if(req.body.google==false)
+    {
+      delete req.body.google;
+      const{error}  = validateSignup(req.body);
       if (error)
         return res.status(400).send({ message: error.details[0].message });
     }
