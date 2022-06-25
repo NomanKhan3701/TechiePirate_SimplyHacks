@@ -44,4 +44,13 @@ model Posts {
   createdAt DateTime       @default(now())
   Comments  postComments[]
 }
+<<<<<<< HEAD
+=======
+// model eventComments{
+
+// }
+// model Events{
+
+// }
+>>>>>>> ad78edfde544943f06ff5afdcbf45c4e5f74fdd2
 
