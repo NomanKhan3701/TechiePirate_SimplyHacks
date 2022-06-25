@@ -8,6 +8,7 @@ export { default as FileUpload } from './FileUpload/FileUpload'
 export { default as ImgUpdateUpload } from './ImgUpdateUpload/ImgUpdateUpload'
 export { default as CreatePost } from "./CreatePost/CreatePost"
 export { default as Button } from './Button/Button'
+export { default as BigButton } from './BigButton/BigButton'
 export { default as Map } from './Map/Map'
 export { default as MarkdownEditor } from './MarkdownEditor/MarkdownEditor'
 export { default as LimitChar } from './LimitChar/LimitChar'
