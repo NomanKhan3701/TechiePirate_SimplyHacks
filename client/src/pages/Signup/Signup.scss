@@ -25,6 +25,8 @@
         padding: 30px;
         border-radius: 20px;
         background: white;
+        display: flex;
+        flex-direction: column;
 
         @media screen and (max-width: 650px) {
             width: 90vw;
@@ -46,6 +48,20 @@
             box-shadow: 5px 5px 10px rgba(rgb(7, 94, 7), 0.1),
                 0 0 3px rgba(rgb(7, 94, 7), 0.1);
             font-size: 14px;
+        }
+
+        .redirect {
+            margin: 20px auto;
+            margin-top: 0;
+            font-size: 18px;
+
+            span {
+                color: var(--color-accent);
+            }
+
+            a {
+                font-weight: 800;
+            }
         }
 
         .btn {

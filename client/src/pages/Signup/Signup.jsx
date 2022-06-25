@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import FullScreenLoader from "./FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
 import "./Signup.scss";
+import { Link } from "react-router-dom";
 
 // const client_server_url = import.meta.env.VITE_APP_CLIENT_SERVER_URL;
 // const client_server_url = process.env.CLIENT_SERVER_URL;
@@ -125,7 +126,10 @@ const SignUp = () => {
 					placeholder="Confirm Password"
 					onChange={onChange}
 				></input>
-
+				<div className="redirect">
+					<span>Have an account ? </span>
+					<Link to='/login'>Login</Link>
+				</div>
 				<div className="btn" onClick={submit}>
 					Submit
 				</div>

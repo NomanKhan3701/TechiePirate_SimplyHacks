@@ -4,6 +4,7 @@ import axios from "axios";
 import FullScreenLoader from "../Signup/FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
+import { Link } from "react-router-dom";
 
 // const admin_server_url = import.meta.env.ADMIN_SERVER_URL;
 // const admin_server_url = process.env.REACT_APP_SERVER_URL;
@@ -45,12 +46,12 @@ const Login = () => {
     <div className="login-container">
       <ToastContainer></ToastContainer>
       <div className="bg-sections">
-				<div className="line"></div>
-				<div className="line"></div>
-				<div className="line"></div>
-				<div className="line"></div>
-				<div className="line"></div>
-			</div>
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+      </div>
       <div className="login">
         <h1>Login</h1>
         <input
@@ -67,6 +68,10 @@ const Login = () => {
           placeholder="Password"
           onChange={onChange}
         ></input>
+        <div className="redirect">
+          <span>Dont have an account ? </span>
+          <Link to='/signup'>Signup</Link>
+        </div>
         <div className="btn" onClick={submit}>
           Submit
         </div>
