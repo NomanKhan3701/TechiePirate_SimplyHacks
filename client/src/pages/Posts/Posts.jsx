@@ -6,11 +6,12 @@ const Posts = () => {
   return (
 	<div className='container page'>
 		<h1>Posts</h1>
-		<div> ALl the post below</div>
-		<Post/>
-		<Post/>
-		<Post/>
-		<Post/>
+		<div className='posts-list'>
+			<Post></Post>
+			<Post></Post>
+			<Post></Post>
+			<Post></Post>
+		</div>
 	</div>
   )
 }
