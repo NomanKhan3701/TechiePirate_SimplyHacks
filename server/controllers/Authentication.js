@@ -40,10 +40,12 @@ const signup = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    if (!req.body.google) {
-      const { error } = validateLogin(req.body);
-      if (error)
-        return res.status(400).send({ message: error.details[0].message });
+    if(!req.body.google)
+    {
+    delete req.body.google;
+     const { error } = validateLogin(req.body);
+     if (error)
+       return res.status(400).send({ message: error.details[0].message });
     }
     const user = await prisma.user.findUnique({
       where: {
