@@ -3,6 +3,21 @@ const prisma = new PrismaClient();
 const { validatePost, validateComment } = require('../models/Posts')
 const { getImages, addImage, deleteImage } = require("../controllers/image");
 const axios = require('axios');
+
+const getPost = async (req, res, next) => {
+    try {
+        const id = req.query.id;
+        const Post = await prisma.Posts.findUnique({
+            where: {
+                postId: Number(id)
+            }
+        })
+        res.send(Post)
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 const getPosts = async (req, res, next) => {
     try {
         const fields = req.query.tags
@@ -24,25 +39,25 @@ const getPosts = async (req, res, next) => {
 
 const addPost = async (req, res, next) => {
     try {
-    let data=req.body;
-    const img=req.body.image;
-    const url=await axios.post("http://localhost:8000/api/image/addImage",{
-        img:img,
-    })
-   // console.log(url.data)
-    data.userEmail=req.user.email;
-    data.image=url.data.url;
-    const {error}=validatePost(data);
-    if(error)
-     return res.status(400).send({ message: error.details[0].message });
-   
-    const post=await prisma.Posts.create({
-      data: data,
-    });
-    res.send(post);
-   } catch (error) {
-    console.log(error);
-    res.status(500).send({ message: "Internal Server Error" });
+        let data = req.body;
+        const img = req.body.image;
+        const url = await axios.post("http://localhost:8000/api/image/addImage", {
+            img: img,
+        })
+        // console.log(url.data)
+        data.userEmail = req.user.email;
+        data.image = url.data.url;
+        const { error } = validatePost(data);
+        if (error)
+            return res.status(400).send({ message: error.details[0].message });
+
+        const post = await prisma.Posts.create({
+            data: data,
+        });
+        res.send(post);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ message: "Internal Server Error" });
     }
 }
 const deletePost = async (req, res, next) => {
@@ -121,6 +136,7 @@ const deleteComment = async (req, res, next) => {
     }
 }
 module.exports = {
+    getPost,
     getPosts,
     addPost,
     deletePost,

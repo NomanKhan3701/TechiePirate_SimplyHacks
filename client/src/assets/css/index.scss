@@ -15,6 +15,7 @@ body {
 
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -40,7 +41,7 @@ a {
 .container {
   padding: 0px var(--pd-container);
 
-  @media screen and (max-width: '900px'){
+  @media screen and (max-width: '900px') {
     padding: 0px 30px;
   }
 
