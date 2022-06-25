@@ -12,16 +12,20 @@
         }
 
         .content {
-            font-size: 19px;
+            font-size: 16px;
             letter-spacing: 1.2px;
         }
 
         .content-right {
             margin-left: 40px;
+            padding: 40px;
+            align-items: center;
         }
 
         .content-left {
             margin-right: 30px;
+            padding: 40px;
+            align-items: center;
         }
     }
 }

@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { GoogleLogin } from "react-google-login";
+import { refreshTokenSetup } from "../Login/refreshToken";
+import { gapi } from "gapi-script";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import FullScreenLoader from "./FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
 import "./Signup.scss";
+import { Link } from "react-router-dom";
 
 // const client_server_url = import.meta.env.VITE_APP_CLIENT_SERVER_URL;
 // const client_server_url = process.env.CLIENT_SERVER_URL;
@@ -78,11 +82,25 @@ const SignUp = () => {
       navigate("/login");
     }
   };
+  const onSuccess = (res) => {
+    console.log(res.profileObj.email);
+    localStorage.setItem("username", res.profileObj.email);
+    localStorage.setItem("loggedIn", true);
+
+    //refreshTokenSetup(res);
+  };
   return (
     <div className="signup-container">
       <ToastContainer></ToastContainer>
+      <div className="bg-sections">
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+      </div>
       <div className="signup">
-        <h1>SignUp</h1>
+        <h1>SingUp</h1>
         <input
           type="text"
           name="firstname"
@@ -118,10 +136,18 @@ const SignUp = () => {
           placeholder="Confirm Password"
           onChange={onChange}
         ></input>
-
+        <div className="redirect">
+          <span>Have an account ? </span>
+          <Link to="/login">Login</Link>
+        </div>
         <div className="btn" onClick={submit}>
           Submit
         </div>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_client_id}
+          onSuccess={onSuccess}
+          onFailure={(err) => console.log("fail", err)}
+        ></GoogleLogin>
       </div>
     </div>
   );

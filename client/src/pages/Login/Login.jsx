@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
 import { GoogleLogin } from "react-google-login";
 import { refreshTokenSetup } from "./refreshToken";
 import { gapi } from "gapi-script";
+import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import FullScreenLoader from "../Signup/FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
+import { Link } from "react-router-dom";
 
 // const admin_server_url = import.meta.env.ADMIN_SERVER_URL;
 // const admin_server_url = process.env.REACT_APP_SERVER_URL;
@@ -42,6 +43,7 @@ const Login = () => {
       toast.error("Fields cannot be empty.", { position: "top-center" });
     } else {
       setLoading(true);
+      console.log(admin_server_url);
       const { data: res } = await axios.post(
         `${admin_server_url}/api/auth/login`,
         {
@@ -54,21 +56,22 @@ const Login = () => {
     }
   };
   const onSuccess = (res) => {
-    console.log("hello");
+    console.log(res.profileObj.email);
     localStorage.setItem("username", res.profileObj.email);
     localStorage.setItem("loggedIn", true);
 
     //refreshTokenSetup(res);
   };
-  const onFailure = (res) => {
-    console.log("fail");
-    toast.error(`error in google Login`, {
-      position: "top-center",
-    });
-  };
   return (
     <div className="login-container">
       <ToastContainer></ToastContainer>
+      <div className="bg-sections">
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+        <div className="line"></div>
+      </div>
       <div className="login">
         <h1>Login</h1>
         <input
@@ -85,6 +88,10 @@ const Login = () => {
           placeholder="Password"
           onChange={onChange}
         ></input>
+        <div className="redirect">
+          <span>Dont have an account ? </span>
+          <Link to="/signup">Signup</Link>
+        </div>
         <div className="btn" onClick={submit}>
           Submit
         </div>
