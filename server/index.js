@@ -21,7 +21,6 @@ app.use(cors(corsOptions));
 app.use("/api/image", useImageRoute);
 app.use("/api/auth", auth);
 app.use("/api/posts",posts);
-
 app.listen(PORT, async () => {
   try {
     console.log(`Server running on ${PORT}`)

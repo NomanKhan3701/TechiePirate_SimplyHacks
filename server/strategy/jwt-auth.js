@@ -15,7 +15,7 @@ passport.use(
             email: jwt_payload.email,
         }
     })
-        if (user) {
+      if (user) {
         delete user.password;
         return done(null, user);
       } else {

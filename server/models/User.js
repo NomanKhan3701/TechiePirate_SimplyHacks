@@ -31,4 +31,6 @@ const validateLogin = (data) => {
   return schema.validate(data);
 };
 
+
+
 module.exports = { generateAuthToken, validateSignup, validateLogin };
