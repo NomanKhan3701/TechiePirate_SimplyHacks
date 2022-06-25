@@ -5,7 +5,7 @@ import gardeningJson from "../../assets/lottie/gardening.json";
 import contactJson from "../../assets/lottie/contact-us-lottie.json";
 import deliveryJson from "../../assets/lottie/delivery-bike.json";
 import envelopeJson from "../../assets/lottie/nature-envelope.json";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
 const About = () => {
 	return (
