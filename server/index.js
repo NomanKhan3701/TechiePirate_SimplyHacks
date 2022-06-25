@@ -4,6 +4,8 @@ const app = express();
 const cors = require("cors");
 const useImageRoute = require("./routes/image");
 const  auth=require("./routes/Authentication")
+const posts=require('./routes/Posts')
+
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -18,8 +20,7 @@ app.use(cors(corsOptions));
 // {* All the routes here *}
 app.use("/api/image", useImageRoute);
 app.use("/api/auth", auth);
-
-
+app.use("/api/posts",posts);
 app.listen(PORT, async () => {
   try {
     console.log(`Server running on ${PORT}`)

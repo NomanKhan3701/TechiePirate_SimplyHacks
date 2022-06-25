@@ -11,9 +11,36 @@ datasource db {
 }
 
 model User {
-  firstName String
-  lastName  String 
-  email String @id @unique 
-  password String 
+  firstName    String
+  lastName     String
+  email        String         @unique
+  password     String
+  Posts        Posts[]
+  postComments postComments[]
+  WorkPts      Int            @default(0)
+  ResourcePts  Int            @default(0)
+
+  @@id([email])
+}
+
+model postComments {
+  commentId   Int    @id @default(sequence())
+  comment     String
+  Author      User   @relation(fields: [userEmail], references: [email])
+  userEmail   String
+  Posts       Posts? @relation(fields: [postsPostId], references: [postId])
+  postsPostId Int?
+}
+
+model Posts {
+  postId    Int            @id @default(sequence())
+  title     String
+  tags      String[]
+  content   String
+  Likes     Int            @default(0)
+  author    User           @relation(fields: [userEmail], references: [email])
+  userEmail String
+  createdAt DateTime       @default(now())
+  Comments  postComments[]
 }
 
