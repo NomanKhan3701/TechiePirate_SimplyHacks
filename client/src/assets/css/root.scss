@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Luxurious+Script&family=Roboto:ital,wght@0,100;0,300;0,500;0,700;0,900;1,100;1,300;1,500;1,700&family=Urbanist:ital,wght@0,600;1,100;1,200;1,300;1,400;1,900&display=swap');
+
+
+:root {
+    /* Navbar */
+    --nav-height: 80px;
+    --bg-nav: transparent;
+
+    /* Color Constants */
+    --color-green: #598415;
+    --color-blue: #1b63d7;
+    --color-accent: var(--color-green);
+    --color-border: rgba(21, 27, 33, 0.1);
+
+    /* text colors */
+    --color-text-title: rgb(31, 31, 31);
+
+    /* z-index */
+    --z-sidebar: 100;
+    --z-nav: 100;
+
+
+    /* padding */
+    --pd-container: 120px;
+
+    /* fonts */
+    --font-luxury: 'Luxurious Script', cursive;
+
+    /* background colors */
+    --bg-dark-blue: #001a2c;
+    --bg-purple-blue: #002171;
+    --bg-dark-green: #024137;
+    --bg-mid-green: green;
+    --bg-sidebar: #2a6bb1;
+    --bg-light-cream: rgb(247, 247, 244);
+    --bg-light: #ffff;
+
+    /* ease functions */
+    --e-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --e-ease: ease;
+}

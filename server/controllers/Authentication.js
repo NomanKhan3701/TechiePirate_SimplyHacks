@@ -33,7 +33,7 @@ const signup = async (req, res, next) => {
       data: data,
     });
     res.status(201).send({ message: "User Created successfully" });
-  } 
+  }
   catch (e) {
     console.log(e)
     res.status(500).send({ message: "Internal Server Error" });
@@ -59,8 +59,8 @@ const login = async (req, res, next) => {
 
     if (await argon2.verify(user.password, req.body.password)) {
       const token = generateAuthToken(user);
-      
-      res.status(200).send({ token:"Bearer "+token, message: "Logged In Successfully" });
+
+      res.status(200).send({ token: "Bearer " + token, message: "Logged In Successfully" });
     } else {
       return res.status(401).send({ message: "Invalid Password" }); // password did not match
     }
