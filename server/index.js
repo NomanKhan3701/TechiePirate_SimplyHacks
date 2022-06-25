@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const useImageRoute = require("./routes/image");
 const  auth=require("./routes/Authentication")
-var passport = require('passport');
+const posts=require('./routes/Posts')
 
 
 dotenv.config();
@@ -18,10 +18,9 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors(corsOptions));
 
 // {* All the routes here *}
-app.use(passport.initialize());
 app.use("/api/image", useImageRoute);
 app.use("/api/auth", auth);
-
+app.use("/api/posts",posts);
 
 app.listen(PORT, async () => {
   try {
