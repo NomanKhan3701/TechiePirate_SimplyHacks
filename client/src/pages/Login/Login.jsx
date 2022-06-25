@@ -49,7 +49,7 @@ const Login = () => {
     }
   };
   const onSuccess = (res) => {
-    console.log("hello");
+    console.log(res.profileObj.email);
     localStorage.setItem("username", res.profileObj.email);
     localStorage.setItem("loggedIn", true);
 
