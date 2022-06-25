@@ -1,12 +1,13 @@
 import { Routes, Route } from 'react-router'
-import { CreateEvent, Events, Home, Login, Posts, Signup } from './pages/import';
-import { Navbar } from './components/import';
-import ViewEvent from './pages/ViewEvent/ViewEvent';
-import ViewPost from './pages/ViewPost/ViewPost';
+import { CreateEvent, Events, Home, Login, Posts, Signup, ViewEvent, ViewPost } from './pages/import';
+import { CreatePost, Navbar } from './components/import';
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div className="app">
+			<ToastContainer></ToastContainer>
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
@@ -17,6 +18,7 @@ function App() {
         <Route path='/createevent' element={<CreateEvent />} />
         <Route path='/event/:id' element={<ViewEvent />} />
         <Route path='/post/:id' element={<ViewPost />} />
+        <Route path='/createpost' element={<CreatePost />} />
       </Routes>
     </div>
   );

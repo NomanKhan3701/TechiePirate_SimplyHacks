@@ -14,3 +14,10 @@ export const eventTypes = {
     color: 'var(--color-blue)'
   },
 }
+
+export const testMarkdown = 
+`
+This post is written in markdown. You can make things **bold**, *italics* and do all sorts of cool stuff.
+Including:
+## Headings
+`

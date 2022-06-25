@@ -20,7 +20,9 @@ const Navbar = () => {
 
 	return (
 		<div className={'navbar container' + (scrolled ? ' scrolled' : '')}>
-			<div className="logo">Our Logo</div>
+			<div className="logo">
+				We<span>Change</span>
+			</div>
 			<div className="links">
 				<Link to='/'>Home</Link>
 				<Link to='/posts'>Posts</Link>

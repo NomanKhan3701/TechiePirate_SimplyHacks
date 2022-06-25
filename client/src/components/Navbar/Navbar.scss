@@ -20,10 +20,13 @@
     }
 
     .logo {
-        font-family: var(--font-luxury);
-        font-size: 30px;
-        color: var(--color-accent);
-        font-weight: 700;
+        font-size: 24px;
+        font-weight: 800;
+        color: #000;
+
+        span {
+            color: var(--color-accent);
+        }
     }
 
     .links {
