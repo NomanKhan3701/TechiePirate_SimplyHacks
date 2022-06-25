@@ -33,7 +33,20 @@ const getPost = async (req, res, next) => {
 const getPosts = async (req, res, next) => {
   try {
     if (!req.query.tags) {
-      const Posts = await prisma.Posts.findMany({});
+      const Posts = await prisma.Posts.findMany({
+        include: {
+          author: {
+            select: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              workPts: true,
+              resourcePts: true,
+              image: true,
+            },
+          },
+        },
+      });
       res.status(200).send(Posts);
     } else {
       const fields = req.query.tags;
@@ -42,6 +55,18 @@ const getPosts = async (req, res, next) => {
         where: {
           tags: {
             hasSome: field,
+          },
+        },
+        include: {
+          author: {
+            select: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              workPts: true,
+              resourcePts: true,
+              image: true,
+            },
           },
         },
       });
