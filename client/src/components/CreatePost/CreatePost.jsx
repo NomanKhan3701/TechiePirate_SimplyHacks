@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { FileUpload } from '../import'
 import { toast } from 'react-toastify';
+import Button from '../Button/Button';
+import MarkdownEditor from '../MarkdownEditor/MarkdownEditor'
 import './CreatePost.scss'
 import axios from 'axios';
 
@@ -9,15 +11,16 @@ const server_url = `${process.env.REACT_APP_server_url}/api`;
 const CreatePost = () => {
 	const [files, setFiles] = useState([]);
 	const [prevImg, setPrevImg] = useState();
+	const [markdownVal, setMarkdownVal] = useState("");
 	const [post, setPost] = useState({
 		title: "",
 		tags: "",
-		content: "hello workld",
+		content: "",
 		image: ""
 	})
 
 	const createPost = async () => {
-		if (post.title === "" || post.tags === "" || post.content === "") {
+		if (post.title === "" || post.tags === "") {
 			toast.error("Please fill all the fields", {
 				position: "top-center",
 			});
@@ -25,11 +28,10 @@ const CreatePost = () => {
 		}
 		try {
 			const varToken = await localStorage.getItem("token");
-			console.log(varToken)
 			const res = await axios.post(`${server_url}/posts`, {
 				title: post.title,
-				tags: post.tags,
-				content: post.content,
+				tags: post.tags.split(','),
+				content: markdownVal,
 				image: post.image,
 			}, {
 				headers: {
@@ -40,7 +42,6 @@ const CreatePost = () => {
 		} catch (e) {
 			console.log("err --> ", e);
 		}
-
 	}
 
 	useEffect(() => {
@@ -48,7 +49,7 @@ const CreatePost = () => {
 			setPost((prevValue) => {
 				return {
 					...prevValue,
-					content: prevImg,
+					image: prevImg,
 				}
 			})
 		}
@@ -74,9 +75,15 @@ const CreatePost = () => {
 					</div>
 				</div>
 				<div className="title-util">
+					<h3>Content</h3>
+					<div className="tags">
+						<MarkdownEditor setMarkdownVal={setMarkdownVal} />
+					</div>
+				</div>
+				<div className="title-util">
 					<h3>Tags</h3>
 					<div className="tags">
-						<textarea name='tags' value={post.tags} onChange={handleOnChange} placeholder="Enter ',' seperated (e.g. india,tree)..." />
+						<textarea name='tags' value={post.tags} onChange={handleOnChange} placeholder="Enter ',' seperated tag (e.g. india, tree)" />
 					</div>
 				</div>
 				<div className="title-util">
@@ -85,7 +92,10 @@ const CreatePost = () => {
 						<FileUpload setPrevImg={setPrevImg} setFiles={setFiles} />
 					</div>
 				</div>
-				<div className="btn" onClick={createPost}>Create Post</div>
+				<div className="btn">
+					<Button text='Create Post' onClick={createPost} />
+
+				</div>
 			</div>
 
 		</div>

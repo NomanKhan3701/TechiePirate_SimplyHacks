@@ -1,12 +1,13 @@
 import React from 'react'
 import moment from 'moment'
-import { FaTree } from 'react-icons/fa'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
-import { TbBeach } from 'react-icons/tb'
 import './EventCard.scss'
+import { Link } from 'react-router-dom'
+import { eventTypes } from '../../constants'
 
 const EventCard = () => {
   const event = {
+    id: 'test',
     title: 'My Event Title',
     date: moment(),
     details: 'Hello World',
@@ -14,24 +15,11 @@ const EventCard = () => {
     location: 'Bandra, Mumbai' 
   }
 
-  const eventTypes = {
-    'tree_planting': {
-      title: 'Tree Planting',
-      icon: FaTree,
-      color: 'var(--color-green)'
-    },
-    'beach_cleaning': {
-      title: 'Beach Cleaning',
-      icon: TbBeach,
-      color: 'var(--color-blue)'
-    },
-  }
-
   const eventType = eventTypes[event.type]
   const IconComponent = eventType.icon
 
 	return (
-		<div className='event-card' style={{'--color-accent': eventType.color}}>
+		<Link to={`/event/${event.id}`} className='event-card' style={{'--color-accent': eventType.color}}>
       <div className='event-card-header'>
         <img src='https://via.placeholder.com/512' alt=''/>
         <div className='title'>
@@ -57,7 +45,7 @@ const EventCard = () => {
           {event.location}
         </span>
       </div>
-    </div>
+    </Link>
 	)
 }
 

@@ -2,9 +2,11 @@
   display: flex;
   flex-direction: column;
   background: #FFF;
-  border: solid 1px rgba(21, 27, 33, 0.1);
+  border: solid 1px var(--color-border);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
+  color: var(--color-text-body);
   cursor: pointer;
 
   .details {

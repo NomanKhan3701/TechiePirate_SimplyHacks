@@ -3,17 +3,20 @@ import { GoogleLogin } from "react-google-login";
 import { refreshTokenSetup } from "./refreshToken";
 import { gapi } from "gapi-script";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FullScreenLoader from "../Signup/FullScreenLoader";
 import "react-toastify/dist/ReactToastify.css";
 import "./Login.scss";
 import { Link } from "react-router-dom";
+import { Button } from "../../components/import";
 
 // const admin_server_url = import.meta.env.ADMIN_SERVER_URL;
 // const admin_server_url = process.env.REACT_APP_SERVER_URL;
 const admin_server_url = process.env.REACT_APP_server_url;
 
 const Login = () => {
+  const navigate = useNavigate();
   window.gapi.load("client:auth2", () => {
     window.gapi.client.init({
       clientId: process.env.REACT_APP_client_id,
@@ -43,35 +46,56 @@ const Login = () => {
       toast.error("Fields cannot be empty.", { position: "top-center" });
     } else {
       setLoading(true);
-      console.log(admin_server_url);
-      const { data: res } = await axios.post(
-        `${admin_server_url}/api/auth/login`,
-        {
-          email: loginData.email,
-          password: loginData.password,
-          google: false,
+      try {
+        const { data: res } = await axios.post(
+          `${admin_server_url}/api/auth/login`,
+          {
+            email: loginData.email,
+            password: loginData.password,
+            google: false,
+          }
+        );
+        localStorage.setItem("token", res.token);
+        console.log(res.token);
+
+        navigate("/");
+      } catch (error) {
+        const statusCode = error.response.status;
+        if (statusCode == 401) {
+          toast.error("Invalid email/password.", {
+            position: "top-center",
+          });
         }
-      );
-      localStorage.setItem("token", res.token);
-      console.log(res.token);
+      }
+      setLoading(false);
     }
   };
   const onSuccess = async (response) => {
-    console.log(response.profileObj);
     localStorage.setItem("username", response.profileObj.email);
     localStorage.setItem("loggedIn", true);
+    setLoading(true);
+    try {
+      const { data: res } = await axios.post(
+        `${admin_server_url}/api/auth/login`,
+        {
+          email: response.profileObj.email,
+          password: "",
+          google: true,
+        }
+      );
 
-    const { data: res } = await axios.post(
-      `${admin_server_url}/api/auth/login`,
-      {
-        email: response.profileObj.email,
-        password: "",
-        google: true,
+      localStorage.setItem("token", res.token);
+      console.log(res.token);
+      navigate("/");
+    } catch (error) {
+      const statusCode = error.response.status;
+      if (statusCode == 401) {
+        toast.error("Invalid email/password.", {
+          position: "top-center",
+        });
       }
-    );
-    localStorage.setItem("token", res.token);
-    console.log(res.token);
-
+    }
+    setLoading(false);
     //refreshTokenSetup(res);
   };
   return (
@@ -84,7 +108,7 @@ const Login = () => {
         <div className="line"></div>
       </div>
       <div className="login">
-        <h1>Login</h1>
+        <h1>Login into your account</h1>
         <input
           type="text"
           name="email"
@@ -103,14 +127,21 @@ const Login = () => {
           <span>Dont have an account ? </span>
           <Link to="/signup">Signup</Link>
         </div>
-        <div className="btn" onClick={submit}>
-          Submit
+        <div className="btn">
+          <Button text='login' onClick={submit} />
+
         </div>
-        <GoogleLogin
-          clientId={process.env.REACT_APP_client_id}
-          onSuccess={onSuccess}
-          onFailure={(err) => console.log("fail", err)}
-        ></GoogleLogin>
+
+        <div className="or">OR</div>
+        <div className="google">
+          <GoogleLogin
+            clientId={process.env.REACT_APP_client_id}
+            onSuccess={onSuccess}
+            onFailure={(err) => console.log("fail", err)}
+            buttonText="Sign in with Google"
+          ></GoogleLogin>
+        </div>
+
       </div>
     </div>
   );
