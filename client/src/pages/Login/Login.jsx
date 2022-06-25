@@ -44,6 +44,13 @@ const Login = () => {
   return (
     <div className="login-container">
       <ToastContainer></ToastContainer>
+      <div className="bg-sections">
+				<div className="line"></div>
+				<div className="line"></div>
+				<div className="line"></div>
+				<div className="line"></div>
+				<div className="line"></div>
+			</div>
       <div className="login">
         <h1>Login</h1>
         <input
