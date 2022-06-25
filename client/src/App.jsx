@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router'
 import { CreatePost, Map, Navbar } from './components/import';
-import { CreateEvent, Events, Home, Login, Posts, Signup, ViewEvent, ViewPost } from './pages/import';
+import { CreateEvent, Events, Home, Login, Posts, Profile, Signup, ViewEvent, ViewPost } from './pages/import';
 
 import "react-toastify/dist/ReactToastify.css";
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -22,6 +22,7 @@ function App() {
         <Route path='/post/:id' element={<ViewPost />} />
         <Route path='/createpost' element={<CreatePost />} />
         <Route path='/map' element={<Map />} />
+        <Route path='/profile' element={<Profile />} />
       </Routes>
     </div>
   );
