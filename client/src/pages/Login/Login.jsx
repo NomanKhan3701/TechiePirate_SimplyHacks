@@ -48,6 +48,13 @@ const Login = () => {
       console.log(res);
     }
   };
+  const onSuccess = (res) => {
+    console.log("hello");
+    localStorage.setItem("username", res.profileObj.email);
+    localStorage.setItem("loggedIn", true);
+
+    //refreshTokenSetup(res);
+  };
   return (
     <div className="login-container">
       <ToastContainer></ToastContainer>
