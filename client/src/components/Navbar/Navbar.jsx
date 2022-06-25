@@ -6,7 +6,7 @@ import './Navbar.scss'
 const Navbar = () => {
 	const [scrolled, setScrolled] = useState(false);
 	const auth = useAuth()
-	
+
 	useEffect(() => {
 		const listener = () => {
 			if (window.scrollY > 60 && !scrolled) {
@@ -26,17 +26,19 @@ const Navbar = () => {
 				We<span>Change</span>
 			</div>
 			<div className="links">
-				<Link to='/'>Home</Link>
-				<Link to='/posts'>Posts</Link>
-				<Link to='/events'>Events</Link>
+				<Link className='link' to='/'>Home</Link>
+				<Link className='link' to='/posts'>Posts</Link>
+				<Link className='link' to='/events'>Events</Link>
 				{
-					!auth.state.authenticated ? 
+					!auth.state.authenticated ?
 						<Link className='big' to='/login'>Login / Register</Link>
-					:
-					<div className='nav-user'>
-						<img src={auth.state?.user?.image || 'https://via.placeholder.com/128'} />
-						{`${auth.state.user.firstName} ${auth.state.user.lastName}`}
-					</div>
+						:
+						<Link className='no-link' to='/profile'>
+							<div className='nav-user'>
+								<img src={auth.state?.user?.image || 'https://via.placeholder.com/128'} />
+								{`${auth.state.user.firstName} ${auth.state.user.lastName}`}
+							</div>
+						</Link>
 				}
 			</div>
 		</div>

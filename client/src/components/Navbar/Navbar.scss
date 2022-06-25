@@ -101,6 +101,32 @@
                 height: 0px;
             }
         }
+
+        a.no-link {
+            background: transparent;
+            padding: 0;
+
+            &:hover {
+                background: transparent;
+            }
+
+            &:active {
+                background: transparent;
+            }
+
+            &::after {
+                content: '';
+                display: flex;
+                width: 0px;
+                height: 0px;
+            }
+
+            &:hover::after {
+                margin-top: 0px;
+                width: 0px;
+                height: 0px;
+            }
+        }
     }
 }
 
