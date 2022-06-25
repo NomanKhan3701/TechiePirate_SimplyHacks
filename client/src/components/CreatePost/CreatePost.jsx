@@ -20,7 +20,7 @@ const CreatePost = () => {
 	})
 
 	const createPost = async () => {
-		if (post.title === "" || post.tags === "" || post.content === "") {
+		if (post.title === "" || post.tags === "") {
 			toast.error("Please fill all the fields", {
 				position: "top-center",
 			});

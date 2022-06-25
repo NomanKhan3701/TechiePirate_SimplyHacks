@@ -24,25 +24,25 @@ const getPosts = async (req, res, next) => {
 
 const addPost = async (req, res, next) => {
     try {
-        let data = req.body;
-        const img = req.body.image;
-        const url = await axios.post("http://localhost:8000/api/image/addImage", {
-            img: img,
-        })
-        // console.log(url.data.url)
-        data.userEmail = req.user.email;
-        data.image = url.data.url;
-        const { error } = validatePost(data);
-        if (error)
-            return res.status(400).send({ message: error.details[0].message });
-
-        const post = await prisma.Posts.create({
-            data: data,
-        });
-        res.send(post);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send({ message: "Yo Internal Server Error" });
+    let data=req.body;
+    const img=req.body.image;
+    const url=await axios.post("http://localhost:8000/api/image/addImage",{
+        img:img,
+    })
+   // console.log(url.data)
+    data.userEmail=req.user.email;
+    data.image=url.data.url;
+    const {error}=validatePost(data);
+    if(error)
+     return res.status(400).send({ message: error.details[0].message });
+   
+    const post=await prisma.Posts.create({
+      data: data,
+    });
+    res.send(post);
+   } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
     }
 }
 const deletePost = async (req, res, next) => {
