@@ -28,8 +28,8 @@ model postComments {
   comment     String
   Author      User   @relation(fields: [userEmail], references: [email])
   userEmail   String
-  Posts       Posts? @relation(fields: [postsPostId], references: [postId])
-  postsPostId Int?
+  Posts       Posts @relation(fields: [postsPostId], references: [postId])
+  postsPostId Int
 }
 
 model Posts {

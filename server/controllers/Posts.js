@@ -68,7 +68,13 @@ const deletePost=async(req,res,next)=>{
 }
 const addComment=async(req,res,next)=>{
  try {
-    
+    const {error}=validateComment(req.body);
+      if (error)
+       return res.status(400).send({ message: error.details[0].message });
+    const comment =await prisma.postComments.create({
+        data:req.body
+    })
+    res.status(201).send(comment);
  } catch (error) {
     console.log(error)
     res.status(500).send({ message: "Internal Server Error" });
@@ -88,7 +94,24 @@ const getComments=async(req,res,next)=>{
 }
 const deleteComment=async(req,res,next)=>{
     try {
-        
+        const comment=await prisma.postComments.findUnique({
+            where:{
+                commentId:req.body.commentId,
+            }
+        })
+        if(comment)
+        {
+            const deletedComment=await prisma.postComments.delete({
+                where:{
+                    commentId:req.body.commentId,
+                }
+            })
+            console.log("delete",deletedComment)
+            res.status(200).send({message:"Deleted Successfully",comment:deletedComment})
+        }
+        else{
+            res.status(404).send({message:"Resource not found "})
+        }
     } catch (error) {
         console.log(error)
         res.status(500).send({ message: "Internal Server Error" });

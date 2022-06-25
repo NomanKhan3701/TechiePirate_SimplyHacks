@@ -2,8 +2,11 @@ const Joi = require("joi");
 
 const validateComment=(data)=>{
   const schema= Joi.object({
-
+    comment:Joi.string().label("title"),
+    userEmail:Joi.string().email().required().label("email"),
+    postsPostId:Joi.number().integer().label("postId"),
   })
+  return schema.validate(data)
 }
 const validatePost = (data) => {
   const schema = Joi.object({
