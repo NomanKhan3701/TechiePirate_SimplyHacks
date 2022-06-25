@@ -76,12 +76,14 @@ model Events {
   time           DateTime
   city           String
   address        String
+  lat            Float @default(0)
+  long           Float @default(0)
   eventTags      String[]
   organizerEmail String
   image          String?
   donationAmount Float           @default(0.0)
   organizer      User            @relation(fields: [organizerEmail], references: [email])
   contributors   Contributor[]
-  particicpants  Participant[]
+  participants   Participant[]
   comments       eventComments[]
 }

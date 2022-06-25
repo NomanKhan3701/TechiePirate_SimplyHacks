@@ -1,10 +1,6 @@
 const Joi = require("joi");
 
 const validateEvent = (data) => {
-  const schema = Joi.object({});
-  return schema.validate(data);
-};
-const validateParticicpant = (data) => {
   const schema = Joi.object({
     image: Joi.string().label("image"),
     title: Joi.string().required().label("title"),
@@ -14,6 +10,13 @@ const validateParticicpant = (data) => {
     address: Joi.string().required().label("Address"),
     eventTags: Joi.array().items(Joi.string()).label("Tags"),
     organizerEmail: Joi.string().email().required().label("Email"),
+  });
+  return schema.validate(data);
+};
+const validateParticipant = (data) => {
+  const schema = Joi.object({
+    eventsEventId:Joi.number().label("eventId"),
+    userEmail:Joi.string().email().required().label("userEmail"),
   });
   return schema.validate(data);
 };
@@ -28,6 +31,6 @@ const validateComment = (data) => {
 module.exports = {
   validateEvent,
   validateComment,
-  validateParticicpant,
+  validateParticipant,
   validateContributor,
 };
