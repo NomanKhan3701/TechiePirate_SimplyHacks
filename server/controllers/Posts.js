@@ -95,8 +95,6 @@ const getComments = async (req, res, next) => {
         console.log(error)
         res.status(500).send({ message: "Internal Server Error" });
     }
-    const Comments = await prisma.postComments.findMany({})
-    res.send(Comments)
 }
 const deleteComment = async (req, res, next) => {
     try {

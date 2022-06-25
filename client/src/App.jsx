@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router'
-import { CreateEvent, Events, Home, Login, Posts, Signup } from './pages/import';
-import { CreatePost, Map, MarkdownEditor, Navbar } from './components/import';
+import { CreatePost, Map, Navbar } from './components/import';
+import { CreateEvent, Events, Home, Login, Posts, Signup, ViewEvent, ViewPost } from './pages/import';
+
 import "react-toastify/dist/ReactToastify.css";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { ToastContainer } from "react-toastify";
@@ -17,6 +18,8 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
         <Route path='/createevent' element={<CreateEvent />} />
+        <Route path='/event/:id' element={<ViewEvent />} />
+        <Route path='/post/:id' element={<ViewPost />} />
         <Route path='/createpost' element={<CreatePost />} />
         <Route path='/map' element={<Map />} />
       </Routes>

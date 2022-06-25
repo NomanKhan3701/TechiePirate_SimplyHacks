@@ -11,13 +11,22 @@
     justify-content: space-between;
     align-items: center;
     z-index: var(--z-nav);
-    transition: all 0.5s;
+    transition: all 0.25s;
+    border-bottom: solid 2px transparent;
+
+    &.scrolled {
+        background: #FFF;
+        border-bottom: solid 2px var(--color-accent);
+    }
 
     .logo {
-        font-family: var(--font-luxury);
-        font-size: 30px;
-        color: var(--color-accent);
-        font-weight: 700;
+        font-size: 24px;
+        font-weight: 800;
+        color: #000;
+
+        span {
+            color: var(--color-accent);
+        }
     }
 
     .links {
