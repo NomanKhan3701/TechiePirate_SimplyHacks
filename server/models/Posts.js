@@ -13,6 +13,7 @@ const validatePost = (data) => {
     title: Joi.string().required().label("title"),
     tags:Joi.array().items(Joi.string()).required().label("tags"),
     content: Joi.string().required().label("content"),
+    image:Joi.string().label("image"),
     userEmail: Joi.string().email().required().label("email"),
   });
   return schema.validate(data);
