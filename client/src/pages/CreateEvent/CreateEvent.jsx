@@ -3,8 +3,7 @@ import { FileUpload } from "../../components/import";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { FcClock } from "react-icons/fc";
 import { IoIosNotifications } from "react-icons/io";
-import "react-modern-calendar-datepicker/lib/DatePicker.css";
-import { Calendar } from "react-modern-calendar-datepicker";
+import moment from "moment";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
@@ -17,7 +16,7 @@ const CreateEvent = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   const [calendarToggle, setCalendarToggle] = useState(false);
   const [timeToggle, setTimeToggle] = useState(false);
-  const [time, setTime] = useState("7:00 pm");
+  const [time, setTime] = useState(new Date());
 
   return (
     <div className="create-event container">
@@ -38,14 +37,14 @@ const CreateEvent = () => {
         </div>
 
         <div className="date-time">
-          {/* <div className={`calendar ${calendarToggle ? "open" : ""}`}>
+          <div className={`calendar ${calendarToggle ? "open" : ""}`}>
             <Calendar
               value={selectedDay}
               onChange={setSelectedDay}
               shouldHighlightWeekends
               calendarClassName="responsive-calendar"
             />
-          </div> */}
+          </div>
 
           <div className="title-util">
             <h3>Date</h3>
@@ -64,7 +63,7 @@ const CreateEvent = () => {
             </div>
           </div>
 
-          {/* <div className={`time-picker ${timeToggle ? "open" : ""}`}>
+          <div className={`time-picker ${timeToggle ? "open" : ""}`}>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <StaticTimePicker
                 displayStaticWrapperAs="mobile"
@@ -73,7 +72,7 @@ const CreateEvent = () => {
                 renderInput={(params) => <TextField {...params} />}
               />
             </LocalizationProvider>
-          </div> */}
+          </div>
 
           <div className="title-util">
             <h3>Time</h3>
@@ -81,7 +80,7 @@ const CreateEvent = () => {
               className="time"
               onClick={() => setTimeToggle((toggle) => !toggle)}
             >
-              <div className="time-info">{time ? time : "12:00 am"}</div>
+              <div className="time-info">{time ? moment(time).format("hh:mm a") : "12:00 am"}</div>
               <div className="icon">
                 <FcClock />
               </div>
