@@ -22,7 +22,7 @@ const getEvents=async(req,res,next)=>{
 }
 const createEvent=async(req,res,next)=>{
     try {
-        let data=
+        
         res.send("createEvents")
     } catch (error) {
         

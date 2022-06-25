@@ -103,3 +103,31 @@
         }
     }
 }
+
+.nav-user {
+    display: flex;
+    font-size: 16px;
+    font-weight: 600;
+    align-items: center;
+    margin-left: 16px;
+    padding: 8px;
+    border-radius: 64px;
+    transition: all 0.25s;
+    cursor: pointer;
+    padding-right: 16px;
+
+    img {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
+    }
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    &:active {
+        background: rgba(0, 0, 0, 0.1);
+    }
+}
