@@ -20,7 +20,7 @@ const getImages = async (req, res) => {
 const addImage = async (req, res) => {
   try {
     const { img } = req.body;
-    console.log(img.substring(0, 20));
+    //console.log(img.substring(0, 20));
     const uploadedResponse = await cloudinary.uploader.upload(img, {
       upload_preset: "dev_setups",
       quality: "auto",
