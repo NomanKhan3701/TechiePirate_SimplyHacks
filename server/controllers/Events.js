@@ -1,6 +1,14 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const axios = require("axios");
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "techiepirateship@gmail.com",
+    pass: "qyeatqudhekdzgpw",
+  },
+});
 const {
   validateEvent,
   validateComment,
@@ -22,6 +30,12 @@ const getEvents = async (req, res, next) => {
           eventTags: {
             hasSome: field,
           },
+        },
+        include: {
+          organizer: true,
+          contributors: true,
+          participants: true,
+          comments: true,
         },
       });
       res.send(events);
@@ -81,10 +95,25 @@ const createParticipant = async (req, res, next) => {
       data: data,
     });
     // const events = await prisma.Events.findMany({});
-    res
+      //add increase in score for participants
+    // send email to participant
+    var mailOptions = {
+      from: "techiepirateship@gmail.com",
+      to: req.user.email,
+      subject: "WeChange",
+      text: "Congratulations You are a participant",
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+     res
       .status(201)
       .send({ message: "created participant successfully", participant });
-    // send email to participant
+
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server error" });
@@ -101,15 +130,73 @@ const createContributor = async (req, res, next) => {
     res
       .status(201)
       .send({ message: "created contributor successfully", contributor });
+      // add increase in score patch request for contributions
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server error" });
   }
 };
-const addComment = (req, res, next) => {};
-const getComments = (req, res, next) => {};
-const deleteComment = (req, res, next) => {};
-const getEvent = (req, res, next) => {};
+const addComment = async (req, res, next) => {
+  try {
+    const data = req.body;
+    data.userEmail = req.user.email;
+    const { error } = validateComment(data);
+    if (error)
+      return res.status(400).send({
+        message: error.details[0].message,
+      });
+    const comment = await prisma.eventComments.create({
+      data: data,
+    });
+    const Comments = await prisma.eventComments.findMany({
+      // where: {
+      //   eventsEventId: Number(req.body.postsPostId),
+      // },
+    });
+    res.status(201).send(Comments);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Internal Server Error",
+    });
+  }
+};
+const getComments = (req, res, next) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Internal Server Error",
+    });
+  }
+};
+const deleteComment = (req, res, next) => {
+  try {
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Internal Server Error",
+    });
+  }
+};
+const getEvent = async (req, res, next) => {
+  try {
+    const id = Number(req.params.eventId);
+    console.log(id);
+    const event = await prisma.Events.findUnique({
+      where: {
+        eventId: Number(id),
+      },
+    });
+    if (event) res.status(200).send(event);
+    else res.status(404).send({ message: "Resource not Found" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Internal Server Error",
+    });
+  }
+};
 module.exports = {
   getEvents,
   createEvent,

@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  firstName    String
-  lastName     String
-  email        String         @id @unique
-  password     String
-  image        String?
-  resourcePts  Int            @default(0)
-  workPts      Int            @default(0)
-  Contributor  Contributor[]
-  Events       Events[]
-  Participant  Participant[]
-  Posts        Posts[]
-  postComments postComments[]
+  firstName     String
+  lastName      String
+  email         String          @id @unique
+  password      String
+  image         String?
+  resourcePts   Int             @default(0)
+  workPts       Int             @default(0)
+  Contributor   Contributor[]
+  Events        Events[]
+  Participant   Participant[]
+  Posts         Posts[]
+  postComments  postComments[]
+  eventComments eventComments[]
 }
 
 model postComments {
@@ -47,17 +48,20 @@ model Posts {
 model eventComments {
   commentId     Int     @id @default(sequence())
   comment       String
+  author        User    @relation(fields: [userEmail], references: [email])
+  userEmail     String
   eventsEventId Int?
   Events        Events? @relation(fields: [eventsEventId], references: [eventId])
+ 
 }
 
 model Contributor {
-  contributorId Int      @id @default(sequence())
+  contributorId Int     @id @default(sequence())
   userEmail     String
   eventsEventId Int?
   monetary      Float?
-  Events        Events?  @relation(fields: [eventsEventId], references: [eventId])
-  user          User     @relation(fields: [userEmail], references: [email])
+  Events        Events? @relation(fields: [eventsEventId], references: [eventId])
+  user          User    @relation(fields: [userEmail], references: [email])
 }
 
 model Participant {
@@ -75,8 +79,8 @@ model Events {
   time           DateTime
   city           String
   address        String
-  lat            Float @default(0)
-  long           Float @default(0)
+  lat            Float           @default(0)
+  long           Float           @default(0)
   eventTags      String[]
   organizerEmail String
   image          String?

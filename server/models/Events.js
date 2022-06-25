@@ -29,7 +29,11 @@ const validateContributor = (data) => {
   return schema.validate(data);
 };
 const validateComment = (data) => {
-  const schema = Joi.object({});
+  const schema = Joi.object({
+    comment: Joi.string().label("title"),
+    userEmail: Joi.string().email().required().label("email"),
+    eventsEventId: Joi.number().integer().label("eventId"),
+  });
   return schema.validate(data);
 };
 module.exports = {
