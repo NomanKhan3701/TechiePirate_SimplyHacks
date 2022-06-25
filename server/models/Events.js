@@ -21,7 +21,11 @@ const validateParticipant = (data) => {
   return schema.validate(data);
 };
 const validateContributor = (data) => {
-  const schema = Joi.object({});
+  const schema = Joi.object({
+    userEmail:Joi.string().email().required().label("email"),
+    eventsEventId:Joi.number().label("eventid"),
+    monetary:Joi.number().label("Monetary amount")
+  });
   return schema.validate(data);
 };
 const validateComment = (data) => {

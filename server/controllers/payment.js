@@ -27,6 +27,7 @@ const makePayment = async (req, res) => {
       success_url: `${process.env.CLIENT_URL}/success`,
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
     });
+    console.log(session);
     res.json({ url: session.url });
   } catch (e) {
     console.log(e);

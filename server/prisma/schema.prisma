@@ -53,7 +53,6 @@ model eventComments {
 
 model Contributor {
   contributorId Int      @id @default(sequence())
-  contributions String[]
   userEmail     String
   eventsEventId Int?
   monetary      Float?

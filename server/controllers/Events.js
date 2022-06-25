@@ -1,5 +1,4 @@
 const { PrismaClient } = require("@prisma/client");
-
 const prisma = new PrismaClient();
 const axios=require("axios")
 const {
@@ -97,7 +96,8 @@ const createParticipant = async (req, res, next) => {
 };
 const createContributor = async (req, res, next) => {
   try {
-
+    const {error}=validateContributor(req.body);
+    
   } catch (error) {}
 };
 const addComment = (req, res, next) => {};
