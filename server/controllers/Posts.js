@@ -26,13 +26,13 @@ const addPost=async(req,res,next)=>{
     try {
     
     let data=req.body;
-    const img=req.body.content;
+    const img=req.body.image;
     const url=await axios.post("http://localhost:8000/api/image/addImage",{
         img:img,
     })
    // console.log(url.data)
     data.userEmail=req.user.email;
-    data.content=url.data.url;
+    data.image=url.data.url;
     const {error}=validatePost(data);
     if(error)
      return res.status(400).send({ message: error.details[0].message });

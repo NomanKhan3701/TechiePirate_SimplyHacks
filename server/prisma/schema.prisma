@@ -28,7 +28,7 @@ model postComments {
   comment     String
   Author      User   @relation(fields: [userEmail], references: [email])
   userEmail   String
-  Posts       Posts @relation(fields: [postsPostId], references: [postId])
+  Posts       Posts  @relation(fields: [postsPostId], references: [postId])
   postsPostId Int
 }
 
@@ -37,10 +37,10 @@ model Posts {
   title     String
   tags      String[]
   content   String
+  image     String?
   Likes     Int            @default(0)
   author    User           @relation(fields: [userEmail], references: [email])
   userEmail String
   createdAt DateTime       @default(now())
   Comments  postComments[]
 }
-
