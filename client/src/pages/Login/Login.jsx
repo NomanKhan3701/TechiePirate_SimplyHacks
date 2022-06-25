@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { GoogleLogin } from "react-google-login";
+import { refreshTokenSetup } from "./refreshToken";
+import { gapi } from "gapi-script";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
 import FullScreenLoader from "../Signup/FullScreenLoader";
@@ -34,10 +37,13 @@ const Login = () => {
     } else {
       setLoading(true);
       console.log(admin_server_url);
-      const { data: res } = await axios.post(`${admin_server_url}/api/auth/login`, {
-        email: loginData.email,
-        password: loginData.password,
-      });
+      const { data: res } = await axios.post(
+        `${admin_server_url}/api/auth/login`,
+        {
+          email: loginData.email,
+          password: loginData.password,
+        }
+      );
       localStorage.setItem("token", res.data);
       console.log(res);
     }
@@ -70,11 +76,16 @@ const Login = () => {
         ></input>
         <div className="redirect">
           <span>Dont have an account ? </span>
-          <Link to='/signup'>Signup</Link>
+          <Link to="/signup">Signup</Link>
         </div>
         <div className="btn" onClick={submit}>
           Submit
         </div>
+        <GoogleLogin
+          clientId={process.env.REACT_APP_client_id}
+          onSuccess={onSuccess}
+          onFailure={(err) => console.log("fail", err)}
+        ></GoogleLogin>
       </div>
     </div>
   );
