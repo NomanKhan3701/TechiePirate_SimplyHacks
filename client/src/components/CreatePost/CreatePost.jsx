@@ -24,11 +24,17 @@ const CreatePost = () => {
 			return;
 		}
 		try {
+			const varToken = await localStorage.getItem("token");
+			console.log(varToken)
 			const res = await axios.post(`${server_url}/posts`, {
 				title: post.title,
 				tags: post.tags,
 				content: post.content,
 				image: post.image,
+			}, {
+				headers: {
+					Authorization: varToken
+				}
 			})
 			console.log(res)
 		} catch (e) {
