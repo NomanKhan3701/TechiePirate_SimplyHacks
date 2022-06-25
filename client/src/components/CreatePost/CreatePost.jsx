@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { FileUpload } from '../import'
 import { toast } from 'react-toastify';
 import Button from '../Button/Button';
+import MarkdownEditor from '../MarkdownEditor/MarkdownEditor'
 import './CreatePost.scss'
 import axios from 'axios';
 
@@ -10,10 +11,11 @@ const server_url = `${process.env.REACT_APP_server_url}/api`;
 const CreatePost = () => {
 	const [files, setFiles] = useState([]);
 	const [prevImg, setPrevImg] = useState();
+	const [markdownVal, setMarkdownVal] = useState("");
 	const [post, setPost] = useState({
 		title: "",
 		tags: "",
-		content: "hello workld",
+		content: "",
 		image: ""
 	})
 
@@ -29,7 +31,7 @@ const CreatePost = () => {
 			const res = await axios.post(`${server_url}/posts`, {
 				title: post.title,
 				tags: post.tags.split(','),
-				content: post.content,
+				content: markdownVal,
 				image: post.image,
 			}, {
 				headers: {
@@ -73,9 +75,15 @@ const CreatePost = () => {
 					</div>
 				</div>
 				<div className="title-util">
+					<h3>Content</h3>
+					<div className="tags">
+						<MarkdownEditor setMarkdownVal={setMarkdownVal} />
+					</div>
+				</div>
+				<div className="title-util">
 					<h3>Tags</h3>
 					<div className="tags">
-						<textarea name='tags' value={post.tags} onChange={handleOnChange} placeholder="Enter ',' seperated (e.g. india,tree)..." />
+						<textarea name='tags' value={post.tags} onChange={handleOnChange} placeholder="Enter ',' seperated tag (e.g. india, tree)" />
 					</div>
 				</div>
 				<div className="title-util">
