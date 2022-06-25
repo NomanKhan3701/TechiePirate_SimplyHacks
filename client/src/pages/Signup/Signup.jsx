@@ -73,6 +73,7 @@ const SignUp = () => {
           lastName: loginData.lastname,
           email: loginData.email,
           password: loginData.password,
+          google: false,
         })
         .then((response) => {
           setLoading(false);
@@ -82,11 +83,23 @@ const SignUp = () => {
       navigate("/login");
     }
   };
-  const onSuccess = (res) => {
-    console.log(res.profileObj.email);
-    localStorage.setItem("username", res.profileObj.email);
+  const onSuccess = async (response) => {
+    console.log(response.profileObj.email);
+    localStorage.setItem("username", response.profileObj.email);
     localStorage.setItem("loggedIn", true);
 
+    const { data: res } = await axios.post(
+      `${client_server_url}/api/auth/login`,
+      {
+        firstName: response.profileObj.givenName,
+        lastName: response.profileObj.familyName,
+        email: response.profileObj.email,
+        password: "",
+        google: true,
+      }
+    );
+    localStorage.setItem("token", res.data);
+    console.log(res);
     //refreshTokenSetup(res);
   };
   return (
