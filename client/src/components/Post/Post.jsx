@@ -14,7 +14,7 @@ const Post = ({ post }) => {
 			</div>
 			<div className='title'>
 				{post.title}
-				<span>By Aditya • {post.tags[0]} • {moment(post.createdAt).format("DD/MM/YY")}</span>
+				<span>By {post.author.firstName} • {moment(post.createdAt).format("DD/MM/YY")}</span>
 			</div>
 			<div className='content'>
 				<LimitChar word={post.content} limit={30} />

@@ -46,6 +46,7 @@ const ViewEvent = () => {
         if (res.data.participants[i].email === auth?.state?.user?.email)
           setJoined(true);
       }
+      res.data.comments.reverse()
     } catch (e) {
       console.log(e);
     }
@@ -109,11 +110,12 @@ const ViewEvent = () => {
   };
 
   const setComments = (newComments) => {
-    const data = {};
-    Object.assign(data, event);
-    data.comments = newComments;
-    setEvent(data);
-  };
+    const data = {}
+    Object.assign(data, event)
+    data.comments = newComments
+    data.comments.reverse()
+    setEvent(data)
+  }
 
   return (
     <div
