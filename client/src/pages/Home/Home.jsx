@@ -12,10 +12,7 @@ const Home = () => {
 			<div className='home-sec'>
 				<h1>Top Events</h1>
 				<div className='items-grid'>
-					<EventCard></EventCard>
-					<EventCard></EventCard>
-					<EventCard></EventCard>
-					<EventCard></EventCard>
+					
 				</div>
 			</div>
 
