@@ -1,6 +1,7 @@
 import "./ViewEvent.scss";
-import { TbPlant2 } from "react-icons/tb";
+import { TbPlant2, TbCheck } from "react-icons/tb";
 import { GrUserWorker } from "react-icons/gr";
+import CommentCard from './CommentCard'
 import { FaDonate } from "react-icons/fa";
 import {
   BiCalendarAlt,
@@ -17,6 +18,7 @@ import axios from "axios";
 import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
+import ReactMarkdown from "react-markdown";
 
 const client_url = process.env.REACT_APP_client_url;
 const server_url = process.env.REACT_APP_server_url;
@@ -37,7 +39,7 @@ const ViewEvent = () => {
   const getEvent = async () => {
     try {
       const res = await axios.get(`${server_url}/api/events/view/${id}`);
-      setEvent(res.data);
+      setEvent(res.data)
     } catch (e) {
       console.log(e);
     }
@@ -70,6 +72,14 @@ const ViewEvent = () => {
       console.log(e);
     }
   };
+
+  const setComments = (newComments) => {
+    const data = {}
+    Object.assign(data, event)
+    data.comments = newComments
+    setEvent(data)
+  }
+
   return (
     <div className="container page">
       <div className="event-cols">
@@ -77,7 +87,7 @@ const ViewEvent = () => {
           <img
             src={event.image ? event.image : "https://via.placeholder.com/512"}
           />
-          <Link to={"/profile"} className="posted-by">
+          <Link to={"/profile/" + event.organizer?.email} className="posted-by">
             <img src="https://via.placeholder.com/512" />
             <div>
               {event?.organizer?.firstName} {event?.organizer?.lastName}
@@ -118,7 +128,12 @@ const ViewEvent = () => {
           </div>
 
           <div style={{ marginTop: "16px" }}>
-            <BigButton>Join Event</BigButton>
+            <BigButton>
+              {
+                false ? 'Join Event'
+                : <TbCheck style={{'fontSize': '20px'}} />
+              }
+            </BigButton>
           </div>
         </div>
 
@@ -130,7 +145,11 @@ const ViewEvent = () => {
 
           <h1>{event?.title}</h1>
 
-          <div className="event-content">{event?.description}</div>
+          <div className="event-content">
+            <ReactMarkdown>
+              {event?.description}
+            </ReactMarkdown>
+          </div>
 
           <div className="contribute">
             <h2>Can't attend but want to help?</h2>
@@ -176,8 +195,71 @@ const ViewEvent = () => {
           </div>
         </div>
       </div>
+
+      <div className='post-comment-sec'>
+        <h2>Comments</h2>
+
+        {
+          event?.comments != null ?
+            <WriteCommentBox setComments={setComments} eventId={id} />
+          : null
+        }
+
+        {
+          event?.comments?.map((item) => {
+            return <CommentCard key={item.commentId} comment={item}></CommentCard>
+          })
+        }
+      </div>
     </div>
   );
 };
+
+
+const WriteCommentBox = ({setComments, eventId}) => {
+  const auth = useAuth()
+  const [text, setText] = useState('')
+  const [sending, setSending] = useState(false)
+
+  const onSubmit = async () => {
+    if (text.trim() === '' || sending) return
+
+    setSending(true)
+
+    const res = await axios.post(
+      `${server_url}/api/events/comments`,
+      {
+        "comment": text,
+        "eventsEventId": Number(eventId)
+      },
+      {
+        headers: {
+          'Authorization': auth.state.token
+        }
+      }
+    )
+
+    console.log(res.data)
+
+    setComments(res.data);
+    setSending(false)
+  }
+
+  if (!auth.state.authenticated) return
+
+  return (
+    <div className='wcom'>
+      <textarea
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+        placeholder='Want to discuss something?'
+        />
+
+      <div style={{'width': 'fit-content', 'marginLeft': 'auto'}}>
+        <BigButton onClick={onSubmit}>Submit</BigButton>
+      </div>
+    </div>
+  )
+}
 
 export default ViewEvent;

@@ -34,7 +34,7 @@ const Navbar = () => {
 					!auth.state.authenticated ?
 						<Link className='big' to='/login'>Login / Register</Link>
 						:
-						<Link className='no-link' to='/profile'>
+						<Link className='no-link' to={`/profile/${auth.state?.user?.email}`}>
 							<div className='nav-user'>
 								<img alt='User' src={auth.state?.user?.image || getDefaultPhoto(auth)} />
 								{`${auth.state.user.firstName} ${auth.state.user.lastName}`}
