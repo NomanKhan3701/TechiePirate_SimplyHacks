@@ -14,6 +14,9 @@ const Events = () => {
 	const [events, setEvents] = useState([]);
 	const [loading, setLoading] = useState(true);
 
+	const [filter, setFilter] = useState('all')
+	const [searchText, setSearchText] = useState('')
+
 	const auth = useAuth()
 
 	useEffect(() => {
@@ -30,11 +33,37 @@ const Events = () => {
 			console.log(e)
 		}
 	}
+
+	const results = events.filter(
+		(item) => {
+			if (searchText.trim() === '')	return true
+			return (
+				item?.title?.toLowerCase().includes(searchText.toLowerCase()) ||
+				item?.description?.toLowerCase().includes(searchText.toLowerCase())
+			)
+		}
+	).filter(
+		(item) => {
+			if (filter === 'all') return true
+			for (let i = 0; i < item.eventTags.length; i++) {
+				if (item.eventTags[i].toLowerCase().includes(filter)) {
+					return true
+				}
+			}
+			return false
+		}
+	)
+
 	return (
 		<div className='container page'>
 			<h1>Upcoming Events</h1>
 
-			<SearchBar />
+			<SearchBar
+				searchText={searchText}
+				setSearchText={setSearchText}
+				filter={filter}
+				setFilter={setFilter}
+			/>
 			
 			{
 				auth.state.authenticated ?
@@ -45,7 +74,7 @@ const Events = () => {
 			}
 
 			<div className='events-list'>
-				{events.map((event, index) => {
+				{results.map((event, index) => {
 					return <EventCard key={index} event={event}></EventCard>
 				})}
 
