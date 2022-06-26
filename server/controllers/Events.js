@@ -53,10 +53,13 @@ const createEvent = async (req, res, next) => {
     }
     data.organizerEmail = req.user.email;
     const { error } = validateEvent(data);
-    if (error)
+    if (error) {
+      console.log(error)
       return res
         .status(400)
         .send({ error, message: error.details[0].message, hi: "hello" });
+    }
+
     const event = await prisma.Events.create({
       data: data,
     });
@@ -154,7 +157,7 @@ const addComment = async (req, res, next) => {
     });
   }
 };
-const getComments = async(req, res, next) => {
+const getComments = async (req, res, next) => {
   try {
     const Comments = await prisma.eventComments.findMany({
       where: {

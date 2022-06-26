@@ -16,8 +16,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
 
+const client_url = process.env.REACT_APP_client_url;
 const server_url = process.env.REACT_APP_server_url;
+
 const ViewEvent = () => {
   const navigate = useNavigate();
   const auth = useAuth();
@@ -41,16 +44,23 @@ const ViewEvent = () => {
   };
 
   const donate = async () => {
-    if (!auth?.authenticated) {
+    if (!auth?.state.authenticated) {
       navigate("/login");
     }
-    if (amount.trim() === "" || message.trim() === "") return;
+    if (amount.trim() === "" || message.trim() === "") {
+      toast.error("Fields cannot be empty", { position: "top-center" });
+      return;
+    }
     try {
-      localStorage.setItem("donationToken", {
-        userEmail: auth?.state?.user?.email,
-        eventsEventId: id,
-        monetary: amount,
-      });
+      localStorage.setItem(
+        "donationToken",
+        JSON.stringify({
+          userEmail: auth?.state?.user?.email,
+          eventsEventId: id,
+          monetary: amount,
+        })
+      );
+
       const res = await axios.post(`${server_url}/api/payment`, {
         items: [{ id: 1, quantity: 1 }],
         amount: amount,
