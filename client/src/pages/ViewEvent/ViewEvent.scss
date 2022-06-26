@@ -27,11 +27,6 @@
       border: solid 1px var(--color-border);
       transition: all 0.25s;
 
-
-      svg {
-        color: var(--color-accent);
-      }
-
       span {
         display: flex;
         font-weight: 600;
@@ -108,12 +103,17 @@
         justify-content: center;
         margin-right: 10px;
 
+
+        svg {
+          color: var(--color-accent);
+        }
+
         span {
           font-size: 14px;
           font-weight: 600;
           margin-left: 8px;
           margin-top: -2px;
-
+          color: var(--color-accent)
         }
       }
     }

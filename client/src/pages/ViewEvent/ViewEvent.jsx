@@ -73,7 +73,7 @@ const ViewEvent = () => {
               {event?.organizer?.firstName} {event?.organizer?.lastName}
               <div className="flex">
                 <span>
-                  <GrUserWorker></GrUserWorker>
+                  <TbPlant2></TbPlant2>
                   <span>{event?.organizer?.workPts}</span>
                 </span>
                 <span>
