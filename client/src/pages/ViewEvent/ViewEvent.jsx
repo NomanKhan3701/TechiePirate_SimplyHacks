@@ -1,5 +1,7 @@
 import "./ViewEvent.scss";
 import { TbPlant2 } from "react-icons/tb";
+import { GrUserWorker } from "react-icons/gr";
+import { FaDonate } from "react-icons/fa";
 import {
   BiCalendarAlt,
   BiTime,
@@ -7,37 +9,48 @@ import {
   BiRupee,
   BiMessage,
 } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { eventTypes } from "../../constants";
 import BigButton from "../../components/BigButton/BigButton";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import moment from "moment";
+import { useAuth } from "../../contexts/AuthContext";
 
 const server_url = process.env.REACT_APP_server_url;
 const ViewEvent = () => {
   const navigate = useNavigate();
+  const auth = useAuth();
+  const { id } = useParams();
   const eventType = eventTypes["tree_planting"];
   const [message, setMessage] = useState("");
   const [amount, setAmount] = useState("");
   const [event, setEvent] = useState([]);
 
-  useEffect(()=>{
-    getEvent()
-  },[])
+  useEffect(() => {
+    getEvent();
+  }, []);
 
   const getEvent = async () => {
-    
-  }
+    try {
+      const res = await axios.get(`${server_url}/api/events/view/${id}`);
+      setEvent(res.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const donate = async () => {
+    if (!auth?.authenticated) {
+      navigate("/login");
+    }
     if (amount.trim() === "" || message.trim() === "") return;
-
     try {
-      // localStorage.setItem("donationToken",{
-      //   userEmail:email,
-      //   eventsEventId:id,
-      //   monetary: amount,
-      // })
+      localStorage.setItem("donationToken", {
+        userEmail: auth?.state?.user?.email,
+        eventsEventId: id,
+        monetary: amount,
+      });
       const res = await axios.post(`${server_url}/api/payment`, {
         items: [{ id: 1, quantity: 1 }],
         amount: amount,
@@ -51,16 +64,21 @@ const ViewEvent = () => {
     <div className="container page">
       <div className="event-cols">
         <div className="left">
-          <img src="https://via.placeholder.com/512" />
-
+          <img
+            src={event.image ? event.image : "https://via.placeholder.com/512"}
+          />
           <Link to={"/profile"} className="posted-by">
             <img src="https://via.placeholder.com/512" />
             <div>
-              Aditya Kharote
-              <div>
+              {event?.organizer?.firstName} {event?.organizer?.lastName}
+              <div className="flex">
                 <span>
-                  <TbPlant2></TbPlant2>
-                  <span>12</span>
+                  <GrUserWorker></GrUserWorker>
+                  <span>{event?.organizer?.workPts}</span>
+                </span>
+                <span>
+                  <FaDonate />
+                  <span>{event?.organizer?.resourcePts}</span>
                 </span>
               </div>
             </div>
@@ -71,24 +89,21 @@ const ViewEvent = () => {
               <i>
                 <BiCalendarAlt></BiCalendarAlt>
               </i>
-              <span>14th February 2022</span>
+              <span>{moment(event?.time).format("Do MMMM YYYY")}</span>
             </span>
 
             <span>
               <i>
                 <BiTime></BiTime>
               </i>
-              <span>10:00 AM</span>
+              <span>{moment(event?.time).format("LT")}</span>
             </span>
 
             <span>
               <i>
                 <BiMapPin></BiMapPin>
               </i>
-              <span>
-                Bhavans Campus, Old D N Nagar, Munshi Nagar, Andheri West,
-                Mumbai, Maharashtra 400058
-              </span>
+              <span>{event?.address}</span>
             </span>
           </div>
 
@@ -103,32 +118,9 @@ const ViewEvent = () => {
             <span>{eventType.title}</span>
           </div>
 
-          <h1>Event Title</h1>
+          <h1>{event?.title}</h1>
 
-          <div className="event-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-            consequat viverra lectus, sed lacinia risus convallis sit amet.
-            Curabitur lacinia est et egestas egestas. Fusce non lorem id mi
-            dapibus accumsan in eget eros. Fusce auctor placerat lacus in
-            luctus. Morbi porttitor molestie libero non placerat. Nullam tempus
-            lacus sed felis lacinia, ac molestie mauris tempor. Nam porttitor,
-            felis vitae commodo vulputate, odio risus tincidunt elit, vel
-            egestas sem justo vel nulla. Aenean mattis magna enim. Praesent quis
-            massa laoreet lacus porta ultrices elementum rhoncus enim. Aliquam
-            erat volutpat.
-            <br />
-            <br />
-            Morbi erat nisi, laoreet quis tellus et, imperdiet tempus nibh. Sed
-            nec pretium enim. Mauris lacinia rutrum pellentesque. Praesent
-            libero nibh, efficitur vitae lobortis in, aliquet id purus. Morbi
-            rutrum, turpis vel dapibus mattis, arcu sapien convallis libero, et
-            viverra sem metus at justo. Donec semper enim ex, at luctus dui
-            vulputate pellentesque. Etiam sapien quam, rhoncus in urna at,
-            efficitur viverra purus. Mauris blandit turpis feugiat lacinia
-            venenatis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Nullam vitae tellus consequat lectus viverra maximus. Etiam
-            pellentesque consectetur enim, et gravida elit tincidunt quis.
-          </div>
+          <div className="event-content">{event?.description}</div>
 
           <div className="contribute">
             <h2>Can't attend but want to help?</h2>
