@@ -6,6 +6,8 @@ import { eventTypes } from '../../constants'
 import BigButton from '../../components/BigButton/BigButton'
 import { useState } from 'react'
 import axios from 'axios'
+import { getDefaultPhoto } from '../../utils'
+import { useAuth } from '../../contexts/AuthContext'
 
 const server_url = process.env.REACT_APP_server_url
 const ViewEvent = () => {
@@ -13,6 +15,7 @@ const ViewEvent = () => {
   const eventType = eventTypes['tree_planting']
   const [message, setMessage] = useState("")
   const [amount, setAmount] = useState("")
+  const auth = useAuth()
   
   const donate = async () => {
     if (amount.trim() === '' || message.trim() === '') return
@@ -26,8 +29,8 @@ const ViewEvent = () => {
     } catch (e) {
       console.log(e);
     }
-
   }
+
   return (
     <div className='container page'>
       <div className='event-cols'>
@@ -35,7 +38,7 @@ const ViewEvent = () => {
           <img src='https://via.placeholder.com/512' />
 
           <Link to={'/profile'} className='posted-by'>
-            <img src='https://via.placeholder.com/512' />
+            <img src={getDefaultPhoto(auth)} />
             <div>
               Aditya Kharote
               <div>
