@@ -145,6 +145,9 @@ const addComment = async (req, res, next) => {
       where: {
         eventsEventId: Number(req.body.eventsEventId),
       },
+      include:{
+        author:true,
+      }
     });
     res.status(201).send(Comments);
   } catch (error) {
@@ -160,6 +163,9 @@ const getComments = async(req, res, next) => {
       where: {
         eventsEventId: Number(req.query.eventsEventId),
       },
+      include:{
+        author:true,
+      }
     });
     res.status(200).send(Comments);
   } catch (error) {

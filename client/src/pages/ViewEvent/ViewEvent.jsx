@@ -1,6 +1,7 @@
 import "./ViewEvent.scss";
 import { TbPlant2 } from "react-icons/tb";
 import { GrUserWorker } from "react-icons/gr";
+import CommentCard from './CommentCard'
 import { FaDonate } from "react-icons/fa";
 import {
   BiCalendarAlt,
@@ -34,7 +35,7 @@ const ViewEvent = () => {
   const getEvent = async () => {
     try {
       const res = await axios.get(`${server_url}/api/events/view/${id}`);
-      setEvent(res.data);
+      setEvent(res.data)
     } catch (e) {
       console.log(e);
     }
@@ -60,6 +61,14 @@ const ViewEvent = () => {
       console.log(e);
     }
   };
+
+  const setComments = (comments) => {
+    const data = {}
+    Object.assign(data, event)
+    data.comments = comments
+    setEvent(event)
+  }
+
   return (
     <div className="container page">
       <div className="event-cols">
@@ -166,8 +175,69 @@ const ViewEvent = () => {
           </div>
         </div>
       </div>
+
+      <div className='post-comment-sec'>
+        <h2>Comments</h2>
+
+        {
+          event?.comments != null ?
+            <WriteCommentBox setComments={setComments} eventId={id} />
+          : null
+        }
+
+        {
+          event?.comments?.map((item) => {
+            return <CommentCard comment={item}></CommentCard>
+          })
+        }
+      </div>
     </div>
   );
 };
+
+
+const WriteCommentBox = ({setComments, eventId}) => {
+  const auth = useAuth()
+  const [text, setText] = useState('')
+  const [sending, setSending] = useState(false)
+
+  const onSubmit = async () => {
+    if (text.trim() === '' || sending) return
+
+    setSending(true)
+
+    const res = await axios.post(
+      `${server_url}/api/events/comments`,
+      {
+        "comment": text,
+        "eventsEventId": Number(eventId)
+      },
+      {
+        headers: {
+          'Authorization': auth.state.token
+        }
+      }
+    )
+
+    setComments(res.data);
+    setSending(false)
+  }
+
+  if (!auth.state.authenticated) return
+
+  return (
+    <div className='wcom'>
+      <textarea
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+        placeholder='Want to discuss something?'
+        />
+
+      <div style={{'width': 'fit-content', 'marginLeft': 'auto'}}>
+        <BigButton onClick={onSubmit}>Submit</BigButton>
+      </div>
+    </div>
+  )
+}
 
 export default ViewEvent;
