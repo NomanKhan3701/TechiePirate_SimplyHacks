@@ -142,9 +142,9 @@ const addComment = async (req, res, next) => {
       data: data,
     });
     const Comments = await prisma.eventComments.findMany({
-      // where: {
-      //   eventsEventId: Number(req.body.postsPostId),
-      // },
+      where: {
+        eventsEventId: Number(req.body.eventsEventId),
+      },
     });
     res.status(201).send(Comments);
   } catch (error) {
@@ -154,8 +154,14 @@ const addComment = async (req, res, next) => {
     });
   }
 };
-const getComments = (req, res, next) => {
+const getComments = async(req, res, next) => {
   try {
+    const Comments = await prisma.eventComments.findMany({
+      where: {
+        eventsEventId: Number(req.query.eventsEventId),
+      },
+    });
+    res.status(200).send(Comments);
   } catch (error) {
     console.log(error);
     res.status(500).send({
