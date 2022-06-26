@@ -28,10 +28,10 @@ const Login = () => {
     password: "",
   });
 
-  const auth = useAuth()
+  const auth = useAuth();
 
   if (auth.state.authenticated) {
-    return navigate('/');
+    return navigate("/");
   }
 
   if (isLoading) {
@@ -43,7 +43,7 @@ const Login = () => {
     setLoginData((prevData) => {
       return { ...prevData, [name]: value };
     });
-  }
+  };
 
   const submit = async () => {
     if (!(loginData.email && loginData.password)) {
@@ -61,7 +61,7 @@ const Login = () => {
         );
 
         localStorage.setItem("auth_token", res.token);
-        auth.verifyLogin()
+        auth.verifyLogin();
         navigate("/");
       } catch (error) {
         const statusCode = error.response.status;
@@ -73,7 +73,7 @@ const Login = () => {
       }
       setLoading(false);
     }
-  }
+  };
 
   const onSuccess = async (response) => {
     setLoading(true);
@@ -85,11 +85,11 @@ const Login = () => {
           password: "",
           google: true,
         }
-      )
+      );
 
       localStorage.setItem("auth_token", res.token);
-      auth.verifyLogin()
-      navigate("/");
+      auth.verifyLogin();
+      navigate("/login");
     } catch (error) {
       const statusCode = error.response.status;
       if (statusCode == 401) {
@@ -100,7 +100,7 @@ const Login = () => {
     }
     setLoading(false);
     //refreshTokenSetup(res);
-  }
+  };
 
   return (
     <div className="login-container">
@@ -132,8 +132,7 @@ const Login = () => {
           <Link to="/signup">Signup</Link>
         </div>
         <div className="btn">
-          <Button text='Login' onClick={submit} />
-
+          <Button text="Login" onClick={submit} />
         </div>
 
         <div className="or">OR</div>
@@ -145,10 +144,9 @@ const Login = () => {
             buttonText="Sign in with Google"
           ></GoogleLogin>
         </div>
-
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Login;
