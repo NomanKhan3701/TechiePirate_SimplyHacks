@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BigButton, Button, FileUpload, Map, MarkdownEditor } from "../../components/import";
 import { BsFillCalendarDateFill } from "react-icons/bs";
 import { FcHome } from "react-icons/fc";
@@ -11,7 +11,9 @@ import { StaticTimePicker } from "@mui/x-date-pickers/StaticTimePicker";
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import TextField from "@mui/material/TextField";
 import "./CreateEvent.scss";
+import axios from "axios";
 
+const server_url = process.env.REACT_APP_server_url;
 const CreateEvent = () => {
   const [files, setFiles] = useState([]);
   const [prevImg, setPrevImg] = useState();
@@ -24,6 +26,42 @@ const CreateEvent = () => {
   const [latitude, setLatitude] = useState();
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
+  const [title, setTitle] = useState("");
+
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
+    }
+  }, []);
+
+  function positionSuccess(pos) {
+    const crd = pos.coords;
+    const longi = crd.longitude, lati = crd.latitude
+    const accuracy = crd.accuracy;
+    setLongitude(longi)
+    setLatitude(lati);
+  }
+
+  function positionError(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  const createEvent = async () => {
+    try {
+      const res = await axios.post(`${server_url}/api/events`, {
+        image: prevImg,
+        title: title,
+        time: selectedDay,
+        city: city,
+        address: address,
+        description: markdownVal,
+      })
+      console.log(res)
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
   return (
     <div className="create-event container page">
@@ -31,7 +69,7 @@ const CreateEvent = () => {
       <div className="main-form">
         <div className="title">
           <h3>Title</h3>
-          <input type="text" name="" id="" placeholder="Title here..." />
+          <input value={title} onChange={(e) => setTitle(e.target.value)} type="text" name="" id="" placeholder="Title here..." />
         </div>
         <div className="desc">
           <h3>Description</h3>
@@ -110,9 +148,9 @@ const CreateEvent = () => {
           <input type='text' value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Event address..." />
         </div>
         <div className="map">
-          <Map setLatitude={setLatitude} setLongitude={setLongitude} />
+          {longitude && latitude ? <Map longi={longitude} lati={latitude} setLatitude={setLatitude} setLongitude={setLongitude} /> : ''}
         </div>
-        <div className="btn">
+        <div className="btn" onClick={createEvent}>
           <BigButton>
             Create Event
           </BigButton>

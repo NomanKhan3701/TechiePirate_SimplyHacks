@@ -51,7 +51,7 @@ model eventComments {
   eventsEventId Int?
   userEmail     String
   Events        Events? @relation(fields: [eventsEventId], references: [eventId])
-  User          User    @relation(fields: [userEmail], references: [email])
+  author        User    @relation(fields: [userEmail], references: [email])
 }
 
 model Contributor {

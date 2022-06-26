@@ -1,7 +1,7 @@
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const makePayment = async (req, res) => {
-  const amount = Number(req.body.amount);
+  const amount = Number(req.body.items[0].quantity);
   
   const storeItems = new Map([
     [1, { priceInCents: amount * 100, name: "Donation" }],
@@ -27,6 +27,7 @@ const makePayment = async (req, res) => {
       success_url: `${process.env.CLIENT_URL}/success`,
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
     });
+    console.log(session);
     res.json({ url: session.url });
   } catch (e) {
     console.log(e);
