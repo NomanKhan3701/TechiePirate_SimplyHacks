@@ -56,7 +56,7 @@ const createEvent = async (req, res, next) => {
     if (error)
       return res
         .status(400)
-        .send({ error, message: error.details[0].message, hi: "hello" });
+        .send({ error, message: error.details[0].message });
     const event = await prisma.Events.create({
       data: data,
     });
@@ -144,6 +144,9 @@ const addComment = async (req, res, next) => {
     const Comments = await prisma.eventComments.findMany({
       where: {
         eventsEventId: Number(req.body.eventsEventId),
+        include:{
+          author:true,
+        }
       },
     });
     res.status(201).send(Comments);
@@ -190,7 +193,11 @@ const getEvent = async (req, res, next) => {
         organizer: true,
         contributors: true,
         participants: true,
-        comments: true,
+        comments: {
+          include:{
+            author:true,
+          }
+        }
       },
     });
     if (event) res.status(200).send(event);
