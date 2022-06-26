@@ -32,7 +32,7 @@ const ViewEvent = () => {
   const [message, setMessage] = useState("");
   const [amount, setAmount] = useState("");
   const [event, setEvent] = useState([]);
-  const [joined, setJoined] = useState(true);
+  const [joined, setJoined] = useState(false);
 
   useEffect(() => {
     getEvent();
@@ -42,15 +42,19 @@ const ViewEvent = () => {
     try {
       const res = await axios.get(`${server_url}/api/events/view/${id}`);
       setEvent(res.data);
+      for (let i = 0; i < res.data.participants.length; i++) {
+        if (res.data.participants[i].email === auth?.state?.user?.email)
+          setJoined(true);
+      }
     } catch (e) {
       console.log(e);
     }
   };
 
   if (!event) {
-    return <FullScreenLoader></FullScreenLoader>
+    return <FullScreenLoader></FullScreenLoader>;
   }
-  
+
   const eventType = eventTypes[getEventType(event)];
 
   const donate = async () => {
@@ -81,6 +85,29 @@ const ViewEvent = () => {
     }
   };
 
+  const joinEvent = async () => {
+    try {
+      const token = localStorage.getItem("auth_token");
+      const res = await axios.post(
+        `${server_url}/api/events/participant`,
+        {
+          eventsEventId: Number(id),
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      toast.success("Joined the event successfully", {
+        position: "top-center",
+      });
+      setJoined(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const setComments = (newComments) => {
     const data = {};
     Object.assign(data, event);
@@ -89,7 +116,10 @@ const ViewEvent = () => {
   };
 
   return (
-    <div className="container page" style={{'--color-accent': eventType.color}}>
+    <div
+      className="container page"
+      style={{ "--color-accent": eventType.color }}
+    >
       <div className="event-cols">
         <div className="left">
           <img
@@ -136,7 +166,7 @@ const ViewEvent = () => {
           </div>
 
           <div style={{ marginTop: "16px" }}>
-            <BigButton>
+            <BigButton onClick={joinEvent}>
               {joined ? (
                 <div className="btn-join">
                   <span>Event joined</span>
