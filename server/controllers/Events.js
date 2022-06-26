@@ -53,16 +53,11 @@ const createEvent = async (req, res, next) => {
     }
     data.organizerEmail = req.user.email;
     const { error } = validateEvent(data);
-<<<<<<< HEAD
-    if (error)
-      return res.status(400).send({ error, message: error.details[0].message });
-=======
     if (error) {
       return res
         .status(400)
         .send({ error, message: error.details[0].message });
     }
->>>>>>> varun2
     const event = await prisma.Events.create({
       data: data,
     });
@@ -207,13 +202,8 @@ const getEvent = async (req, res, next) => {
         comments: {
           include: {
             author: true,
-<<<<<<< HEAD
-          },
-        },
-=======
           }
         }
->>>>>>> varun2
       },
     });
     if (event) res.status(200).send(event);
