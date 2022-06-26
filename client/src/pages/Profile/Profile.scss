@@ -113,11 +113,33 @@
     flex-direction: column;
 
     > h1 {
-      margin-bottom: 32px;
+      margin-bottom: 16px;
     }
 
-    .profile-content {
+    .profile-sec {
+      margin-bottom: 32px;
 
+      h3 {
+        margin-bottom: 16px;
+      }
+    }
+
+    .scores {
+      display: flex;
+      color: var(--color-accent);
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 32px;
+
+      div {
+        display: flex;
+        align-items: center;
+        margin-right: 64px;
+
+        span {
+          margin-left: 8px;
+        }
+      }
     }
   }
 }
