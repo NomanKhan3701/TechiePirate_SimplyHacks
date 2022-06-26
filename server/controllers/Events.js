@@ -19,7 +19,7 @@ const {
 const getEvents = async (req, res, next) => {
   try {
     if (!req.query.tags) {
-      const events = await prisma.Events.findMany({})
+      const events = await prisma.Events.findMany({});
       res.send(events);
     } else {
       const fields = req.query.tags;
@@ -34,7 +34,7 @@ const getEvents = async (req, res, next) => {
       res.send(events);
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
@@ -71,12 +71,12 @@ const createEvent = async (req, res, next) => {
 const deleteEvent = async (req, res, next) => {
   try {
     res.send("deleteEvents");
-  } catch (error) { }
+  } catch (error) {}
 };
 const editEvent = async (req, res, next) => {
   try {
     res.send("editEvents");
-  } catch (error) { }
+  } catch (error) {}
 };
 const createParticipant = async (req, res, next) => {
   try {
@@ -90,7 +90,9 @@ const createParticipant = async (req, res, next) => {
       data: data,
     });
     // const events = await prisma.Events.findMany({});
-    res.status(201).send({ message: "created event successfully", participant });
+    res
+      .status(201)
+      .send({ message: "created event successfully", participant });
     // send email to participant
     var mailOptions = {
       from: "techiepirateship@gmail.com",
