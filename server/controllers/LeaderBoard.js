@@ -16,7 +16,7 @@ const leaderboard = async (req, res, next) => {
 
     res.status(200).send(users);
   } catch (error) {
-    console.log(e);
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 };

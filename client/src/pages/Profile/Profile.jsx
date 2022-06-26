@@ -86,7 +86,11 @@ const Profile = () => {
 
             <div className="profile-sec">
               <h3>Donations</h3>
-              <div className="pitems-grid"></div>
+              <div className="pitems-grid">
+                {profile.Contributor.map((part, index) => {
+                  return <EventCard key={index} event={part.Events} />;
+                })}
+              </div>
             </div>
           </div>
         </div>
