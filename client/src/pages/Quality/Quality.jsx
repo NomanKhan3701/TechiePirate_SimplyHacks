@@ -8,6 +8,7 @@ import "./Quality.scss";
 import { Link } from "react-router-dom";
 import { Button } from "../../components/import";
 import NewsAPI from "newsapi";
+import moment from "moment";
 const newsapi = new NewsAPI("5dad1d2da1ac42e5bf6dc26c0274ab7b");
 
 const admin_server_url = process.env.REACT_APP_server_url;
@@ -17,6 +18,8 @@ const Quality = () => {
   const [cityName, setCityName] = useState("");
   const [aqi, setAqi] = useState();
   const [weather, setWeather] = useState();
+  const [latLong, setLatLong] = useState(null)
+  const [news, setNews] = useState()
 
   var optionsForCoordinates = {
     enableHighAccuracy: true,
@@ -30,7 +33,8 @@ const Quality = () => {
     var crd = pos.coords;
     var lat = crd.latitude.toString();
     var lng = crd.longitude.toString();
-    var coordinates = [lat, lng];
+    setLatLong(lat + ', ' + lng)
+
     options = {
       method: "GET",
       url: "https://api.ambeedata.com/latest/by-lat-lng",
@@ -52,26 +56,6 @@ const Quality = () => {
         setLoading(false);
         console.error(error);
       });
-    options.url = "https://api.ambeedata.com/soil/latest/by-lat-lng";
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log("shalom");
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-    options.url = "https://api.ambeedata.com/weather/alerts/latest/by-lat-lng";
-    axios
-      .request(options)
-      .then(function (response) {
-        console.log("shalom");
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
   }
   function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
@@ -83,9 +67,11 @@ const Quality = () => {
       error,
       optionsForCoordinates
     );
+
     axios.get(`${admin_server_url}/api/news`).then((response) => {
       console.log("news");
-      console.log(response);
+      console.log(response.data.data);
+      setNews(response.data.data);
     });
   }, []);
 
@@ -140,7 +126,7 @@ const Quality = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="container page">
       <div className="bg-sections">
         <div className="line"></div>
         <div className="line"></div>
@@ -148,23 +134,45 @@ const Quality = () => {
         <div className="line"></div>
         <div className="line"></div>
       </div>
-      <div className="login">
-        <h1>Enter the city name</h1>
-        <input
-          type="text"
-          name="city"
-          value={cityName}
-          placeholder="City"
-          onChange={onChange}
-        ></input>
 
-        <div className="btn">
-          <Button text="Get Quality" onClick={submit} />
-        </div>
+      <h1>Current Scenario</h1>
+      <span className="nearest-to">
+        Near your location: <span>{latLong}</span>
+      </span>
+
+      <div className="aqi-card">
+        AQI
+        <span>{aqi || '...'}</span>
       </div>
-      <div>AQI {aqi}</div>
+
+      <div className="news-list">
+        {
+          news ? news.articles.map((item) => {
+            return <NewsCard news={item}></NewsCard>
+          }) : null
+        }
+      </div>
     </div>
   );
 };
+
+function NewsCard({news = {}}) {
+  return (
+    <a href={news.url} className='news-card'>
+			<div className="img-holder">
+				<img src={news.urlToImage} />
+
+				<div className="fader"></div>
+			</div>
+			<div className='title'>
+				{news.title}
+				<span>{news.source.name + ' • ' + moment(news.publishedAt).format('hh:mm a, DD/MM/YY').toUpperCase()}</span>
+			</div>
+			<div className='content'>
+        {news.description}
+			</div>
+		</a>
+  )
+}
 
 export default Quality;

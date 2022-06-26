@@ -9,7 +9,7 @@ export function getEventType(event) {
   if (!tags) return 'misc'
   
   for (let i = 0; i < tags.length; i++) {
-    if (tags[i].toLowerCase().includes('water')) {
+    if (tags[i].toLowerCase().includes('water') || tags[i].toLowerCase().includes('beach')) {
       return 'water'
     }
 

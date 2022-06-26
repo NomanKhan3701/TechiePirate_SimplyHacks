@@ -27,9 +27,7 @@ const Posts = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
     getPosts();
-    setLoading(false);
   }, []);
 
   if (loading) {

@@ -75,23 +75,32 @@ const Profile = () => {
               </div>
             </div>
 
-            <div className="profile-sec">
-              <h3>Events Joined</h3>
-              <div className="pitems-grid">
-                {profile.Participant.map((part, index) => {
-                  return <EventCard key={index} event={part.Events} />;
-                })}
-              </div>
-            </div>
+            {
+							profile.Participant && profile.Participant.length > 0 ? (
+								<div className="profile-sec">
+									<h3>Events Joined</h3>
+									<div className="pitems-grid">
+										{profile.Participant.map((part, index) => {
+											return <EventCard key={index} event={part.Events} />;
+										})}
+									</div>
+								</div>
+							) : null
+						}
 
-            <div className="profile-sec">
-              <h3>Donations</h3>
-              <div className="pitems-grid">
-                {profile.Contributor.map((part, index) => {
-                  return <EventCard key={index} event={part.Events} />;
-                })}
-              </div>
-            </div>
+            {
+							profile.Contributor && profile.Contributor.length > 0 ? (
+								<div className="profile-sec">
+									<h3>Donations</h3>
+									<div className="pitems-grid">
+										{profile.Contributor.map((part, index) => {
+											return <EventCard key={index} event={part.Events} />;
+										})}
+									</div>
+								</div>
+							) : null
+						}
+
           </div>
         </div>
       </div>

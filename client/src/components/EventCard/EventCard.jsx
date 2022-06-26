@@ -5,6 +5,7 @@ import "./EventCard.scss";
 import { Link } from "react-router-dom";
 import { eventTypes } from "../../constants";
 import { getEventType } from "../../utils";
+import { LimitChar } from "../import";
 
 const EventCard = ({ event }) => {
   // const eventType = eventTypes[event.eventTags[0]];
@@ -30,7 +31,9 @@ const EventCard = ({ event }) => {
         </div>
       </div>
 
-      <div className="details">{event.description}</div>
+      <div className="details">
+        <LimitChar word={event.description} limit={30}></LimitChar>
+      </div>
 
       <div className="event-card-overlay">
         <span className="big-icon">
