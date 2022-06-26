@@ -14,10 +14,6 @@ router.get(
     res.send(req.user);
   }
 );
-router.get(
-  "/profile",
-  profile
-);
-
+router.get("/profile", profile);
 
 module.exports = router;
