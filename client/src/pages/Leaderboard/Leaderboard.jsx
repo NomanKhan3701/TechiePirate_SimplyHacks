@@ -19,7 +19,14 @@ export default function Leaderboard() {
 		try {
 			setLoading(true)
 			const res = await axios.get(`${server_url}/api/leaderboard`);
-			setLeaderboard(res.data)
+      const data = res.data
+
+      data.sort((a, b) => {
+        if (a.workPts !== b.workPts) return b.workPts - a.workPts
+        return b.resourcePts - a.resourcePts
+      })
+
+			setLeaderboard(data)
 			setLoading(false)
 		} catch (e) {
 			console.log(e);

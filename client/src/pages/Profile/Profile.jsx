@@ -15,18 +15,18 @@ const Profile = () => {
 	const {email} = useParams()
 	const [profile, setProfile] = useState(null)
 
-	const getProfile = async () => {
-		try {
-      const res = await axios.get(`${server_url}/api/auth/profile?email=${email}`);
-      setProfile(res.data)
-    } catch (e) {
-      console.log(e);
-    }
-	}
-
 	useEffect(() => {
+		const getProfile = async () => {
+			try {
+				const res = await axios.get(`${server_url}/api/auth/profile?email=${email}`);
+				setProfile(res.data)
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		
 		getProfile()
-	}, [])
+	}, [email])
 
 	if (!profile) {
 		return <FullScreenLoader></FullScreenLoader>
