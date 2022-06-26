@@ -8,5 +8,6 @@ export { default as CreatePost } from "./CreatePost/CreatePost"
 export { default as ViewEvent } from "./ViewEvent/ViewEvent"
 export { default as ViewPost } from "./ViewPost/ViewPost"
 export { default as Profile } from "./Profile/Profile"
-export {default as Success} from "./Payment/Success/Success"
-export {default as Cancel} from "./Payment/Cancel/Cancel"
+export { default as Success } from "./Payment/Success/Success"
+export { default as Cancel } from "./Payment/Cancel/Cancel"
+export { default as Quality } from './Quality/Quality'

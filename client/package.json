@@ -19,6 +19,8 @@
     "gapi-script": "^1.2.0",
     "mapbox-gl": "^2.9.1",
     "moment": "^2.29.3",
+    "newsapi": "^2.4.1",
+    "querystring": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-google-login": "^5.2.2",
