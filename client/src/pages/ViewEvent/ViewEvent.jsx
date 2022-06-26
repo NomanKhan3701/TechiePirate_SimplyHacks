@@ -19,6 +19,8 @@ import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
 import ReactMarkdown from "react-markdown";
+import FullScreenLoader from "../Signup/FullScreenLoader";
+import { getEventType } from "../../utils";
 
 const client_url = process.env.REACT_APP_client_url;
 const server_url = process.env.REACT_APP_server_url;
@@ -27,7 +29,6 @@ const ViewEvent = () => {
   const navigate = useNavigate();
   const auth = useAuth();
   const { id } = useParams();
-  const eventType = eventTypes["tree_planting"];
   const [message, setMessage] = useState("");
   const [amount, setAmount] = useState("");
   const [event, setEvent] = useState([]);
@@ -45,6 +46,12 @@ const ViewEvent = () => {
       console.log(e);
     }
   };
+
+  if (!event) {
+    return <FullScreenLoader></FullScreenLoader>
+  }
+  
+  const eventType = eventTypes[getEventType(event)];
 
   const donate = async () => {
     if (!auth?.state.authenticated) {
@@ -82,7 +89,7 @@ const ViewEvent = () => {
   };
 
   return (
-    <div className="container page">
+    <div className="container page" style={{'--color-accent': eventType.color}}>
       <div className="event-cols">
         <div className="left">
           <img

@@ -13,6 +13,7 @@ const Home = () => {
 	const getPosts = async () => {
 		try {
 			const res = await axios.get(`${server_url}/api/posts`);
+			res.data = res.data.slice(0, Math.min(res.data.length, 4))
 			setPosts(res.data)
 		} catch (e) {
 			console.log(e);
@@ -21,8 +22,9 @@ const Home = () => {
 
 	const getEvents = async () => {
 		try {
-			/*const res = await axios.get(`${server_url}/api/events`);
-			setEvents(res.data)*/
+			const res = await axios.get(`${server_url}/api/events`);
+			res.data = res.data.slice(0, Math.min(res.data.length, 4))
+			setEvents(res.data)
 		} catch (e) {
 			console.log(e);
 		}
@@ -41,7 +43,9 @@ const Home = () => {
 			<div className='home-sec'>
 				<h1>Top Events</h1>
 				<div className='items-grid'>
-					
+					{!events ? <div className='loading'><Loader /></div> : events?.map((event, key) => {
+						return <EventCard event={event} key={key} />
+					})}
 				</div>
 			</div>
 
