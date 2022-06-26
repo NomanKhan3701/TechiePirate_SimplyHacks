@@ -42,7 +42,7 @@
                 font-weight: 800;
 
                 .green {
-                    color: var(--bg-mid-green);
+                    color: var(--color-accent);
                 }
 
                 .words {
@@ -59,13 +59,14 @@
                 cursor: pointer;
 
                 .btn {
-                    background: var(--bg-mid-green);
+                    background: var(--color-accent);
                     width: 60px;
                     height: 60px;
                     display: grid;
                     place-items: center;
                     border-radius: 50%;
-                    box-shadow: 10px 10px 20px rgba(green, 0.4);
+                    box-shadow: 0px 4px 20px #5a84154f;
+                    transition: all 0.25s ease;
 
                     svg {
                         font-size: 30px;
@@ -91,7 +92,13 @@
                     margin-left: 20px;
                     font-size: 20px;
                     font-weight: 600;
-                    color: green;
+                    color: var(--color-accent);
+                }
+
+                &:hover {
+                    .btn {
+                        margin-right: 16px;
+                    }
                 }
             }
         }
@@ -109,4 +116,8 @@
             }
         }
     }
+}
+
+.home-sec {
+    padding: 48px 0px;
 }

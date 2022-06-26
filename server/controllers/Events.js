@@ -53,8 +53,16 @@ const createEvent = async (req, res, next) => {
     }
     data.organizerEmail = req.user.email;
     const { error } = validateEvent(data);
+<<<<<<< HEAD
     if (error)
       return res.status(400).send({ error, message: error.details[0].message });
+=======
+    if (error) {
+      return res
+        .status(400)
+        .send({ error, message: error.details[0].message });
+    }
+>>>>>>> varun2
     const event = await prisma.Events.create({
       data: data,
     });
@@ -143,11 +151,11 @@ const addComment = async (req, res, next) => {
     });
     const Comments = await prisma.eventComments.findMany({
       where: {
-        eventsEventId: Number(req.body.eventsEventId),
+        eventsEventId: Number(req.body.eventsEventId)
       },
       include: {
         author: true,
-      },
+      }
     });
     res.status(201).send(Comments);
   } catch (error) {
@@ -163,6 +171,9 @@ const getComments = async (req, res, next) => {
       where: {
         eventsEventId: Number(req.query.eventsEventId),
       },
+      include: {
+        author: true,
+      }
     });
     res.status(200).send(Comments);
   } catch (error) {
@@ -196,8 +207,13 @@ const getEvent = async (req, res, next) => {
         comments: {
           include: {
             author: true,
+<<<<<<< HEAD
           },
         },
+=======
+          }
+        }
+>>>>>>> varun2
       },
     });
     if (event) res.status(200).send(event);

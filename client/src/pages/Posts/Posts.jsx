@@ -1,16 +1,17 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
-import { Loader, Post } from '../../components/import'
+import { Link } from 'react-router-dom'
+import { BigButton, Loader, Post } from '../../components/import'
+import { useAuth } from '../../contexts/AuthContext'
+import FullScreenLoader from '../Signup/FullScreenLoader'
 import './Posts.scss'
 
 const server_url = process.env.REACT_APP_server_url
+
 const Posts = () => {
 	const [loading, setLoading] = useState(true);
 	const [posts, setPosts] = useState([]);
-
-	useEffect(() => {
-		getPosts();
-	}, [])
+	const auth = useAuth()
 
 	const getPosts = async () => {
 		try {
@@ -23,13 +24,36 @@ const Posts = () => {
 		}
 	}
 
+	useEffect(() => {
+		setLoading(true)
+		getPosts();
+		setLoading(false)
+	}, [])
+
+	if (loading) {
+		return <FullScreenLoader></FullScreenLoader>
+	}
+
 	return (
 		<div className='container page'>
 			<h1>Posts</h1>
+
+			{
+				auth.state.authenticated ?
+					<Link 
+						style={{'width': 'fit-content', 'marginBottom': '24px', 'display': 'flex'}} 
+						to="/posts/create">
+						<BigButton>Create</BigButton>
+					</Link>
+				: null
+			}
+
 			<div className='posts-list'>
-				{loading ? <div className='loading'><Loader /></div> : posts?.map((post, key) => {
-					return <Post post={post} key={key} />
-				})}
+				{
+					loading ? <div className='loading'><Loader /></div> : posts?.map((post, key) => {
+						return <Post post={post} key={key} />
+					})
+				}
 			</div>
 		</div>
 	)

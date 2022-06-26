@@ -15,6 +15,7 @@ import { BigButton } from '../../components/import'
 import { useAuth } from '../../contexts/AuthContext'
 
 const server_url = process.env.REACT_APP_server_url
+
 const ViewPost = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -52,7 +53,7 @@ const ViewPost = () => {
               : null
           }
 
-          <Link to={'/profile/' + post.author.id} className='posted-by'>
+          <Link to={'/profile/' + post.author.email} className='posted-by'>
             <img src={post.author.image || 'https://via.placeholder.com/512'} />
             <div>
               {`${post.author.firstName} ${post.author.lastName}`}
@@ -97,7 +98,7 @@ const ViewPost = () => {
 
         {
           comments?.map((item) => {
-            return <CommentCard comment={item}></CommentCard>
+            return <CommentCard key={item.commentId} comment={item}></CommentCard>
           })
         }
       </div>

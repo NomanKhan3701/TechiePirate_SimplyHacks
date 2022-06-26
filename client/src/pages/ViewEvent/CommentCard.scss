@@ -1,0 +1,62 @@
+.comment {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+  width: 100%;
+
+  .author {
+    display: flex;
+    align-items: center;
+
+    > img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      font-size: 16px;
+      font-weight: 600;
+
+      > span {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 500;
+        margin-top: 2px;
+        color: var(--color-accent);
+
+        span {
+          margin-left: 4px;
+        }
+      }
+    }
+  }
+
+  .content {
+    --card-color: rgb(228, 234, 235);
+    background: var(--card-color);
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &::before {
+      content: ' ';
+      height: 0px;
+      width: 0px;
+      display: block;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 16px solid var(--card-color);
+      position: absolute;
+      top: -12px;
+      left: 10px;
+    }
+  }
+}

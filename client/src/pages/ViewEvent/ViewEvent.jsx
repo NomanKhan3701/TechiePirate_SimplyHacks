@@ -1,5 +1,8 @@
 import "./ViewEvent.scss";
-import { TbPlant2 } from "react-icons/tb";
+import { TbPlant2, TbCheck } from "react-icons/tb";
+import { GrUserWorker } from "react-icons/gr";
+import CommentCard from './CommentCard'
+import { FaDonate } from "react-icons/fa";
 import {
   BiCalendarAlt,
   BiTime,
@@ -7,37 +10,59 @@ import {
   BiRupee,
   BiMessage,
 } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { eventTypes } from "../../constants";
 import BigButton from "../../components/BigButton/BigButton";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import moment from "moment";
+import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
+import ReactMarkdown from "react-markdown";
 
+const client_url = process.env.REACT_APP_client_url;
 const server_url = process.env.REACT_APP_server_url;
+
 const ViewEvent = () => {
   const navigate = useNavigate();
+  const auth = useAuth();
+  const { id } = useParams();
   const eventType = eventTypes["tree_planting"];
   const [message, setMessage] = useState("");
   const [amount, setAmount] = useState("");
   const [event, setEvent] = useState([]);
 
-  useEffect(()=>{
-    getEvent()
-  },[])
+  useEffect(() => {
+    getEvent();
+  }, []);
 
   const getEvent = async () => {
-    
-  }
+    try {
+      const res = await axios.get(`${server_url}/api/events/view/${id}`);
+      setEvent(res.data)
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const donate = async () => {
-    if (amount.trim() === "" || message.trim() === "") return;
-
+    if (!auth?.state.authenticated) {
+      navigate("/login");
+    }
+    if (amount.trim() === "" || message.trim() === "") {
+      toast.error("Fields cannot be empty", { position: "top-center" });
+      return;
+    }
     try {
-      localStorage.setItem("donationToken",{
-        userEmail:email,
-        eventsEventId:id,
-        monetary: amount,
-      })
+      localStorage.setItem(
+        "donationToken",
+        JSON.stringify({
+          userEmail: auth?.state?.user?.email,
+          eventsEventId: id,
+          monetary: amount,
+        })
+      );
+
       const res = await axios.post(`${server_url}/api/payment`, {
         items: [{ id: 1, quantity: 1 }],
         amount: amount,
@@ -47,20 +72,33 @@ const ViewEvent = () => {
       console.log(e);
     }
   };
+
+  const setComments = (newComments) => {
+    const data = {}
+    Object.assign(data, event)
+    data.comments = newComments
+    setEvent(data)
+  }
+
   return (
     <div className="container page">
       <div className="event-cols">
         <div className="left">
-          <img src="https://via.placeholder.com/512" />
-
-          <Link to={"/profile"} className="posted-by">
+          <img
+            src={event.image ? event.image : "https://via.placeholder.com/512"}
+          />
+          <Link to={"/profile/" + event.organizer?.email} className="posted-by">
             <img src="https://via.placeholder.com/512" />
             <div>
-              Aditya Kharote
-              <div>
+              {event?.organizer?.firstName} {event?.organizer?.lastName}
+              <div className="flex">
                 <span>
                   <TbPlant2></TbPlant2>
-                  <span>12</span>
+                  <span>{event?.organizer?.workPts}</span>
+                </span>
+                <span>
+                  <FaDonate />
+                  <span>{event?.organizer?.resourcePts}</span>
                 </span>
               </div>
             </div>
@@ -71,29 +109,31 @@ const ViewEvent = () => {
               <i>
                 <BiCalendarAlt></BiCalendarAlt>
               </i>
-              <span>14th February 2022</span>
+              <span>{moment(event?.time).format("Do MMMM YYYY")}</span>
             </span>
 
             <span>
               <i>
                 <BiTime></BiTime>
               </i>
-              <span>10:00 AM</span>
+              <span>{moment(event?.time).format("LT")}</span>
             </span>
 
             <span>
               <i>
                 <BiMapPin></BiMapPin>
               </i>
-              <span>
-                Bhavans Campus, Old D N Nagar, Munshi Nagar, Andheri West,
-                Mumbai, Maharashtra 400058
-              </span>
+              <span>{event?.address}</span>
             </span>
           </div>
 
           <div style={{ marginTop: "16px" }}>
-            <BigButton>Join Event</BigButton>
+            <BigButton>
+              {
+                false ? 'Join Event'
+                : <TbCheck style={{'fontSize': '20px'}} />
+              }
+            </BigButton>
           </div>
         </div>
 
@@ -103,31 +143,12 @@ const ViewEvent = () => {
             <span>{eventType.title}</span>
           </div>
 
-          <h1>Event Title</h1>
+          <h1>{event?.title}</h1>
 
           <div className="event-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-            consequat viverra lectus, sed lacinia risus convallis sit amet.
-            Curabitur lacinia est et egestas egestas. Fusce non lorem id mi
-            dapibus accumsan in eget eros. Fusce auctor placerat lacus in
-            luctus. Morbi porttitor molestie libero non placerat. Nullam tempus
-            lacus sed felis lacinia, ac molestie mauris tempor. Nam porttitor,
-            felis vitae commodo vulputate, odio risus tincidunt elit, vel
-            egestas sem justo vel nulla. Aenean mattis magna enim. Praesent quis
-            massa laoreet lacus porta ultrices elementum rhoncus enim. Aliquam
-            erat volutpat.
-            <br />
-            <br />
-            Morbi erat nisi, laoreet quis tellus et, imperdiet tempus nibh. Sed
-            nec pretium enim. Mauris lacinia rutrum pellentesque. Praesent
-            libero nibh, efficitur vitae lobortis in, aliquet id purus. Morbi
-            rutrum, turpis vel dapibus mattis, arcu sapien convallis libero, et
-            viverra sem metus at justo. Donec semper enim ex, at luctus dui
-            vulputate pellentesque. Etiam sapien quam, rhoncus in urna at,
-            efficitur viverra purus. Mauris blandit turpis feugiat lacinia
-            venenatis. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Nullam vitae tellus consequat lectus viverra maximus. Etiam
-            pellentesque consectetur enim, et gravida elit tincidunt quis.
+            <ReactMarkdown>
+              {event?.description}
+            </ReactMarkdown>
           </div>
 
           <div className="contribute">
@@ -174,8 +195,71 @@ const ViewEvent = () => {
           </div>
         </div>
       </div>
+
+      <div className='post-comment-sec'>
+        <h2>Comments</h2>
+
+        {
+          event?.comments != null ?
+            <WriteCommentBox setComments={setComments} eventId={id} />
+          : null
+        }
+
+        {
+          event?.comments?.map((item) => {
+            return <CommentCard key={item.commentId} comment={item}></CommentCard>
+          })
+        }
+      </div>
     </div>
   );
 };
+
+
+const WriteCommentBox = ({setComments, eventId}) => {
+  const auth = useAuth()
+  const [text, setText] = useState('')
+  const [sending, setSending] = useState(false)
+
+  const onSubmit = async () => {
+    if (text.trim() === '' || sending) return
+
+    setSending(true)
+
+    const res = await axios.post(
+      `${server_url}/api/events/comments`,
+      {
+        "comment": text,
+        "eventsEventId": Number(eventId)
+      },
+      {
+        headers: {
+          'Authorization': auth.state.token
+        }
+      }
+    )
+
+    console.log(res.data)
+
+    setComments(res.data);
+    setSending(false)
+  }
+
+  if (!auth.state.authenticated) return
+
+  return (
+    <div className='wcom'>
+      <textarea
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+        placeholder='Want to discuss something?'
+        />
+
+      <div style={{'width': 'fit-content', 'marginLeft': 'auto'}}>
+        <BigButton onClick={onSubmit}>Submit</BigButton>
+      </div>
+    </div>
+  )
+}
 
 export default ViewEvent;
