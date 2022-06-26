@@ -15,16 +15,17 @@ const validateEvent = (data) => {
 };
 const validateParticipant = (data) => {
   const schema = Joi.object({
-    eventsEventId:Joi.number().label("eventId"),
-    userEmail:Joi.string().email().required().label("userEmail"),
+    eventsEventId: Joi.number().label("eventId"),
+    userEmail: Joi.string().email().required().label("userEmail"),
+    monetary: Joi.number().label("monetary"),
   });
   return schema.validate(data);
 };
 const validateContributor = (data) => {
   const schema = Joi.object({
-    userEmail:Joi.string().email().required().label("email"),
-    eventsEventId:Joi.number().label("eventid"),
-    monetary:Joi.number().label("Monetary amount")
+    userEmail: Joi.string().email().required().label("email"),
+    eventsEventId: Joi.number().label("eventid"),
+    monetary: Joi.number().label("Monetary amount"),
   });
   return schema.validate(data);
 };
