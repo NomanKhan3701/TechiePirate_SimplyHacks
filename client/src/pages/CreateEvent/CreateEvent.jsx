@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Button, FileUpload, MarkdownEditor } from "../../components/import";
+import { BigButton, Button, FileUpload, Map, MarkdownEditor } from "../../components/import";
 import { BsFillCalendarDateFill } from "react-icons/bs";
+import { FcHome } from "react-icons/fc";
 import { FcClock } from "react-icons/fc";
+import { FaCity } from "react-icons/fa";
 import moment from "moment";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -18,9 +20,14 @@ const CreateEvent = () => {
   const [timeToggle, setTimeToggle] = useState(false);
   const [time, setTime] = useState(new Date());
   const [markdownVal, setMarkdownVal] = useState("");
+  const [longitude, setLongitude] = useState();
+  const [latitude, setLatitude] = useState();
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
 
   return (
-    <div className="create-event container">
+    <div className="create-event container page">
+      <h1>New Event</h1>
       <div className="main-form">
         <div className="title">
           <h3>Title</h3>
@@ -94,8 +101,21 @@ const CreateEvent = () => {
             </div>
           </div>
         </div>
+        <div className="location-input">
+          <span><FaCity /></span>
+          <input type="text" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Event city" />
+        </div>
+        <div className="location-input">
+          <span><FcHome /></span>
+          <input type='text' value={address} onChange={(e) => setAddress(e.target.value)} placeholder="Event address..." />
+        </div>
+        <div className="map">
+          <Map setLatitude={setLatitude} setLongitude={setLongitude} />
+        </div>
         <div className="btn">
-          <Button text='Create Event' />
+          <BigButton>
+            Create Event
+          </BigButton>
         </div>
       </div>
     </div>

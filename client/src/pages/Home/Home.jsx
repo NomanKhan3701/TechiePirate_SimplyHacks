@@ -7,6 +7,8 @@ const Home = () => {
 		<div className='home container'>
 			<Header />
 			<About />
+
+			<div className='home-sec'></div>
 		</div>
 	)
 }

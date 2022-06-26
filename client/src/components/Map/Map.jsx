@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./Map.scss";
 import mapboxgl from "mapbox-gl";
+import { MapboxGeocoder } from '@mapbox/mapbox-gl-geocoder';
 mapboxgl.accessToken =
   "pk.eyJ1Ijoibm9tYW4zNzAxIiwiYSI6ImNsNHR4dXBsZTBqOXgzZXBoeDdydHpjajMifQ.6-p5dHzGJUZuRvrjxLQm4w";
 
-const Map = () => {
+const Map = ({ setLongitude, setLatitude }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
   const [lng, setLng] = useState(-70.9);
@@ -26,6 +27,15 @@ const Map = () => {
       center: [crd.longitude, crd.latitude],
       zoom: zoom,
     });
+
+    var geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken
+    });
+
+    map.addControl(geocoder);
+
+    setLongitude(crd.longitude)
+    setLatitude(crd.latitude)
     console.log(`More or less ${crd.accuracy} meters.`);
   }
 
@@ -43,12 +53,12 @@ const Map = () => {
   }, []);
 
   return (
-    <div>
-      <div className="sidebar">
+    <>
+      {/* <div className="sidebar">
         Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-      </div>
+      </div> */}
       <div ref={mapContainer} className="map-container" />
-    </div>
+    </>
   );
 };
 

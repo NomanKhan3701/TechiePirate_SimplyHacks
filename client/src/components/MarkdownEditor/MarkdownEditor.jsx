@@ -3,7 +3,7 @@ import './MarkdownEditor.scss'
 import React, { useState, useCallback } from 'react'
 
 const MarkdownEditor = ({ setMarkdownVal }) => {
-	const [value, setValue] = useState("Type Here...");
+	const [value, setValue] = useState("");
 
 	const onChange = useCallback((value) => {
 		setMarkdownVal(value);
@@ -11,7 +11,7 @@ const MarkdownEditor = ({ setMarkdownVal }) => {
 	}, []);
 	return (
 		<div className="markdown-editor">
-			<SimpleMdeReact value={value} onChange={onChange} />
+			<SimpleMdeReact placeholder="Write about your event here" value={value} onChange={onChange} />
 		</div>
 	)
 }

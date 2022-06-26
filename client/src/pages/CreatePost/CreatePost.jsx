@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useEffect } from 'react';
-import { FileUpload } from '../import'
+import { BigButton, FileUpload } from '../../components/import'
 import { toast } from 'react-toastify';
-import Button from '../Button/Button';
-import MarkdownEditor from '../MarkdownEditor/MarkdownEditor'
+import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor'
 import './CreatePost.scss'
 import axios from 'axios';
 
@@ -66,7 +65,8 @@ const CreatePost = () => {
 	};
 
 	return (
-		<div className='create-post container'>
+		<div className='create-post container page'>
+			<h1>New Post</h1>
 			<div className="form-container">
 				<div className="title-util">
 					<h3>Title</h3>
@@ -93,11 +93,11 @@ const CreatePost = () => {
 					</div>
 				</div>
 				<div className="btn">
-					<Button text='Create Post' onClick={createPost} />
-
+					<BigButton onClick={createPost}>
+						Create Post
+					</BigButton>
 				</div>
 			</div>
-
 		</div>
 	)
 }

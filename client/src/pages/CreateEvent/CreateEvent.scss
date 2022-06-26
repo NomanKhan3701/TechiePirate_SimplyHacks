@@ -1,11 +1,9 @@
 .create-event {
     background: var(--bg-light-cream);
     min-height: 100vh;
-    transform: translateY(calc(-1 * var(--nav-height)));
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--nav-height) 20px;
     position: relative;
 
     &::after {
@@ -61,6 +59,8 @@
 
         h3 {
             margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         .date-time {
@@ -147,6 +147,42 @@
                     font-weight: 600;
                 }
             }
+        }
+
+        .location-input {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            background: white;
+
+            input {
+                width: calc(100% - 40px);
+                height: 100%;
+                outline: none;
+                font-size: 14px;
+                border: none;
+                outline: none;
+                margin-left: 20px;
+                font-size: 16px;
+            }
+
+            span {
+                svg {
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .map {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
         }
 
 

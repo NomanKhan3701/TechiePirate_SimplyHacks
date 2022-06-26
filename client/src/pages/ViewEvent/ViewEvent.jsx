@@ -1,6 +1,6 @@
 import './ViewEvent.scss'
 import { TbPlant2 } from 'react-icons/tb'
-import { BiCalendarAlt, BiTime, BiMapPin } from 'react-icons/bi'
+import { BiCalendarAlt, BiTime, BiMapPin, BiRupee, BiMessage } from 'react-icons/bi'
 import { Link, useNavigate } from 'react-router-dom'
 import { eventTypes } from '../../constants'
 import BigButton from '../../components/BigButton/BigButton'
@@ -13,13 +13,10 @@ const ViewEvent = () => {
   const eventType = eventTypes['tree_planting']
   const [message, setMessage] = useState("")
   const [amount, setAmount] = useState("")
-  const openForm = () => {
 
-  }
-  const closeForm = () => {
-
-  }
   const donate = async () => {
+    if (amount.trim() === '' || message.trim() === '') return
+
     try {
       const res = await axios.post(`${server_url}/api/payment`, {
         items: [{ id: 1, quantity: 1 }],
@@ -98,20 +95,27 @@ const ViewEvent = () => {
               All proceeds will be used to fund this event.<br /><br />
               You can also contact the event creator directly in case you want to provide supplies or other non monetary contributions.
             </p>
-            <div onClick={openForm} style={{ 'width': 'fit-content' }}>
-              <BigButton >Donate Now</BigButton>
-            </div>
           </div>
           <div className="donate-form">
+
             <div className="input">
+              <span>
+                <BiRupee></BiRupee>
+              </span>
+              <input name='amount' type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder='Amount' />
+            </div>
+
+            <div className="input">
+              <span>
+                <BiMessage></BiMessage>
+              </span>
               <input name="message" value={message} onChange={(e) => setMessage(e.target.value)} type="text" placeholder='Message' />
-
             </div>
-            <div className="input">
-              <input name='amount' value={amount} onChange={(e) => setAmount(e.target.value)} type="text" placeholder='Amount' />
 
+            <div onClick={donate} style={{ 'width': 'fit-content' }}>
+              <BigButton >Donate Now</BigButton>
             </div>
-            <button onClick={donate}>Donate</button>
+
           </div>
         </div>
       </div>
