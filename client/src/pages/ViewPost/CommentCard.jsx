@@ -1,11 +1,12 @@
 import './CommentCard.scss'
 import { TbPlant2 } from 'react-icons/tb'
+import { getDefaultPhoto } from '../../utils'
 
 const CommentCard = ({comment}) => {
   return (
     <div className='comment'>
       <div className='author'>
-        <img src='https://via.placeholder.com/256' />
+        <img src={comment.author?.image || getDefaultPhoto(comment.author)} />
         <div>
           {comment.userEmail}
           <span>

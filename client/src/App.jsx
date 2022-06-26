@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router'
 import { Map, Navbar } from './components/import';
-import { Cancel, CreateEvent, CreatePost, Events, Home, Login, Posts, Profile, Signup, Success, ViewEvent, ViewPost } from './pages/import';
+import { CreatePost, Cancel, CreateEvent, Events, Home, Login, Payment, Posts, Profile, Signup, Success, ViewEvent, ViewPost } from './pages/import';
 
 import "react-toastify/dist/ReactToastify.css";
 import "mapbox-gl/dist/mapbox-gl.css";
@@ -26,7 +26,6 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/success' element={<Success />} />
           <Route path='/cancel' element={<Cancel />} />
-          <Route path='/map' element={<Map />} />
         </Routes>
       </AuthProvider>
     </div>

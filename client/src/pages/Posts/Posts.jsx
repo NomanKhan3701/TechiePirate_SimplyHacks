@@ -1,16 +1,13 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import { Loader, Post } from '../../components/import'
+import FullScreenLoader from '../Signup/FullScreenLoader'
 import './Posts.scss'
 
 const server_url = process.env.REACT_APP_server_url
 const Posts = () => {
 	const [loading, setLoading] = useState(true);
 	const [posts, setPosts] = useState([]);
-
-	useEffect(() => {
-		getPosts();
-	}, [])
 
 	const getPosts = async () => {
 		try {
@@ -21,6 +18,16 @@ const Posts = () => {
 		} catch (e) {
 			console.log(e);
 		}
+	}
+
+	useEffect(() => {
+		setLoading(true)
+		getPosts();
+		setLoading(false)
+	}, [])
+
+	if (loading) {
+		return <FullScreenLoader></FullScreenLoader>
 	}
 
 	return (
