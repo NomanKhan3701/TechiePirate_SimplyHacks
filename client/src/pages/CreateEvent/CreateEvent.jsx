@@ -214,7 +214,11 @@ const CreateEvent = () => {
           )}
         </div>
         <div className="btn" onClick={createEvent}>
-          <LoadingBtn loading={loading} text="Create Event" />
+          <LoadingBtn
+            loading={loading}
+            completedText="Event Created"
+            text="Create Event"
+          />
         </div>
       </div>
     </div>

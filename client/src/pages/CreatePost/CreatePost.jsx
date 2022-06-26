@@ -112,7 +112,7 @@ const CreatePost = () => {
           </div>
         </div>
         <div className="btn" onClick={createPost}>
-          <LoadingBtn loading={loading} text="Create Post" />
+          <LoadingBtn loading={loading} completedText="Post created" text="Create Post" />
         </div>
       </div>
     </div>

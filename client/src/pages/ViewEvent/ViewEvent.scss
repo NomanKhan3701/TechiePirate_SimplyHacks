@@ -15,6 +15,17 @@
       object-position: center;
     }
 
+    .btn-join {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      svg {
+        margin-left: 20px;
+        font-size: 17px;
+      }
+    }
+
     .event-info {
       padding: 20px 24px;
       display: flex;
