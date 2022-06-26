@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from './contexts/AuthContext';
+import Leaderboard from './pages/Leaderboard/Leaderboard';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path='/profile/:email' element={<Profile />} />
           <Route path='/success' element={<Success />} />
           <Route path='/cancel' element={<Cancel />} />
+          <Route path='/leaderboard' element={<Leaderboard />} />
         </Routes>
       </AuthProvider>
     </div>

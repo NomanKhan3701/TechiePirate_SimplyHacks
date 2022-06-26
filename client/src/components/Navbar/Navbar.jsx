@@ -28,8 +28,9 @@ const Navbar = () => {
 			</div>
 			<div className="links">
 				<Link className='link' to='/'>Home</Link>
-				<Link className='link' to='/posts'>Posts</Link>
 				<Link className='link' to='/events'>Events</Link>
+				<Link className='link' to='/posts'>Posts</Link>
+				<Link className='link' to='/leaderboard'>Leaderboard</Link>
 				{
 					!auth.state.authenticated ?
 						<Link className='big' to='/login'>Login / Register</Link>

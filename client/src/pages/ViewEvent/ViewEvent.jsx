@@ -37,6 +37,7 @@ const ViewEvent = () => {
   const getEvent = async () => {
     try {
       const res = await axios.get(`${server_url}/api/events/view/${id}`);
+      res.data.comments.reverse()
       setEvent(res.data)
     } catch (e) {
       console.log(e);
@@ -74,6 +75,7 @@ const ViewEvent = () => {
     const data = {}
     Object.assign(data, event)
     data.comments = newComments
+    data.comments.reverse()
     setEvent(data)
   }
 

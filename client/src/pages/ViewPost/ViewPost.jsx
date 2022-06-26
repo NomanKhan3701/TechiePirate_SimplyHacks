@@ -1,6 +1,7 @@
 import './ViewPost.scss'
 import { TbPlant2 } from 'react-icons/tb'
 import { BiCalendarAlt, BiTime, BiMapPin } from 'react-icons/bi'
+import { FaDonate } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { testMarkdown } from '../../constants'
@@ -36,6 +37,7 @@ const ViewPost = () => {
 
   const getComments = async () => {
     const res = await axios.get(`${server_url}/api/posts/Comments?postId=${id}`)
+    res.data.reverse()
     setComments(res.data);
   }
 
@@ -60,7 +62,10 @@ const ViewPost = () => {
               <div>
                 <span>
                   <TbPlant2></TbPlant2>
-                  <span>{post.author.workPts + post.author.resourcePts}</span>
+                  <span>{post.author.workPts}</span>
+                  <div style={{'width': '16px'}}></div>
+                  <FaDonate></FaDonate>
+                  <span>{post.author.resourcePts}</span>
                 </span>
               </div>
             </div>
@@ -128,6 +133,7 @@ const WriteCommentBox = ({setComments, postId}) => {
         }
       }
     )
+    res.data.reverse()
 
     setComments(res.data);
     setSending(false)
