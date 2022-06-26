@@ -30,12 +30,6 @@ const getEvents = async (req, res, next) => {
             hasSome: field,
           },
         },
-        include: {
-          organizer: true,
-          contributors: true,
-          participants: true,
-          comments: true,
-        },
       });
       res.send(events);
     }
@@ -113,7 +107,6 @@ const createParticipant = async (req, res, next) => {
     res
       .status(201)
       .send({ message: "created participant successfully", participant });
-
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server error" });
@@ -186,6 +179,12 @@ const getEvent = async (req, res, next) => {
     const event = await prisma.Events.findUnique({
       where: {
         eventId: Number(id),
+      },
+      include: {
+        organizer: true,
+        contributors: true,
+        participants: true,
+        comments: true,
       },
     });
     if (event) res.status(200).send(event);
