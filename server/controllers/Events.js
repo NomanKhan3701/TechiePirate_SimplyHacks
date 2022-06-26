@@ -19,7 +19,7 @@ const {
 const getEvents = async (req, res, next) => {
   try {
     if (!req.query.tags) {
-      const events = await prisma.Events.findMany({})
+      const events = await prisma.Events.findMany({});
       res.send(events);
     } else {
       const fields = req.query.tags;
@@ -34,7 +34,7 @@ const getEvents = async (req, res, next) => {
       res.send(events);
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
@@ -54,9 +54,7 @@ const createEvent = async (req, res, next) => {
     data.organizerEmail = req.user.email;
     const { error } = validateEvent(data);
     if (error)
-      return res
-        .status(400)
-        .send({ error, message: error.details[0].message });
+      return res.status(400).send({ error, message: error.details[0].message });
     const event = await prisma.Events.create({
       data: data,
     });
@@ -70,12 +68,12 @@ const createEvent = async (req, res, next) => {
 const deleteEvent = async (req, res, next) => {
   try {
     res.send("deleteEvents");
-  } catch (error) { }
+  } catch (error) {}
 };
 const editEvent = async (req, res, next) => {
   try {
     res.send("editEvents");
-  } catch (error) { }
+  } catch (error) {}
 };
 const createParticipant = async (req, res, next) => {
   try {
@@ -89,7 +87,9 @@ const createParticipant = async (req, res, next) => {
       data: data,
     });
     // const events = await prisma.Events.findMany({});
-    res.status(201).send({ message: "created event successfully", participant });
+    res
+      .status(201)
+      .send({ message: "created event successfully", participant });
     // send email to participant
     var mailOptions = {
       from: "techiepirateship@gmail.com",
@@ -144,9 +144,9 @@ const addComment = async (req, res, next) => {
     const Comments = await prisma.eventComments.findMany({
       where: {
         eventsEventId: Number(req.body.eventsEventId),
-        include:{
-          author:true,
-        }
+      },
+      include: {
+        author: true,
       },
     });
     res.status(201).send(Comments);
@@ -157,7 +157,7 @@ const addComment = async (req, res, next) => {
     });
   }
 };
-const getComments = async(req, res, next) => {
+const getComments = async (req, res, next) => {
   try {
     const Comments = await prisma.eventComments.findMany({
       where: {
@@ -194,10 +194,10 @@ const getEvent = async (req, res, next) => {
         contributors: true,
         participants: true,
         comments: {
-          include:{
-            author:true,
-          }
-        }
+          include: {
+            author: true,
+          },
+        },
       },
     });
     if (event) res.status(200).send(event);
