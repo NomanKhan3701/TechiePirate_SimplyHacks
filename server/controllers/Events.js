@@ -44,7 +44,7 @@ const createEvent = async (req, res, next) => {
     const img = req.body.image;
     let url;
     if (img) {
-      url = await axios.post("http://localhost:8000/api/image/addImage", {
+      url = await axios.post(process.env.IMAGE_URL, {
         img: img,
       });
       data.image = url.data.url;

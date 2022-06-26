@@ -84,7 +84,7 @@ const addPost = async (req, res, next) => {
   try {
     let data = req.body;
     const img = req.body.image;
-    const url = await axios.post("http://localhost:8000/api/image/addImage", {
+    const url = await axios.post(process.env.IMAGE_URL, {
       img: img,
     });
     // console.log(url.data)
