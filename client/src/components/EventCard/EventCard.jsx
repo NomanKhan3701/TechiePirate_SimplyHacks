@@ -4,10 +4,11 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import "./EventCard.scss";
 import { Link } from "react-router-dom";
 import { eventTypes } from "../../constants";
+import { getEventType } from "../../utils";
 
 const EventCard = ({ event }) => {
   // const eventType = eventTypes[event.eventTags[0]];
-  const eventType = eventTypes['tree_planting'];
+  const eventType = eventTypes[getEventType(event)];
   const IconComponent = eventType.icon;
 
   return (
