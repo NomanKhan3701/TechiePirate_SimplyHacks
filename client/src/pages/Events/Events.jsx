@@ -1,13 +1,13 @@
-import React from 'react'
-import { useState } from 'react'
-import EventCard from '../../components/EventCard/EventCard'
-import SearchBar from '../../components/SearchBar/SearchBar'
-import './Events.scss'
-import axios from "axios"
-import { useEffect } from 'react'
-import { useAuth } from '../../contexts/AuthContext'
-import { BigButton } from '../../components/import'
-import { Link } from 'react-router-dom'
+import React from "react";
+import { useState } from "react";
+import EventCard from "../../components/EventCard/EventCard";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import "./Events.scss";
+import axios from "axios";
+import { useEffect } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import { BigButton } from "../../components/import";
+import { Link, useNavigate } from "react-router-dom";
 
 const server_url = process.env.REACT_APP_server_url;
 const Events = () => {

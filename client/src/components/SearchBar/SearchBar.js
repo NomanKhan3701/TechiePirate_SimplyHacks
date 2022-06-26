@@ -1,5 +1,5 @@
 import './SearchBar.scss'
-import {HiSearch} from 'react-icons/hi'
+import { HiSearch } from 'react-icons/hi'
 
 const SearchBar = ({searchText, setSearchText, filter, setFilter}) => {
   return (

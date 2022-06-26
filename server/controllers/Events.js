@@ -19,7 +19,7 @@ const {
 const getEvents = async (req, res, next) => {
   try {
     if (!req.query.tags) {
-      const events = await prisma.Events.findMany({})
+      const events = await prisma.Events.findMany({});
       res.send(events);
     } else {
       const fields = req.query.tags;
@@ -34,7 +34,7 @@ const getEvents = async (req, res, next) => {
       res.send(events);
     }
   } catch (error) {
-    console.log(error)
+    console.log(error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
@@ -53,10 +53,9 @@ const createEvent = async (req, res, next) => {
     }
     data.organizerEmail = req.user.email;
     const { error } = validateEvent(data);
-    if (error)
-      return res
-        .status(400)
-        .send({ error, message: error.details[0].message });
+    if (error) {
+      return res.status(400).send({ error, message: error.details[0].message });
+    }
     const event = await prisma.Events.create({
       data: data,
     });
@@ -70,43 +69,76 @@ const createEvent = async (req, res, next) => {
 const deleteEvent = async (req, res, next) => {
   try {
     res.send("deleteEvents");
-  } catch (error) { }
+  } catch (error) {}
 };
 const editEvent = async (req, res, next) => {
   try {
     res.send("editEvents");
-  } catch (error) { }
+  } catch (error) {}
 };
 const createParticipant = async (req, res, next) => {
   try {
     let data = req.body;
     data.userEmail = req.user.email;
-    const { error } = validateParticipant;
+    const { error } = validateParticipant(data)
     if (error)
       return res.status(400).send({ message: error.details[0].message });
 
-    const participant = await prisma.Participant.create({
-      data: data,
+    const isParticipant = await prisma.Participant.findMany({
+      where: {
+        AND: [
+          {
+            userEmail: req.user.email,
+            eventsEventId: req.body.eventsEventId,
+          },
+        ],
+      },
     });
+    if (isParticipant.length === 0) {
+      const participant = await prisma.Participant.create({
+        data: data,
+      });
+
+      //updating user workPts
+      let userWorkPts = await prisma.user.findUnique({
+        where: {
+          email: req.user.email,
+        },
+        select: {
+          workPts: true,
+        },
+      });
+
+      userWorkPts.workPts++;
+      const updateParticipant = await prisma.user.update({
+        where: {
+          email: req.user.email,
+        },
+        data: {
+          workPts: userWorkPts.workPts,
+        },
+      });
+      // send email to participant
+      var mailOptions = {
+        from: "techiepirateship@gmail.com",
+        to: req.user.email,
+        subject: "WeChange",
+        text: "Congratulations You are a participant in the event " ,
+      };
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+      res
+        .status(201)
+        .send({ message: "created participant successfully", participant });
+    } else {
+      res.send({ message: "Already a participant" });
+    }
     // const events = await prisma.Events.findMany({});
-    res.status(201).send({ message: "created event successfully", participant });
-    // send email to participant
-    var mailOptions = {
-      from: "techiepirateship@gmail.com",
-      to: req.user.email,
-      subject: "WeChange",
-      text: "Congratulations You are a participant",
-    };
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
-    });
-    res
-      .status(201)
-      .send({ message: "created participant successfully", participant });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server error" });
@@ -119,6 +151,37 @@ const createContributor = async (req, res, next) => {
       return res.status(400).send({ message: error.details[0].message });
     const contributor = await prisma.Contributor.create({
       data: req.body,
+    });
+    let userResourcePts = await prisma.user.findUnique({
+      where: {
+        email: req.body.userEmail,
+      },
+      select: {
+        resourcePts: true,
+      },
+    });
+    var mailOptions = {
+      from: "techiepirateship@gmail.com",
+      to: req.body.userEmail,
+      subject: "WeChange",
+      text: "Congratulations You have contributed Rs "+ req.body.monetary,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+
+    userResourcePts.resourcePts += req.body.monetary;
+    const updateParticipant = await prisma.user.update({
+      where: {
+        email: req.body.userEmail,
+      },
+      data: {
+        resourcePts: userResourcePts.resourcePts,
+      },
     });
     res
       .status(201)
@@ -143,11 +206,11 @@ const addComment = async (req, res, next) => {
     });
     const Comments = await prisma.eventComments.findMany({
       where: {
-        eventsEventId: Number(req.body.eventsEventId)
+        eventsEventId: Number(req.body.eventsEventId),
       },
-      include:{
-        author:true,
-      }
+      include: {
+        author: true,
+      },
     });
     res.status(201).send(Comments);
   } catch (error) {
@@ -157,15 +220,15 @@ const addComment = async (req, res, next) => {
     });
   }
 };
-const getComments = async(req, res, next) => {
+const getComments = async (req, res, next) => {
   try {
     const Comments = await prisma.eventComments.findMany({
       where: {
         eventsEventId: Number(req.query.eventsEventId),
       },
-      include:{
-        author:true,
-      }
+      include: {
+        author: true,
+      },
     });
     res.status(200).send(Comments);
   } catch (error) {
@@ -197,10 +260,10 @@ const getEvent = async (req, res, next) => {
         contributors: true,
         participants: true,
         comments: {
-          include:{
-            author:true,
-          }
-        }
+          include: {
+            author: true,
+          },
+        },
       },
     });
     if (event) res.status(200).send(event);

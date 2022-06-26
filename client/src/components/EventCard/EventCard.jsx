@@ -11,6 +11,7 @@ const EventCard = ({ event }) => {
   const eventType = eventTypes[getEventType(event)];
   const IconComponent = eventType.icon;
 
+  
   return (
     <Link
       to={`/event/${event.eventId}`}

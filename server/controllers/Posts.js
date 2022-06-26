@@ -154,6 +154,9 @@ const addComment = async (req, res, next) => {
       where: {
         postsPostId: Number(req.body.postsPostId),
       },
+      include:{
+        author:true,
+      }
     });
     res.status(201).send(Comments);
   } catch (error) {
