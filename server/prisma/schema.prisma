@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  firstName    String
-  lastName     String
-  email        String         @id @unique
-  password     String
-  image        String?
-  resourcePts  Int            @default(0)
-  workPts      Int            @default(0)
-  Contributor  Contributor[]
-  Events       Events[]
-  Participant  Participant[]
-  Posts        Posts[]
-  postComments postComments[]
+  firstName     String
+  lastName      String
+  email         String          @id @unique
+  password      String
+  image         String?
+  resourcePts   Int             @default(0)
+  workPts       Int             @default(0)
+  Contributor   Contributor[]
+  Events        Events[]
+  Participant   Participant[]
+  Posts         Posts[]
+  eventComments eventComments[]
+  postComments  postComments[]
 }
 
 model postComments {
@@ -48,17 +49,18 @@ model eventComments {
   commentId     Int     @id @default(sequence())
   comment       String
   eventsEventId Int?
+  userEmail     String
   Events        Events? @relation(fields: [eventsEventId], references: [eventId])
+  User          User    @relation(fields: [userEmail], references: [email])
 }
 
 model Contributor {
-  contributorId Int      @id @default(sequence())
-  contributions String[]
+  contributorId Int     @id @default(sequence())
   userEmail     String
   eventsEventId Int?
   monetary      Float?
-  Events        Events?  @relation(fields: [eventsEventId], references: [eventId])
-  user          User     @relation(fields: [userEmail], references: [email])
+  Events        Events? @relation(fields: [eventsEventId], references: [eventId])
+  user          User    @relation(fields: [userEmail], references: [email])
 }
 
 model Participant {
@@ -76,12 +78,12 @@ model Events {
   time           DateTime
   city           String
   address        String
-  lat            Float @default(0)
-  long           Float @default(0)
   eventTags      String[]
   organizerEmail String
-  image          String?
   donationAmount Float           @default(0.0)
+  image          String?
+  lat            Float           @default(0.0)
+  long           Float           @default(0.0)
   organizer      User            @relation(fields: [organizerEmail], references: [email])
   contributors   Contributor[]
   participants   Participant[]

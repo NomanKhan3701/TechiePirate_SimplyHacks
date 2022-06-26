@@ -1,7 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
-const axios=require("axios")
+const axios = require("axios")
 const {
   validateEvent,
   validateComment,
@@ -11,9 +11,9 @@ const {
 
 const getEvents = async (req, res, next) => {
   try {
-    //console.log("hello")
     if (!req.query.tags) {
       const events = await prisma.Events.findMany({});
+      console.log(events)
       res.send(events);
     } else {
       const fields = req.query.tags;
@@ -28,6 +28,7 @@ const getEvents = async (req, res, next) => {
       res.send(events);
     }
   } catch (error) {
+    console.log(error)
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
@@ -36,30 +37,30 @@ const createEvent = async (req, res, next) => {
     let data = req.body;
     const img = req.body.image;
     let url;
-    if(img){
-     url = await axios.post("http://localhost:8000/api/image/addImage", {
-      img: img,
-    });
-     data.image = url.data.url;
+    if (img) {
+      url = await axios.post("http://localhost:8000/api/image/addImage", {
+        img: img,
+      });
+      data.image = url.data.url;
     }
-    else
-    {
-        data.image=undefined
+    else {
+      data.image = undefined
     }
     data.organizerEmail = req.user.email;
     const { error } = validateEvent(data);
     if (error)
-      return res.status(400).send({error,
-        message: error.details[0].message,"hi":"hello"
+      return res.status(400).send({
+        error,
+        message: error.details[0].message, "hi": "hello"
       });
     const event = await prisma.Events.create({
       data: data,
     });
     // const events = await prisma.Events.findMany({});
-    res.status(201).send({message:"created event successfully",event});
+    res.status(201).send({ message: "created event successfully", event });
   } catch (error) {
     console.log(error)
-    res.status(500).send({message:"Internal Server error"})
+    res.status(500).send({ message: "Internal Server error" })
   }
 };
 const deleteEvent = async (req, res, next) => {
@@ -72,13 +73,13 @@ const editEvent = async (req, res, next) => {
   try {
 
     res.send("editEvents");
-  } catch (error) {}
+  } catch (error) { }
 };
 const createParticipant = async (req, res, next) => {
   try {
-    let data=req.body;
-    data.userEmail=req.user.email;
-    const{error}=validateParticipant;
+    let data = req.body;
+    data.userEmail = req.user.email;
+    const { error } = validateParticipant;
     if (error)
       return res
         .status(400)
@@ -88,7 +89,7 @@ const createParticipant = async (req, res, next) => {
       data: data,
     });
     // const events = await prisma.Events.findMany({});
-    res.status(201).send({ message: "created event successfully", participant});
+    res.status(201).send({ message: "created event successfully", participant });
     // send email to participant
   } catch (error) {
     console.log(error);
@@ -98,12 +99,12 @@ const createParticipant = async (req, res, next) => {
 const createContributor = async (req, res, next) => {
   try {
 
-  } catch (error) {}
+  } catch (error) { }
 };
-const addComment = (req, res, next) => {};
-const getComments = (req, res, next) => {};
-const deleteComment = (req, res, next) => {};
-const getEvent = (req, res, next) => {};
+const addComment = (req, res, next) => { };
+const getComments = (req, res, next) => { };
+const deleteComment = (req, res, next) => { };
+const getEvent = (req, res, next) => { };
 module.exports = {
   getEvents,
   createEvent,
