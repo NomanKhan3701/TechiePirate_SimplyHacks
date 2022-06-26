@@ -31,12 +31,6 @@ const getEvents = async (req, res, next) => {
             hasSome: field,
           },
         },
-        include: {
-          organizer: true,
-          contributors: true,
-          participants: true,
-          comments: true,
-        },
       });
       res.send(events);
     }
@@ -95,7 +89,7 @@ const createParticipant = async (req, res, next) => {
       data: data,
     });
     // const events = await prisma.Events.findMany({});
-      //add increase in score for participants
+    //add increase in score for participants
     // send email to participant
     var mailOptions = {
       from: "techiepirateship@gmail.com",
@@ -110,10 +104,9 @@ const createParticipant = async (req, res, next) => {
         console.log("Email sent: " + info.response);
       }
     });
-     res
+    res
       .status(201)
       .send({ message: "created participant successfully", participant });
-
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server error" });
@@ -130,7 +123,7 @@ const createContributor = async (req, res, next) => {
     res
       .status(201)
       .send({ message: "created contributor successfully", contributor });
-      // add increase in score patch request for contributions
+    // add increase in score patch request for contributions
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server error" });
@@ -186,6 +179,12 @@ const getEvent = async (req, res, next) => {
     const event = await prisma.Events.findUnique({
       where: {
         eventId: Number(id),
+      },
+      include: {
+        organizer: true,
+        contributors: true,
+        participants: true,
+        comments: true,
       },
     });
     if (event) res.status(200).send(event);
