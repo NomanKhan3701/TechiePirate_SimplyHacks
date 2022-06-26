@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext';
+import { getDefaultPhoto } from '../../utils';
 import './Navbar.scss'
 
 const Navbar = () => {
@@ -27,15 +28,16 @@ const Navbar = () => {
 			</div>
 			<div className="links">
 				<Link className='link' to='/'>Home</Link>
-				<Link className='link' to='/posts'>Posts</Link>
 				<Link className='link' to='/events'>Events</Link>
+				<Link className='link' to='/posts'>Posts</Link>
+				<Link className='link' to='/leaderboard'>Leaderboard</Link>
 				{
 					!auth.state.authenticated ?
 						<Link className='big' to='/login'>Login / Register</Link>
 						:
-						<Link to='/profile'>
+						<Link className='no-link' to={`/profile/${auth.state?.user?.email}`}>
 							<div className='nav-user'>
-								<img src={auth.state?.user?.image || 'https://via.placeholder.com/128'} />
+								<img alt='User' src={auth.state?.user?.image || getDefaultPhoto(auth)} />
 								{`${auth.state.user.firstName} ${auth.state.user.lastName}`}
 							</div>
 						</Link>

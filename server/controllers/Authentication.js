@@ -69,5 +69,39 @@ const login = async (req, res, next) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
+const profile = async (req, res, next) => {
+  try {
+    const profile = await prisma.user.findUnique({
+      where: {
+        email: req.query.email,
+      },
+      // select: {
+      //   firstName: true,
+      //   lastName: true,
+      //   email: true,
+      //   image: true,
+      //   resourcePts: true,
+      //   workPts: true,
+      // },
+      include: {
+        Participant: {
+          include: {
+            Events: true,
+          },
+        },
+        Contributor: {
+          include: {
+            Events: true,
+          },
+        },
+        Posts: true,
+      },
+    });
+    res.send(profile);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+};
 
-module.exports = { signup, login };
+module.exports = { signup, login, profile };

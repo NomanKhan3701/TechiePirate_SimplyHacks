@@ -7,6 +7,8 @@ const auth = require("./routes/Authentication");
 const posts = require("./routes/Posts");
 const events = require("./routes/Events");
 const payment = require("./routes/payment");
+const news = require("./routes/news");
+const leaderboard = require("./routes/LeaderBoard");
 
 dotenv.config();
 const PORT = process.env.PORT || 8000;
@@ -24,6 +26,8 @@ app.use("/api/auth", auth);
 app.use("/api/posts", posts);
 app.use("/api/events", events);
 app.use("/api/payment", payment);
+app.use("/api/news", news);
+app.use("/api/leaderboard", leaderboard);
 
 app.listen(PORT, async () => {
   try {

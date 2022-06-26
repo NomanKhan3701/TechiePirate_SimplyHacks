@@ -1,55 +1,45 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./Map.scss";
-import mapboxgl from "mapbox-gl";
-mapboxgl.accessToken =
+import Map, { GeolocateControl, Marker, useControl, NavigationControl } from 'react-map-gl';
+import MapboxDraw from '@mapbox/mapbox-gl-draw';
+import marker from '../../assets/images/marker.png'
+
+const accessToken =
   "pk.eyJ1Ijoibm9tYW4zNzAxIiwiYSI6ImNsNHR4dXBsZTBqOXgzZXBoeDdydHpjajMifQ.6-p5dHzGJUZuRvrjxLQm4w";
 
-const Map = () => {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
-  const [zoom, setZoom] = useState(12);
+const CreateEventMap = ({ longi, setLongitude, lati, setLatitude }) => {
+  const [zoom, setZoom] = useState(10);
+  const [initialLongi, setInitialLongi] = useState(longi);
+  const [initialLati, setInitialLati] = useState(lati);
+  const [viewState, setViewState] = React.useState({
+    longitude: longi,
+    latitude: lati,
+    zoom: zoom
+  });
 
-  useEffect(() => {
-    if (map.current) return; // initialize map only once
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(positionSuccess, positionError);
-    }
-  }, []);
-
-  function positionSuccess(pos) {
-    const crd = pos.coords;
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v11",
-      center: [crd.longitude, crd.latitude],
-      zoom: zoom,
-    });
-    console.log(`More or less ${crd.accuracy} meters.`);
+  const change = (evt) => {
+    setViewState(evt.viewState)
   }
 
-  function positionError(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+  const markerMove = (evt) => {
+    setInitialLati(evt.lngLat.lat);
+    setInitialLongi(evt.lngLat.lng);
+    setLongitude(evt.lngLat.lng)
+    setLatitude(evt.lngLat.lat)
   }
 
-  useEffect(() => {
-    if (!map.current) return; // wait for map to initialize
-    map.current.on("move", () => {
-      setLng(map.current.getCenter().lng.toFixed(4));
-      setLat(map.current.getCenter().lat.toFixed(4));
-      setZoom(map.current.getZoom().toFixed(2));
-    });
-  }, []);
-
-  return (
-    <div>
-      <div className="sidebar">
-        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-      </div>
-      <div ref={mapContainer} className="map-container" />
-    </div>
-  );
+  return <Map
+    {...viewState}
+    onMove={evt => change(evt)}
+    mapStyle="mapbox://styles/mapbox/streets-v9"
+    mapboxAccessToken={accessToken}
+    onClick={evt => markerMove(evt)}
+  ><GeolocateControl />
+    <Marker pitchAlignment="auto" draggable="true" onDrag={evt => console.log(evt)} longitude={initialLongi} latitude={initialLati} anchor="bottom" >
+      <img className="marker" src={marker} />
+    </Marker>
+    <NavigationControl position="top-left" />
+  </Map>;
 };
 
-export default Map;
+export default CreateEventMap;

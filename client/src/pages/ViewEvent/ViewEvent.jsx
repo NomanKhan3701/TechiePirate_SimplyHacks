@@ -1,122 +1,304 @@
-import './ViewEvent.scss'
-import { TbPlant2 } from 'react-icons/tb'
-import { BiCalendarAlt, BiTime, BiMapPin } from 'react-icons/bi'
-import { Link, useNavigate } from 'react-router-dom'
-import { eventTypes } from '../../constants'
-import BigButton from '../../components/BigButton/BigButton'
-import { useState } from 'react'
-import axios from 'axios'
+import "./ViewEvent.scss";
+import { TbPlant2, TbCheck } from "react-icons/tb";
+import { GrUserWorker } from "react-icons/gr";
+import CommentCard from "./CommentCard";
+import { FaDonate } from "react-icons/fa";
+import {
+  BiCalendarAlt,
+  BiTime,
+  BiMapPin,
+  BiRupee,
+  BiMessage,
+} from "react-icons/bi";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { eventTypes } from "../../constants";
+import BigButton from "../../components/BigButton/BigButton";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import moment from "moment";
+import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
+import ReactMarkdown from "react-markdown";
+import FullScreenLoader from "../Signup/FullScreenLoader";
+import { getEventType } from "../../utils";
 
-const server_url = process.env.REACT_APP_server_url
+const client_url = process.env.REACT_APP_client_url;
+const server_url = process.env.REACT_APP_server_url;
+
 const ViewEvent = () => {
   const navigate = useNavigate();
-  const eventType = eventTypes['tree_planting']
-  const [message, setMessage] = useState("")
-  const [amount, setAmount] = useState("")
-  const openForm = () => {
+  const auth = useAuth();
+  const { id } = useParams();
+  const [message, setMessage] = useState("");
+  const [amount, setAmount] = useState("");
+  const [event, setEvent] = useState([]);
+  const [joined, setJoined] = useState(false);
 
-  }
-  const closeForm = () => {
+  useEffect(() => {
+    getEvent();
+  }, []);
 
-  }
-  const donate = async () => {
+  const getEvent = async () => {
     try {
-      const res = await axios.post(`${server_url}/api/payment`, {
-        items: [{ id: 1, quantity: 1 }],
-        amount: amount
-      })
-      window.location = res.data.url
+      const res = await axios.get(`${server_url}/api/events/view/${id}`);
+      setEvent(res.data);
+      for (let i = 0; i < res.data.participants.length; i++) {
+        if (res.data.participants[i].userEmail === auth?.state?.user?.email)
+          setJoined(true);
+      }
+      res.data.comments.reverse()
     } catch (e) {
       console.log(e);
     }
+  };
 
+  if (!event) {
+    return <FullScreenLoader></FullScreenLoader>;
   }
-  return (
-    <div className='container page'>
-      <div className='event-cols'>
-        <div className="left">
-          <img src='https://via.placeholder.com/512' />
 
-          <Link to={'/profile'} className='posted-by'>
-            <img src='https://via.placeholder.com/512' />
+  const eventType = eventTypes[getEventType(event)];
+
+  const donate = async () => {
+    if (!auth?.state.authenticated) {
+      navigate("/login");
+    }
+    if (amount.trim() === "" || message.trim() === "") {
+      toast.error("Fields cannot be empty", { position: "top-center" });
+      return;
+    }
+    try {
+      localStorage.setItem(
+        "donationToken",
+        JSON.stringify({
+          userEmail: auth?.state?.user?.email,
+          eventsEventId: id,
+          monetary: amount,
+        })
+      );
+
+      const res = await axios.post(`${server_url}/api/payment`, {
+        items: [{ id: 1, quantity: 1 }],
+        amount: amount,
+      });
+      window.location = res.data.url;
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const joinEvent = async () => {
+    try {
+      const token = localStorage.getItem("auth_token");
+      const res = await axios.post(
+        `${server_url}/api/events/participant`,
+        {
+          eventsEventId: Number(id),
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      toast.success("Joined the event successfully", {
+        position: "top-center",
+      });
+      setJoined(true);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const setComments = (newComments) => {
+    const data = {}
+    Object.assign(data, event)
+    data.comments = newComments
+    data.comments.reverse()
+    setEvent(data)
+  }
+
+  return (
+    <div
+      className="container page"
+      style={{ "--color-accent": eventType.color }}
+    >
+      <div className="event-cols">
+        <div className="left">
+          <img
+            src={event.image ? event.image : "https://via.placeholder.com/512"}
+          />
+          <Link to={"/profile/" + event.organizer?.email} className="posted-by">
+            <img src="https://via.placeholder.com/512" />
             <div>
-              Aditya Kharote
-              <div>
+              {event?.organizer?.firstName} {event?.organizer?.lastName}
+              <div className="flex">
                 <span>
                   <TbPlant2></TbPlant2>
-                  <span>12</span>
+                  <span>{event?.organizer?.workPts}</span>
+                </span>
+                <span>
+                  <FaDonate />
+                  <span>{event?.organizer?.resourcePts}</span>
                 </span>
               </div>
             </div>
           </Link>
 
-          <div className='event-info'>
+          <div className="event-info">
             <span>
-              <i><BiCalendarAlt></BiCalendarAlt></i>
-              <span>14th February 2022</span>
+              <i>
+                <BiCalendarAlt></BiCalendarAlt>
+              </i>
+              <span>{moment(event?.time).format("Do MMMM YYYY")}</span>
             </span>
 
             <span>
-              <i><BiTime></BiTime></i>
-              <span>10:00 AM</span>
+              <i>
+                <BiTime></BiTime>
+              </i>
+              <span>{moment(event?.time).format("LT")}</span>
             </span>
 
             <span>
-              <i><BiMapPin></BiMapPin></i>
-              <span>
-                Bhavans Campus, Old D N Nagar, Munshi Nagar, Andheri West, Mumbai, Maharashtra 400058
-              </span>
+              <i>
+                <BiMapPin></BiMapPin>
+              </i>
+              <span>{event?.address}</span>
             </span>
           </div>
 
-          <div style={{ 'marginTop': '16px' }}>
-            <BigButton>
-              Join Event
+          <div style={{ marginTop: "16px" }}>
+            <BigButton onClick={joinEvent}>
+              {joined ? (
+                <div className="btn-join">
+                  <span>Event joined</span>
+                  <TbCheck style={{ fontSize: "20px" }} />
+                </div>
+              ) : (
+                "Join Event"
+              )}
             </BigButton>
           </div>
         </div>
 
         <div className="right">
-          <div className='event-type' style={{ 'color': eventType.color }}>
+          <div className="event-type" style={{ color: eventType.color }}>
             <eventType.icon />
             <span>{eventType.title}</span>
           </div>
 
-          <h1>Event Title</h1>
+          <h1>{event?.title}</h1>
 
-          <div className='event-content'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat viverra lectus, sed lacinia risus convallis sit amet. Curabitur lacinia est et egestas egestas. Fusce non lorem id mi dapibus accumsan in eget eros. Fusce auctor placerat lacus in luctus. Morbi porttitor molestie libero non placerat. Nullam tempus lacus sed felis lacinia, ac molestie mauris tempor. Nam porttitor, felis vitae commodo vulputate, odio risus tincidunt elit, vel egestas sem justo vel nulla. Aenean mattis magna enim. Praesent quis massa laoreet lacus porta ultrices elementum rhoncus enim. Aliquam erat volutpat.
-            <br />
-            <br />
-            Morbi erat nisi, laoreet quis tellus et, imperdiet tempus nibh. Sed nec pretium enim. Mauris lacinia rutrum pellentesque. Praesent libero nibh, efficitur vitae lobortis in, aliquet id purus. Morbi rutrum, turpis vel dapibus mattis, arcu sapien convallis libero, et viverra sem metus at justo. Donec semper enim ex, at luctus dui vulputate pellentesque. Etiam sapien quam, rhoncus in urna at, efficitur viverra purus. Mauris blandit turpis feugiat lacinia venenatis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae tellus consequat lectus viverra maximus. Etiam pellentesque consectetur enim, et gravida elit tincidunt quis.
+          <div className="event-content">
+            <ReactMarkdown>{event?.description}</ReactMarkdown>
           </div>
 
-          <div className='contribute'>
+          <div className="contribute">
             <h2>Can't attend but want to help?</h2>
             <p>
               You can contribute by donating to the cause. <br />
-              All proceeds will be used to fund this event.<br /><br />
-              You can also contact the event creator directly in case you want to provide supplies or other non monetary contributions.
+              All proceeds will be used to fund this event.
+              <br />
+              <br />
+              You can also contact the event creator directly in case you want
+              to provide supplies or other non monetary contributions.
             </p>
-            <div onClick={openForm} style={{ 'width': 'fit-content' }}>
-              <BigButton >Donate Now</BigButton>
-            </div>
           </div>
           <div className="donate-form">
             <div className="input">
-              <input name="message" value={message} onChange={(e) => setMessage(e.target.value)} type="text" placeholder='Message' />
-
+              <span>
+                <BiRupee></BiRupee>
+              </span>
+              <input
+                name="amount"
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="Amount"
+              />
             </div>
+
             <div className="input">
-              <input name='amount' value={amount} onChange={(e) => setAmount(e.target.value)} type="text" placeholder='Amount' />
-
+              <span>
+                <BiMessage></BiMessage>
+              </span>
+              <input
+                name="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                type="text"
+                placeholder="Message"
+              />
             </div>
-            <button onClick={donate}>Donate</button>
+
+            <div onClick={donate} style={{ width: "fit-content" }}>
+              <BigButton>Donate Now</BigButton>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  )
-}
 
-export default ViewEvent
+      <div className="post-comment-sec">
+        <h2>Comments</h2>
+
+        {event?.comments != null ? (
+          <WriteCommentBox setComments={setComments} eventId={id} />
+        ) : null}
+
+        {event?.comments?.map((item) => {
+          return (
+            <CommentCard key={item.commentId} comment={item}></CommentCard>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const WriteCommentBox = ({ setComments, eventId }) => {
+  const auth = useAuth();
+  const [text, setText] = useState("");
+  const [sending, setSending] = useState(false);
+
+  const onSubmit = async () => {
+    if (text.trim() === "" || sending) return;
+
+    setSending(true);
+
+    const res = await axios.post(
+      `${server_url}/api/events/comments`,
+      {
+        comment: text,
+        eventsEventId: Number(eventId),
+      },
+      {
+        headers: {
+          Authorization: auth.state.token,
+        },
+      }
+    );
+
+    console.log(res.data);
+
+    setComments(res.data);
+    setSending(false);
+  };
+
+  if (!auth.state.authenticated) return;
+
+  return (
+    <div className="wcom">
+      <textarea
+        value={text}
+        onChange={(event) => setText(event.target.value)}
+        placeholder="Want to discuss something?"
+      />
+
+      <div style={{ width: "fit-content", marginLeft: "auto" }}>
+        <BigButton onClick={onSubmit}>Submit</BigButton>
+      </div>
+    </div>
+  );
+};
+
+export default ViewEvent;

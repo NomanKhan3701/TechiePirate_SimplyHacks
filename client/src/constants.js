@@ -1,6 +1,6 @@
 
 import { FaTree } from 'react-icons/fa'
-import { TbBeach } from 'react-icons/tb'
+import { TbBeach, TbHeartHandshake } from 'react-icons/tb'
 
 export const eventTypes = {
   'tree_planting': {
@@ -8,10 +8,15 @@ export const eventTypes = {
     icon: FaTree,
     color: 'var(--color-green)'
   },
-  'beach_cleaning': {
-    title: 'Beach Cleaning',
+  'water': {
+    title: 'Save the Ocean',
     icon: TbBeach,
     color: 'var(--color-blue)'
+  },
+  'misc': {
+    title: 'Miscellaneous',
+    icon: TbHeartHandshake,
+    color: 'var(--color-yellow)'
   },
 }
 

@@ -1,11 +1,9 @@
 .create-event {
     background: var(--bg-light-cream);
     min-height: 100vh;
-    transform: translateY(calc(-1 * var(--nav-height)));
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: var(--nav-height) 20px;
     position: relative;
 
     &::after {
@@ -54,6 +52,55 @@
             }
         }
 
+        .searchbar-sec {
+            height: 42px;
+            background: #FFF;
+            border: solid 1px rgba(12, 16, 29, 0.2);
+            border-radius: 8px;
+            display: flex;
+            cursor: pointer;
+            margin: 20px 0;
+
+            span,
+            div {
+                height: 100%;
+                min-width: 42px;
+                font-size: 18px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--color-accent);
+                border-right: solid 1px rgba(12, 16, 29, 0.194);
+                cursor: pointer;
+
+            }
+
+            div {
+                font-size: 14px;
+                font-weight: 600;
+                padding: 0px 16px;
+                flex-shrink: 0;
+                cursor: pointer;
+
+            }
+
+            input,
+            select {
+                background: transparent;
+                border-radius: 0px 8px 8px 0px;
+                border: none;
+                outline: none;
+                height: 100%;
+                width: 100%;
+                font-size: 14px;
+                font-family: inherit;
+                font-weight: 500;
+                cursor: pointer;
+
+                padding: 0px 16px;
+            }
+        }
+
         .upload-img {
             margin-top: 20px;
             width: 100%;
@@ -61,6 +108,8 @@
 
         h3 {
             margin-bottom: 10px;
+            font-size: 16px;
+            font-weight: 600;
         }
 
         .date-time {
@@ -147,6 +196,42 @@
                     font-weight: 600;
                 }
             }
+        }
+
+        .location-input {
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            background: white;
+
+            input {
+                width: calc(100% - 40px);
+                height: 100%;
+                outline: none;
+                font-size: 14px;
+                border: none;
+                outline: none;
+                margin-left: 20px;
+                font-size: 16px;
+            }
+
+            span {
+                svg {
+                    font-size: 20px;
+                }
+            }
+        }
+
+        .map {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
         }
 
 

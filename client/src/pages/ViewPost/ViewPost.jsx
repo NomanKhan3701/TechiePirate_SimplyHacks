@@ -1,6 +1,7 @@
 import './ViewPost.scss'
 import { TbPlant2 } from 'react-icons/tb'
 import { BiCalendarAlt, BiTime, BiMapPin } from 'react-icons/bi'
+import { FaDonate } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import { testMarkdown } from '../../constants'
@@ -15,6 +16,7 @@ import { BigButton } from '../../components/import'
 import { useAuth } from '../../contexts/AuthContext'
 
 const server_url = process.env.REACT_APP_server_url
+
 const ViewPost = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -35,6 +37,7 @@ const ViewPost = () => {
 
   const getComments = async () => {
     const res = await axios.get(`${server_url}/api/posts/Comments?postId=${id}`)
+    res.data.reverse()
     setComments(res.data);
   }
 
@@ -52,14 +55,17 @@ const ViewPost = () => {
               : null
           }
 
-          <Link to={'/profile/' + post.author.id} className='posted-by'>
+          <Link to={'/profile/' + post.author.email} className='posted-by'>
             <img src={post.author.image || 'https://via.placeholder.com/512'} />
             <div>
               {`${post.author.firstName} ${post.author.lastName}`}
               <div>
                 <span>
                   <TbPlant2></TbPlant2>
-                  <span>{post.author.workPts + post.author.resourcePts}</span>
+                  <span>{post.author.workPts}</span>
+                  <div style={{'width': '16px'}}></div>
+                  <FaDonate></FaDonate>
+                  <span>{post.author.resourcePts}</span>
                 </span>
               </div>
             </div>
@@ -97,7 +103,7 @@ const ViewPost = () => {
 
         {
           comments?.map((item) => {
-            return <CommentCard comment={item}></CommentCard>
+            return <CommentCard key={item.commentId} comment={item}></CommentCard>
           })
         }
       </div>
@@ -127,6 +133,7 @@ const WriteCommentBox = ({setComments, postId}) => {
         }
       }
     )
+    res.data.reverse()
 
     setComments(res.data);
     setSending(false)

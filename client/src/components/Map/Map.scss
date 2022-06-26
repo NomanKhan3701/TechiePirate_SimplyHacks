@@ -1,5 +1,12 @@
 .map-container {
-    height: calc(100vh - var(--nav-height));
+    height: 100%;
+    width: 100%;
+}
+
+.map {
+    .marker {
+        width: 15px;
+    }
 }
 
 .sidebar {
@@ -9,7 +16,7 @@
     font-family: monospace;
     z-index: 1;
     position: absolute;
-    top: var(--nav-height);
+    top: 0;
     left: 0;
     margin: 12px;
     border-radius: 4px;

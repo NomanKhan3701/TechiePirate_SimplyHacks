@@ -1,11 +1,27 @@
-import { Routes, Route } from 'react-router'
-import { CreatePost, Map, Navbar } from './components/import';
-import { Cancel, CreateEvent, Events, Home, Login, Payment, Posts, Profile, Signup, Success, ViewEvent, ViewPost } from './pages/import';
+import { Routes, Route } from "react-router";
+import { Map, Navbar } from "./components/import";
+import {
+  CreatePost,
+  Cancel,
+  CreateEvent,
+  Events,
+  Home,
+  Login,
+  Payment,
+  Posts,
+  Profile,
+  Signup,
+  Success,
+  ViewEvent,
+  ViewPost,
+  Quality,
+} from "./pages/import";
 
 import "react-toastify/dist/ReactToastify.css";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ToastContainer } from "react-toastify";
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider } from "./contexts/AuthContext";
+import Leaderboard from "./pages/Leaderboard/Leaderboard";
 
 function App() {
   return (
@@ -14,19 +30,20 @@ function App() {
         <ToastContainer></ToastContainer>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/posts' element={<Posts />} />
-          <Route path='/events' element={<Events />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<Signup />} />
-          <Route path='/createevent' element={<CreateEvent />} />
-          <Route path='/event/:id' element={<ViewEvent />} />
-          <Route path='/post/:id' element={<ViewPost />} />
-          <Route path='/createpost' element={<CreatePost />} />
-          <Route path='/map' element={<Map />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/success' element={<Success />} />
-          <Route path='/cancel' element={<Cancel />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/posts" element={<Posts />} />
+          <Route path="/posts/create" element={<CreatePost />} />
+          <Route path="/post/:id" element={<ViewPost />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/events/create" element={<CreateEvent />} />
+          <Route path="/event/:id" element={<ViewEvent />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/profile/:email" element={<Profile />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+          <Route path="/quality" element={<Quality />} />
         </Routes>
       </AuthProvider>
     </div>
