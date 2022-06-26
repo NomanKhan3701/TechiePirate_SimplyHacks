@@ -104,7 +104,7 @@ const SignUp = () => {
         google: true,
       });
       console.log(res);
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       const statusCode = error.response.status;
       if (statusCode == 409) {

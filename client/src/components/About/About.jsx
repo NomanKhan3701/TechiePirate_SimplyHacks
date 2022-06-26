@@ -10,6 +10,7 @@ import envelopeJson from "../../assets/lottie/nature-envelope.json";
 const About = () => {
 	return (
 		<div className="about">
+
 			<div className="about-info">
 				<div className="image">
 					<Lottie
@@ -20,63 +21,20 @@ const About = () => {
 					/>
 				</div>
 				<div className="content-right">
-					<h2 className="title">Delevery on time</h2>
 					<div className="content">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-						excepturi minima, molestias quia minus non quasi aliquam vero debitis?
-						Autem praesentium consequuntur voluptas consequatur soluta odio modi,
-						aut ut optio.
+						When the last tree is cut and the last fish killed, the last river poisoned, then you will see that you can't eat money.
+
+						- John May
 					</div>
 				</div>
 			</div>
+
 			<div className="about-info">
 				<div className="content-left">
-					<h2 className="title">Delevery on time</h2>
 					<div className="content">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-						excepturi minima, molestias quia minus non quasi aliquam vero debitis?
-						Autem praesentium consequuntur voluptas consequatur soluta odio modi,
-						aut ut optio.
-					</div>
-				</div>
-				<div className="image">
-					<Lottie
-						loop
-						animationData={contactJson}
-						play
-						style={{
-							margin: "auto", width: "200px", minHeight: "200px"
-						}}
-					/>
-				</div>
-			</div>
-			<div className="about-info">
-				<div className="image">
-					<Lottie
-						loop
-						animationData={deliveryJson}
-						play
-						style={{ margin: "auto", width: "200px", minHeight: "200px" }}
-					/>
-				</div>
-				<div className="content-right">
-					<h2 className="title">Delevery on time</h2>
-					<div className="content">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-						excepturi minima, molestias quia minus non quasi aliquam vero debitis?
-						Autem praesentium consequuntur voluptas consequatur soluta odio modi,
-						aut ut optio.
-					</div>
-				</div>
-			</div>
-			<div className="about-info">
-				<div className="content-left">
-					<h2 className="title">Delevery on time</h2>
-					<div className="content">
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-						excepturi minima, molestias quia minus non quasi aliquam vero debitis?
-						Autem praesentium consequuntur voluptas consequatur soluta odio modi,
-						aut ut optio.
+						Never doubt that a small group of thoughtful and committed citizens can change the world. Indeed, it is the only thing that ever has.
+
+						- Margret Head
 					</div>
 				</div>
 				<div className="image">

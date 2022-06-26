@@ -22,12 +22,12 @@ const Header = () => {
             <div className="green">Together</div>
             <div className="words">We can restore the planet</div>
           </div>
-          <Link to="/events">
+          <Link to="/quality">
             <div className="util">
               <div className="btn">
                 <GiThreeLeaves />
               </div>
-              <div className="content">View Events</div>
+              <div className="content">View Statistics</div>
             </div>
           </Link>
         </div>
