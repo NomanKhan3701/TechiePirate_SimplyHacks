@@ -143,10 +143,7 @@ const addComment = async (req, res, next) => {
     });
     const Comments = await prisma.eventComments.findMany({
       where: {
-        eventsEventId: Number(req.body.eventsEventId),
-        include:{
-          author:true,
-        }
+        eventsEventId: Number(req.body.eventsEventId)
       },
       include:{
         author:true,

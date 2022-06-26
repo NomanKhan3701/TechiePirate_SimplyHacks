@@ -5,11 +5,16 @@ import SearchBar from '../../components/SearchBar/SearchBar'
 import './Events.scss'
 import axios from "axios"
 import { useEffect } from 'react'
+import { useAuth } from '../../contexts/AuthContext'
+import { BigButton } from '../../components/import'
+import { Link } from 'react-router-dom'
 
 const server_url = process.env.REACT_APP_server_url;
 const Events = () => {
 	const [events, setEvents] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	const auth = useAuth()
 
 	useEffect(() => {
 		getEvents();
@@ -30,6 +35,14 @@ const Events = () => {
 			<h1>Upcoming Events</h1>
 
 			<SearchBar />
+			
+			{
+				auth.state.authenticated ?
+					<Link style={{'width': 'fit-content', 'marginBottom': '24px', 'display': 'flex'}} to="/events/create">
+						<BigButton>Create</BigButton>
+					</Link>
+				: null
+			}
 
 			<div className='events-list'>
 				{events.map((event, index) => {

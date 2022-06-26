@@ -1,24 +1,47 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import { getDefaultPhoto } from '../../utils'
 import './Profile.scss'
 import { AiFillMail, AiFillPhone } from 'react-icons/ai'
 import { TbPlant2 } from 'react-icons/tb'
 import { FaDonate } from 'react-icons/fa'
+import { useParams } from 'react-router'
+import FullScreenLoader from '../Signup/FullScreenLoader'
+import axios from 'axios'
+
+const server_url = process.env.REACT_APP_server_url
 
 const Profile = () => {
-	const auth = useAuth()
-	
+	const {email} = useParams()
+	const [profile, setProfile] = useState(null)
+
+	const getProfile = async () => {
+		try {
+      const res = await axios.get(`${server_url}/api/auth/profile?email=${email}`);
+      setProfile(res.data)
+    } catch (e) {
+      console.log(e);
+    }
+	}
+
+	useEffect(() => {
+		getProfile()
+	}, [])
+
+	if (!profile) {
+		return <FullScreenLoader></FullScreenLoader>
+	}
+
 	return (
 		<div className='container profile-container page'>
 			<div className='profile-cols'>
         <div className="left">
-					<img src={getDefaultPhoto(auth)} />
+					<img src={getDefaultPhoto(profile)} />
 
           <div className='profile-info'>
             <span>
 							<i><AiFillMail></AiFillMail></i>
-              <span>adityakharote@hotmail.com</span>
+              <span>{profile.email}</span>
             </span>
 
             <span>
@@ -29,17 +52,17 @@ const Profile = () => {
         </div>
 
         <div className="right">
-          <h1>Aditya Kharote</h1>
+          <h1>{profile.firstName + ' ' + profile.lastName}</h1>
           <div className='profile-content'>
 						<div className='scores'>
 							<div>
 								<TbPlant2></TbPlant2>
-								<span>0</span>
+								<span>{profile.workPts}</span>
 							</div>
 							
 							<div>
 								<FaDonate></FaDonate>
-								<span>0</span>
+								<span>{profile.resourcePts}</span>
 							</div>
 						</div>
 

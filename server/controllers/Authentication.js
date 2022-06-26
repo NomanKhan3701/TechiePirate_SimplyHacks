@@ -73,9 +73,10 @@ const profile = async (req, res, next) => {
   try {
     const profile = await prisma.user.findUnique({
       where: {
-        email: req.params.email,
+        email: req.query.email,
       },
     });
+    res.send(profile)
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server Error" });

@@ -16,7 +16,6 @@ router.get(
 );
 router.get(
   "/profile",
-  passport.authenticate("jwt", { session: false }),
   profile
 );
 

@@ -23,7 +23,7 @@ function App() {
           <Route path='/event/:id' element={<ViewEvent />} />
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:email' element={<Profile />} />
           <Route path='/success' element={<Success />} />
           <Route path='/cancel' element={<Cancel />} />
         </Routes>

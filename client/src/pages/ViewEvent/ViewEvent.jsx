@@ -1,5 +1,5 @@
 import "./ViewEvent.scss";
-import { TbPlant2 } from "react-icons/tb";
+import { TbPlant2, TbCheck } from "react-icons/tb";
 import { GrUserWorker } from "react-icons/gr";
 import CommentCard from './CommentCard'
 import { FaDonate } from "react-icons/fa";
@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import moment from "moment";
 import { useAuth } from "../../contexts/AuthContext";
+import ReactMarkdown from "react-markdown";
 
 const server_url = process.env.REACT_APP_server_url;
 const ViewEvent = () => {
@@ -62,11 +63,11 @@ const ViewEvent = () => {
     }
   };
 
-  const setComments = (comments) => {
+  const setComments = (newComments) => {
     const data = {}
     Object.assign(data, event)
-    data.comments = comments
-    setEvent(event)
+    data.comments = newComments
+    setEvent(data)
   }
 
   return (
@@ -76,7 +77,7 @@ const ViewEvent = () => {
           <img
             src={event.image ? event.image : "https://via.placeholder.com/512"}
           />
-          <Link to={"/profile"} className="posted-by">
+          <Link to={"/profile/" + event.organizer?.email} className="posted-by">
             <img src="https://via.placeholder.com/512" />
             <div>
               {event?.organizer?.firstName} {event?.organizer?.lastName}
@@ -117,7 +118,12 @@ const ViewEvent = () => {
           </div>
 
           <div style={{ marginTop: "16px" }}>
-            <BigButton>Join Event</BigButton>
+            <BigButton>
+              {
+                false ? 'Join Event'
+                : <TbCheck style={{'fontSize': '20px'}} />
+              }
+            </BigButton>
           </div>
         </div>
 
@@ -129,7 +135,11 @@ const ViewEvent = () => {
 
           <h1>{event?.title}</h1>
 
-          <div className="event-content">{event?.description}</div>
+          <div className="event-content">
+            <ReactMarkdown>
+              {event?.description}
+            </ReactMarkdown>
+          </div>
 
           <div className="contribute">
             <h2>Can't attend but want to help?</h2>
@@ -187,7 +197,7 @@ const ViewEvent = () => {
 
         {
           event?.comments?.map((item) => {
-            return <CommentCard comment={item}></CommentCard>
+            return <CommentCard key={item.commentId} comment={item}></CommentCard>
           })
         }
       </div>
@@ -218,6 +228,8 @@ const WriteCommentBox = ({setComments, eventId}) => {
         }
       }
     )
+
+    console.log(res.data)
 
     setComments(res.data);
     setSending(false)
