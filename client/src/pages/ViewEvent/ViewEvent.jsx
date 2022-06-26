@@ -43,7 +43,7 @@ const ViewEvent = () => {
       const res = await axios.get(`${server_url}/api/events/view/${id}`);
       setEvent(res.data);
       for (let i = 0; i < res.data.participants.length; i++) {
-        if (res.data.participants[i].email === auth?.state?.user?.email)
+        if (res.data.participants[i].userEmail === auth?.state?.user?.email)
           setJoined(true);
       }
       res.data.comments.reverse()
