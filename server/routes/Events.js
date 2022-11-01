@@ -17,7 +17,7 @@ router.post(
 router.delete(
   "/comments",
   passport.authenticate("jwt", { session: false }),
-  event.de
+  event.deleteComment
 );
 router.post(
   "/participant",
