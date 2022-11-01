@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const leaderboard  = require("../controllers/LeaderBoard");
+const {LeaderBoard}=require("../classes/LeaderBoard")
 
-router.get("/", leaderboard);
+const leaderboard=new LeaderBoard();
+router.get("/",leaderboard.leaderboard );
 
 module.exports = router;

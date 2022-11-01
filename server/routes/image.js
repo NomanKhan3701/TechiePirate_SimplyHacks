@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { getImages, addImage, deleteImage } = require("../controllers/image");
+const {Image}=require("../classes/Image")
 
-router.get("/getImage", getImages);
-router.post("/addImage", addImage);
-router.delete("/deleteImage", deleteImage);
+const image=new Image(); 
+router.get("/getImage", image.getImages);
+router.post("/addImage", image.addImage);
 
 module.exports = router;

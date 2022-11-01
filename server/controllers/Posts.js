@@ -1,7 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const { validatePost, validateComment } = require("../models/Posts");
-const { getImages, addImage, deleteImage } = require("../controllers/image");
 const axios = require("axios");
 
 const getPost = async (req, res, next) => {

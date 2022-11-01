@@ -1,49 +1,33 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
-const {
-  getEvents,
-  createEvent,
-  deleteEvent,
-  editEvent,
-  addComment,
-  getComments,
-  deleteComment,
-  createParticipant,
-  createContributor,
-  getEvent,
-} = require("../controllers/Events");
+const {Event}=require("../classes/Event")
 require("../strategy/jwt-auth");
 
-router.get("/", getEvents);
-router.get("/view/:eventId",getEvent);
-router.post("/", passport.authenticate("jwt", { session: false }), createEvent);
-router.delete(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  deleteEvent
-);
-router.patch("/", passport.authenticate("jwt", { session: false }), editEvent);
-router.get("/comments", getComments);
+const event=new Event();
+router.get("/", event.showEvent);
+router.get("/view/:eventId",event.getEvent);
+router.post("/", passport.authenticate("jwt", { session: false }), event.createEvent);
+router.get("/comments", event.getComments);
 router.post(
   "/comments",
   passport.authenticate("jwt", { session: false }),
-  addComment
+  event.addComment
 );
 router.delete(
   "/comments",
   passport.authenticate("jwt", { session: false }),
-  deleteComment
+  event.de
 );
 router.post(
   "/participant",
   passport.authenticate("jwt", { session: false }),
-  createParticipant
+  event.participateEvent
 );
 router.post(
   "/contributor",
   passport.authenticate("jwt", { session: false }),
-  createContributor
+  event.donateEvent
 );
 
 module.exports = router;

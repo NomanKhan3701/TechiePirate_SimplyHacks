@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { makePayment } = require("../controllers/payment");
-router.post("/", makePayment);
+const {PaymentGateway}=require("../classes/PaymentGateway")
+
+const paymentGateway = new PaymentGateway();
+router.post("/", paymentGateway.processTransaction);
 
 module.exports = router;

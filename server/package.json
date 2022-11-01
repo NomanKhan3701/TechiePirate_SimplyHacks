@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^3.15.2",
+    "@prisma/client": "^4.5.0",
     "argon2": "^0.28.5",
     "axios": "^0.27.2",
     "cloudinary": "^1.30.0",
@@ -29,6 +30,6 @@
   "devDependencies": {
     "nodemon": "^2.0.16",
     "prettier": "2.7.1",
-    "prisma": "^3.15.2"
+    "prisma": "^4.5.0"
   }
 }
