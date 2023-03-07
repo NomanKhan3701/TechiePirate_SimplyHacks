@@ -1,8 +1,7 @@
 ## Simplihacks 2.0 Winner🥇
 
-## WeChange Demo
-
 [![WeChange project showcase Image](https://i.ytimg.com/vi/uKH4lSk7ulk/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEAgZSgPMA8=&rs=AOn4CLCkQxFlOY_PvJ5GQjVHI76WJYrs6A)](https://www.youtube.com/watch?v=uKH4lSk7ulk)
+## WeChange Demo
 
 ## Inspiration
 There are many social media platforms for every human concern. For example, there is Instagram for social life and LinkedIn for your professional career. However, the web still lacks a place for people/organisations to share ideas and promote action for our planet, Earth.
